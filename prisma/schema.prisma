@@ -44,6 +44,7 @@ model User {
   sessions      Session[]
   createdAt     DateTime    @default(now())
   Questions     Question[]
+  Responses     QuestionResponse[]
 }
 
 model VerificationToken {
@@ -70,6 +71,8 @@ model Question {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  responses QuestionResponse[]
 }
 
 model Category {
@@ -79,4 +82,16 @@ model Category {
   Questions   Question[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+
+model QuestionResponse {
+  id           String  @id @default(cuid())
+  questionId   String
+  userId       String
+  // 0 Means the right answer, 1 means the first wrong answer, 2 means the second wrong answer, 3 means the third wrong answer
+  response     Int
+  createdAt    DateTime @default(now())
+
+  question Question @relation(fields: [questionId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
 }

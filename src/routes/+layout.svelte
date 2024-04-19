@@ -70,7 +70,7 @@
                         </SidebarDropdownWrapper>
 
                         <SidebarItem label="Rangliste" href="/rangliste"></SidebarItem>
-                        <SidebarItem label="Profil" href="/profil"></SidebarItem>
+                        <!-- <SidebarItem label="Profil" href="/profil"></SidebarItem> -->
                     </SidebarGroup>
                     
                     <SidebarGroup title="About" border>
@@ -80,7 +80,7 @@
                 </SidebarWrapper>
             </Sidebar>
         </div>
-        <div class="p-8 w-full h-full overflow-y-scroll">
+        <div class="p-8 w-full h-full overflow-y-auto">
             <slot></slot>
         </div>
     </div>

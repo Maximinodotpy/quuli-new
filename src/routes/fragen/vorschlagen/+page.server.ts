@@ -36,9 +36,9 @@ export const actions: Actions = {
         const frage = String(data.get('frage')) ?? ''
         const antwort = String(data.get('antwort')) ?? ''
         
-        const falsch1 = String(data.get('falsch1')) ?? ''
-        const falsch2 = String(data.get('falsch2')) ?? ''
-        const falsch3 = String(data.get('falsch3')) ?? ''
+        const falsch1 = String(data.get('falsch1') || '')
+        const falsch2 = String(data.get('falsch2') || '')
+        const falsch3 = String(data.get('falsch3') || '')
 
         const category = String(data.get('category')) ?? ''
 

@@ -6,6 +6,7 @@
     export let data: PageData;
 	export let form: ActionData;
 
+    let answer = "";
     let wrongAnswer1 = "";
     let wrongAnswer2 = "";
     let wrongAnswer3 = "";
@@ -13,6 +14,10 @@
     function isAValidAnswer(answer: string) {
         // Is a valid answer if it is not empty without the whitespace around
         return answer.trim() == "";
+    }
+
+    function hasDuplicates(array: Array<any>) {
+        return (new Set(array)).size !== array.length;
     }
 </script>
 
@@ -39,7 +44,7 @@
             </div>
             <div>
                 <Label for="antwort" class="mb-2 text-xl">Antwort</Label>
-                <Input name="antwort" id="antwort" type="text" required />
+                <Input name="antwort" id="antwort" type="text" required bind:value={answer} />
             </div>
         </div>
 
@@ -58,6 +63,12 @@
                     <Label for="falsch3" class="mb-2 text-xl">Falsche Antwort 3</Label>
                     <Input name="falsch3" id="falsch3" type="text" bind:value={wrongAnswer3}  />
                 </fieldset>
+
+                <!-- Check if any of the answers are the same -->
+
+                <!-- {#if hasDuplicates([wrongAnswer1, wrongAnswer2, wrongAnswer3, answer]) && answer != "" && wrongAnswer1 != ''}
+                    <Alert class="col-span-3" type="error">Die Antworten dürfen nicht gleich sein.</Alert>
+                {/if} -->
             </div>
         </div>
 
