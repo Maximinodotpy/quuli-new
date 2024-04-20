@@ -31,11 +31,12 @@
 
 {#if !$page.data.session}
     <Alert class="mb-4" type="error">Bitte <a href="/login" class="underline">melde</a> dich an um Fragen vorzuschlagen.</Alert>
+{:else}
+    {#if data.userAlreadyAnsweredAmount < AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS}
+        <Alert class="mb-4" type="error">Bitte <a href="/quiz" class="underline">beantworte</a> mindestens <b>{ AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS }</b> Fragen, bevor du selber welche vorschlägst. Du hast bis jetzt <b>{data.userAlreadyAnsweredAmount}</b> Fragen beantwortet.</Alert>
+    {/if}
 {/if}
 
-{#if data.userAlreadyAnsweredAmount < AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS}
-    <Alert class="mb-4" type="error">Bitte <a href="/quiz" class="underline">beantworte</a> mindestens <b>{ AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS }</b> Fragen, bevor du selber welche vorschlägst. Du hast bis jetzt <b>{data.userAlreadyAnsweredAmount}</b> Fragen beantwortet.</Alert>
-{/if}
 
 <!-- Form successful message -->
 {#if form?.success}

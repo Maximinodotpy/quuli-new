@@ -79,12 +79,14 @@
             <TableHead>
                 <TableHeadCell>Frage</TableHeadCell>
                 <TableHeadCell>Antwort</TableHeadCell>
+                <TableHeadCell></TableHeadCell>
             </TableHead>
             <TableBody>
                 {#each data.submitted_questions as question}
                     <TableBodyRow>
                         <TableBodyCell>{question.question}</TableBodyCell>
                         <TableBodyCell>{question.answer}</TableBodyCell>
+                        <TableBodyCell><a href="/fragen/bearbeiten/{question.id}">Bearbeiten</a></TableBodyCell>
                     </TableBodyRow>
                 {/each}
             </TableBody>
