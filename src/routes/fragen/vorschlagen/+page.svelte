@@ -3,7 +3,7 @@
     import { Alert, Heading, Input, Label, Button, Select, P } from "flowbite-svelte";
     import type { ActionData, PageData } from "./$types";
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
-    import { AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS } from "$lib/const";
+    import { AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS, QUESTION_MIN_LENGTH } from "$lib/const";
     import { enhance } from "$app/forms";
 
     export let data: PageData;
@@ -30,17 +30,17 @@
 <PageHeaderArea title="Frage vorschlagen" text="Quuli lebt von deinen kreativen Fragen. Hilf mit die Quuli-Datenbanken mit spannenden und fordernden Fragen zu befüllen. Fleissige Bienchen erhalten auch einen Platz auf der Rangliste." />
 
 {#if !$page.data.session}
-    <Alert class="mb-4" type="error">Bitte <a href="/login" class="underline">melde</a> dich an um Fragen vorzuschlagen.</Alert>
+    <Alert class="mb-4 border-2" type="error">Bitte <a href="/login" class="underline">melde</a> dich an um Fragen vorzuschlagen.</Alert>
 {:else}
     {#if data.userAlreadyAnsweredAmount < AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS}
-        <Alert class="mb-4" type="error">Bitte <a href="/quiz" class="underline">beantworte</a> mindestens <b>{ AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS }</b> Fragen, bevor du selber welche vorschlägst. Du hast bis jetzt <b>{data.userAlreadyAnsweredAmount}</b> Fragen beantwortet.</Alert>
+        <Alert class="mb-4 border-2" type="error">Bitte <a href="/quiz" class="underline">beantworte</a> mindestens <b>{ AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS }</b> Fragen, bevor du selber welche vorschlägst. Du hast bis jetzt <b>{data.userAlreadyAnsweredAmount}</b> Fragen beantwortet.</Alert>
     {/if}
 {/if}
 
 
 <!-- Form successful message -->
 {#if form?.success}
-    <Alert class="mb-4" color="green">Hurra deine Frage wurde erfolgreich vorgeschlagen In deinem <a href="/profil" class="underline">Profil</a> hast du eine Übersicht über alle deiner vorgeschlagenen Fragen.</Alert>
+    <Alert class="mb-4 border-2" color="green">Hurra deine Frage wurde erfolgreich vorgeschlagen In deinem <a href="/profil" class="underline">Profil</a> hast du eine Übersicht über alle deiner vorgeschlagenen Fragen.</Alert>
 {/if}
 
 <form method="post" use:enhance>
@@ -74,12 +74,17 @@
 
                 <!-- Check if any of the answers are the same -->
                 {#if hasDuplicates([wrongAnswer1, wrongAnswer2, wrongAnswer3, answer, question])}
-                    <Alert class="col-span-3" type="error">Die Antworten und Frage dürfen nicht gleich sein.</Alert>
+                    <Alert class="col-span-3 border-2" type="error">Die Antworten und die Frage dürfen nicht gleich sein.</Alert>
                 {/if}
 
                 <!-- Check if the question is atleast 10 Characters -->
-                {#if question.length < 10 && question != ''}
-                    <Alert class="col-span-3" type="error">Die Frage muss mindestens 10 Zeichen lang sein.</Alert>
+                {#if question.length < QUESTION_MIN_LENGTH && question != ''}
+                    <Alert class="col-span-3 border-2" type="error">Die Frage muss mindestens { QUESTION_MIN_LENGTH } Zeichen lang sein.</Alert>
+                {/if}
+
+                <!-- Ask the user if he forgot to add a question mark after the question -->
+                {#if question.length > QUESTION_MIN_LENGTH && question[question.length - 1] != "?"}
+                    <Alert class="col-span-3 border-2" color="blue">Vergiss nicht ein Fragezeichen am Ende der Frage zu setzen, falls es bei dieser Frage Sinn macht.</Alert>
                 {/if}
             </div>
         </div>

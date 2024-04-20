@@ -26,6 +26,7 @@
     import { navigating } from "$app/stores";
     import { slide } from "svelte/transition";
     import { expoOut } from "svelte/easing";
+    import Footer from "$lib/Components/Footer.svelte";
 
      let showSidebar = false;
 
@@ -90,7 +91,7 @@
                     </DropdownItem>
                 </Dropdown>
             {:else}
-                <Button color="blue" href="/login">Anmelden</Button>
+                <Button href="/login">Anmelden</Button>
             {/if}
             <DarkMode />
         </div>
@@ -139,9 +140,11 @@
 
         <button class="bg-neutral-900/50 absolute left-0 w-full h-full z-10 {showSidebar ? 'block': 'hidden'} md:hidden" on:click={() => { showSidebar = false }}></button>
 
-        <div class="p-8 w-full h-full overflow-y-auto">
+        <div class="w-full h-full overflow-y-auto p-8">
             <slot></slot>
+            <div class="pt-24"><Footer /></div>
         </div>
+
     </div>
 </div>
 
