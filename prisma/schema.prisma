@@ -72,6 +72,8 @@ model Question {
   wrongAnswer2 String?
   wrongAnswer3 String?
 
+  status QuestionStatus @default(NORMAL)
+
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
@@ -109,4 +111,10 @@ model QuestionResponse {
   user     User     @relation(fields: [userId], references: [id])
 
   @@map("questionresponse")
+}
+
+
+enum QuestionStatus {
+  NORMAL
+  DELETED
 }

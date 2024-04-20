@@ -80,13 +80,19 @@
                 <TableHeadCell>Frage</TableHeadCell>
                 <TableHeadCell>Antwort</TableHeadCell>
                 <TableHeadCell></TableHeadCell>
+                <TableHeadCell></TableHeadCell>
             </TableHead>
             <TableBody>
                 {#each data.submitted_questions as question}
                     <TableBodyRow>
                         <TableBodyCell>{question.question}</TableBodyCell>
                         <TableBodyCell>{question.answer}</TableBodyCell>
-                        <TableBodyCell><a href="/fragen/bearbeiten/{question.id}">Bearbeiten</a></TableBodyCell>
+                        <TableBodyCell>
+                            <Button href="/fragen/bearbeiten/{question.id}" size="xs">Bearbeiten</Button>
+                        </TableBodyCell>
+                        <TableBodyCell>
+                            <Button href="/fragen/loeschen/{question.id}" size="xs" data-sveltekit-preload-data="tap" >Löschen</Button>
+                        </TableBodyCell>
                     </TableBodyRow>
                 {/each}
             </TableBody>
