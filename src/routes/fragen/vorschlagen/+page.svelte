@@ -21,6 +21,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Frage vorschlagen</title>
+</svelte:head>
+
 <div class="mb-10">
     <Heading class="mb-4">Frage vorschlagen</Heading>
     <P>Quuli lebt von deinen kreativen Fragen. Hilf mit die Quuli Datenbanken mit spannenden und fordernden Fragen zu befüllen. Fleissige Bienchen erhalten auch einen Platz auf der Rangliste.</P>

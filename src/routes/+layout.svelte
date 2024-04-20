@@ -26,8 +26,8 @@
 
 <div class="h-screen flex flex-col overflow-hidden">
     <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 z-20 items-center">
-        <div class="text-2xl w-64">
-            Quuli
+        <div class="text-2xl w-64 pl-4 font-bold">
+            QUULI
         </div>
 
         <div class="grow pr-20 max-w-96">
@@ -63,7 +63,7 @@
                         <SidebarItem label="Home" href="/"></SidebarItem>
                         <SidebarItem label="Zum Quiz" href="/quiz"></SidebarItem>
                         
-                        <SidebarDropdownWrapper label="Fragen" isOpen={true}>
+                        <SidebarDropdownWrapper label="Fragen">
                             <SidebarDropdownItem label="Vorschlagen" href="/fragen/vorschlagen"></SidebarDropdownItem>
                             <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem>
                             <SidebarDropdownItem label="Fragebögen"></SidebarDropdownItem>

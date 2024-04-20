@@ -15,8 +15,38 @@ export const load: PageServerLoad = async ({ locals }) => {
             createdById: auth.user?.id
         } 
     })) ?? []
+
+
+    // Get responses for this user
+    const responses = await db.questionResponse.findMany({
+        include: {
+            question: true
+        },
+        where: {
+            userId: auth.user?.id
+        },
+        take: 10,
+    })
+
+    // Get right answers from db
+    const right_answers = await db.questionResponse.count({
+        where: {
+            response: 0,
+            userId: auth.user?.id,
+        }
+    })
+
+    // Total answers
+    const total_answers = await db.questionResponse.count({
+        where: {
+            userId: auth.user?.id
+        }
+    })
     
     return {
-        submitted_questions: submitted_questions
+        submitted_questions: submitted_questions,
+        responses: responses,
+        right_answers: right_answers,
+        total_answers: total_answers,
     }
 }
