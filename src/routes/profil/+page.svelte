@@ -25,6 +25,8 @@
     });
 
     export let data: PageData;
+
+    console.log(data);
 </script>
 
 <div class="flex justify-between items-center">
@@ -38,10 +40,10 @@
         </div>
     </div>
     
-    <!-- <div>
+    {#if data.total_answers}
         <Rating id="example-1b" total={5} size={50} rating={data.right_answers / data.total_answers * 5} />
         <p class="text-center">{data.right_answers} von {data.total_answers} Fragen richtig beantwortet</p>
-    </div> -->
+    {/if}
 </div>
 
 <!-- <Tabs style="underline">
