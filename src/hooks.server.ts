@@ -3,7 +3,7 @@ import { db } from "./db";
 export { handle } from "./auth"
 
 
-const categories = [
+/* const categories = [
     { name: "Geschichte" },
     { name: "Wissenschafft" },
     { name: "Sport" },
@@ -22,4 +22,4 @@ categories.forEach(async (category) => {
             data: category
         });
     }
-});
+}); */

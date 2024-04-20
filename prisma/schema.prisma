@@ -24,6 +24,9 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+
+  // Name this table account (lowercase) instead of Account
+  @@map("account")
 }
 
 model Session {
@@ -32,6 +35,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
 }
 
 model User {
@@ -45,6 +50,8 @@ model User {
   createdAt     DateTime    @default(now())
   Questions     Question[]
   Responses     QuestionResponse[]
+
+  @@map("user")
 }
 
 model VerificationToken {
@@ -53,6 +60,8 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+
+  @@map("verificationtoken")
 }
 
 model Question {
@@ -73,6 +82,8 @@ model Question {
   updatedAt DateTime @updatedAt
 
   responses QuestionResponse[]
+
+  @@map("question")
 }
 
 model Category {
@@ -82,6 +93,8 @@ model Category {
   Questions   Question[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  @@map("category")
 }
 
 model QuestionResponse {
@@ -94,4 +107,6 @@ model QuestionResponse {
 
   question Question @relation(fields: [questionId], references: [id])
   user     User     @relation(fields: [userId], references: [id])
+
+  @@map("questionresponse")
 }
