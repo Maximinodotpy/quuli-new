@@ -16,21 +16,34 @@
         Dropdown,
         DropdownHeader,
         DropdownItem,
-        DropdownDivider
+        DropdownDivider,
+        NavHamburger,
      } from 'flowbite-svelte';
 
+     let showSidebar = false;
+
+     onMount(() => {
+        // Set showSidebar to false on page size change
+        window.addEventListener('resize', () => {
+            showSidebar = false;
+        });
+     });
+
      import { signOut } from "@auth/sveltekit/client";
+    import { onMount } from "svelte";
 
     $: activeUrl = $page.url.pathname;
 </script>
 
 <div class="h-screen flex flex-col overflow-hidden">
     <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 z-20 items-center">
+        <NavHamburger onClick={() => showSidebar = !showSidebar}/>
+
         <div class="text-2xl w-64 pl-4 font-bold">
             QUULI
         </div>
 
-        <div class="grow pr-20 max-w-96">
+        <div class="grow pr-20 max-w-96 hidden">
             <Input placeholder="Suche" />
         </div>
 
@@ -56,7 +69,7 @@
     </div>
 
     <div class="flex grow overflow-hidden">
-        <div class="w-64 border-r h-full dark:border-slate-700">
+        <div class="w-64 border-r h-full dark:border-slate-700 {showSidebar ? 'block': 'hidden'} md:block absolute md:static bg-white dark:bg-slate-800 z-20">
             <Sidebar activeUrl={activeUrl}>
                 <SidebarWrapper divClass="h-full p-2">
                     <SidebarGroup title="Group 1">
@@ -80,6 +93,9 @@
                 </SidebarWrapper>
             </Sidebar>
         </div>
+
+        <button class="bg-neutral-900/50 absolute left-0 w-full h-full z-10 {showSidebar ? 'block': 'hidden'} md:hidden" on:click={() => { showSidebar = false }}></button>
+
         <div class="p-8 w-full h-full overflow-y-auto">
             <slot></slot>
         </div>
