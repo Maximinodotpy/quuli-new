@@ -29,6 +29,10 @@
     console.log(data);
 </script>
 
+<svelte:head>
+    <title>{ data.session?.user?.name }</title>
+</svelte:head>
+
 <div class="flex justify-between items-center">
     <div class="flex items-center space-x-4 rtl:space-x-reverse text-4xl mb-8">
         <Avatar src="{ $page.data.session?.user?.image ?? '' }" size="xl" />
@@ -46,7 +50,7 @@
     {/if}
 </div>
 
-<!-- <Tabs style="underline">
+<Tabs style="underline">
     <TabItem title="Leistung">
 
         <Table class="w-full">
@@ -82,4 +86,3 @@
         </Table>
     </TabItem>
 </Tabs>
- -->
