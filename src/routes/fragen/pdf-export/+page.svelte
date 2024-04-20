@@ -1,11 +1,6 @@
 <script lang="ts">
-    import {
-        Heading,
-        P
-    } from "flowbite-svelte";
+    import {} from "flowbite-svelte";
+    import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
 </script>
 
-<div class="mb-10">
-    <Heading class="mb-4">Fragen als PDF exportieren</Heading>
-    <P>Möchtest du deine Freunde auch noch im echten Leben mit Trivia nerven, dann bist hier genau richtig.</P>
-</div>
+<PageHeaderArea title="Fragen als PDF exportieren" text="Möchtest du deine Freunde auch noch im echten Leben mit Quiz Fragen nerven, dann bist hier genau richtig." />

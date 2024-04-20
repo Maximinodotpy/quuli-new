@@ -24,8 +24,8 @@
 <div class="max-w-sm mx-auto h-full flex items-center">
     <div>
         <div class="mb-6">
-            <Heading class="mb-4">Anmelden</Heading>
-            <P>Melde dich an um noch mehr Features von Quuli freizuschalten!</P>
+            <Heading class="mb-4 text-center">Anmelden</Heading>
+            <P>Melde dich an, um noch mehr Features von Quuli freizuschalten! Verwende dazu einfach deine E-Mail Adresse.</P>
         </div>
         
         <div>

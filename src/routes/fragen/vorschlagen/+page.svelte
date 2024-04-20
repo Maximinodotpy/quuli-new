@@ -2,6 +2,7 @@
     import { page } from "$app/stores";
     import { Alert, Heading, Input, Label, Button, Select, P } from "flowbite-svelte";
     import type { ActionData, PageData } from "./$types";
+    import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
 
     export let data: PageData;
 	export let form: ActionData;
@@ -24,14 +25,7 @@
     }
 </script>
 
-<svelte:head>
-    <title>Frage vorschlagen</title>
-</svelte:head>
-
-<div class="mb-10">
-    <Heading class="mb-4">Frage vorschlagen</Heading>
-    <P>Quuli lebt von deinen kreativen Fragen. Hilf mit die Quuli Datenbanken mit spannenden und fordernden Fragen zu befüllen. Fleissige Bienchen erhalten auch einen Platz auf der Rangliste.</P>
-</div>
+<PageHeaderArea title="Frage vorschlagen" text="Quuli lebt von deinen kreativen Fragen. Hilf mit die Quuli-Datenbanken mit spannenden und fordernden Fragen zu befüllen. Fleissige Bienchen erhalten auch einen Platz auf der Rangliste." />
 
 {#if !$page.data.session}
     <Alert class="mb-4" type="error">Bitte <a href="/login" class="underline">melde</a> dich an um Fragen vorzuschlagen.</Alert>

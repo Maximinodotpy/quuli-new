@@ -26,6 +26,12 @@
 
      let showSidebar = false;
 
+
+     // Close sidebar on page change
+        page.subscribe((value) => {
+            showSidebar = false;
+        });
+
      let isFragenDropdownOpen = writable(false);
 
      onMount(() => {
@@ -41,7 +47,7 @@
     $: activeUrl = $page.url.pathname;
 </script>
 
-<div class="h-screen flex flex-col overflow-hidden">
+<div class="h-[100svh] flex flex-col overflow-hidden">
     <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 z-20 items-center">
         <NavHamburger onClick={() => showSidebar = !showSidebar}/>
 
