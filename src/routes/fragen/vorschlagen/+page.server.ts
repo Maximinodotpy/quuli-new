@@ -33,14 +33,21 @@ export const actions: Actions = {
 
         console.log(data);
 
-        const frage = String(data.get('frage')) ?? ''
-        const antwort = String(data.get('antwort')) ?? ''
+        let frage = String(data.get('frage')) ?? ''
+        let antwort = String(data.get('antwort')) ?? ''
         
-        const falsch1 = String(data.get('falsch1') || '')
-        const falsch2 = String(data.get('falsch2') || '')
-        const falsch3 = String(data.get('falsch3') || '')
+        let falsch1 = String(data.get('falsch1') || '')
+        let falsch2 = String(data.get('falsch2') || '')
+        let falsch3 = String(data.get('falsch3') || '')
 
         const category = String(data.get('category')) ?? ''
+
+        // Trim all the strings
+        frage = frage.trim()
+        antwort = antwort.trim()
+        falsch1 = falsch1.trim()
+        falsch2 = falsch2.trim()
+        falsch3 = falsch3.trim()
 
         // Print alle values
         console.log(frage);
