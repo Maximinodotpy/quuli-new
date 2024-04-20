@@ -38,17 +38,14 @@
         </div>
     </div>
     
-    <div>
+    <!-- <div>
         <Rating id="example-1b" total={5} size={50} rating={data.right_answers / data.total_answers * 5} />
         <p class="text-center">{data.right_answers} von {data.total_answers} Fragen richtig beantwortet</p>
-    </div>
+    </div> -->
 </div>
 
-<!-- <pre>{ JSON.stringify($page.data.session, null, 4) }</pre> -->
-
-<Tabs style="underline">
+<!-- <Tabs style="underline">
     <TabItem title="Leistung">
-        <!-- <pre>{ JSON.stringify(data.responses, null, 4) }</pre> -->
 
         <Table class="w-full">
             <TableHead>
@@ -56,31 +53,31 @@
                 <TableHeadCell>Antwort</TableHeadCell>
             </TableHead>
             <TableBody>
-                <!-- {#each data.responses as response}
+                {#each data.responses as response}
                     <TableBodyRow>
                         <TableBodyCell>{response.question.question}</TableBodyCell>
                         <TableBodyCell>{response.question.answer}</TableBodyCell>
                     </TableBodyRow>
-                {/each} -->
+                {/each}
             </TableBody>
         </Table>
 
     </TabItem>
     <TabItem title="Vorgeschlagene Fragen" open>
-        <!-- Create table with these questions -->
         <Table class="w-full">
             <TableHead>
                 <TableHeadCell>Frage</TableHeadCell>
                 <TableHeadCell>Antwort</TableHeadCell>
             </TableHead>
             <TableBody>
-                <!-- {#each data.submitted_questions as question}
+                {#each data.submitted_questions as question}
                     <TableBodyRow>
                         <TableBodyCell>{question.question}</TableBodyCell>
                         <TableBodyCell>{question.answer}</TableBodyCell>
                     </TableBodyRow>
-                {/each} -->
+                {/each}
             </TableBody>
         </Table>
     </TabItem>
 </Tabs>
+ -->
