@@ -1,5 +1,6 @@
 import type { Question } from "@prisma/client";
 import { writable, type Writable } from "svelte/store";
+import { db } from "../db";
 
 export function createPersistentStore<T>(key: string, initialValue: any): Writable<T> {
   const store = writable(initialValue);
@@ -64,4 +65,43 @@ export async function checkQuestionFormData(formData: FormData) {
   }
 
   return questionO;
+}
+
+
+
+
+export async function getAllPublicQuestions() {
+  const questions = await db.question.findMany({
+    where: {
+      status: 'NORMAL'
+    }
+  });
+
+  return questions;
+}
+
+export async function getAmountOfPublicQuestions() {
+  const amount = await db.question.count({
+    where: {
+      status: 'NORMAL'
+    }
+  });
+
+  return amount;
+}
+
+
+export function jsonToFormData(json: any) {
+  const formData = new FormData();
+
+  for (const key in json) {
+    formData.append(key, json[key]);
+  }
+
+  return formData;
+}
+
+export function formToFormData(form: HTMLFormElement) {
+  const formData = new FormData(form);
+  return formData;
 }

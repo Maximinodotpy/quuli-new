@@ -85,13 +85,17 @@
             <TableBody>
                 {#each data.submitted_questions as question}
                     <TableBodyRow>
-                        <TableBodyCell>{question.question}</TableBodyCell>
-                        <TableBodyCell>{question.answer}</TableBodyCell>
+                        <TableBodyCell>
+                            <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.question}</div>
+                        </TableBodyCell>
+                        <TableBodyCell>
+                            <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.answer}</div>
+                        </TableBodyCell>
                         <TableBodyCell>
                             <Button href="/fragen/bearbeiten/{question.id}" size="xs">Bearbeiten</Button>
                         </TableBodyCell>
                         <TableBodyCell>
-                            <Button href="/fragen/loeschen/{question.id}" size="xs" data-sveltekit-preload-data="tap" >Löschen</Button>
+                            <Button href="/fragen/loeschen/{question.id}" size="xs" data-sveltekit-preload-data="tap" data-sveltekit-reload >Löschen</Button>
                         </TableBodyCell>
                     </TableBodyRow>
                 {/each}
