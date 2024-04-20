@@ -54,8 +54,8 @@
         </div>
     {/if}
 
-    <form method="post" class="grow flex flex-col gap-10" bind:this={formEl} action="?/check_answer" use:enhance>
-        <div class="grid { ['md:grid-cols-2', 'md:grid-cols-1', 'md:grid-cols-2'][answersCount-2] } gap-8 grow">
+    <form method="post" class="grow flex flex-col gap-4 md:gap-10" bind:this={formEl} action="?/check_answer" use:enhance>
+        <div class="grid { ['md:grid-cols-2', 'md:grid-cols-1', 'md:grid-cols-2'][answersCount-2] } gap-4 md:gap-8 grow">
             
             <label class="font-bold text-xl md:text-2xl border dark:border-slate-500 hover:bg-primary-200 dark:hover:bg-primary-800/25 transition-all p-4 md:p-8 rounded-xl" style="order: {String(moment(data.question.createdAt).unix()).at(-1)};" id="answer1" on:change={goCheck}>
                 { data.question.answer }

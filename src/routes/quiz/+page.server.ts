@@ -4,7 +4,7 @@ import type { Question } from "@prisma/client";
 import { redirect } from "@sveltejs/kit";
 
 
-const RECENT_QUESTIONS = "recent_questions";
+const RECENT_QUESTIONS = "recent_questions_v1";
 
 
 export const load: PageServerLoad = async ({ request, cookies }) => {
@@ -14,13 +14,16 @@ export const load: PageServerLoad = async ({ request, cookies }) => {
     const recent_questions = cookies.get(RECENT_QUESTIONS)?.split(",");
     console.log("recent_questions", recent_questions);
 
-    const question: Question | null = await db.question.findFirst({
+    const questions: Question[] = await db.question.findMany({
         where: {
             NOT: {
                 id: { in: recent_questions || [] }
             }
         }
     });
+
+    // Get random question
+    const question = questions[Math.floor(Math.random() * questions.length)];
 
     if (!question) {
         throw new Error("No question found");
@@ -106,7 +109,8 @@ export const actions: Actions = {
 
                 cookies.set(RECENT_QUESTIONS, recent_questions_array.join(','), {
                     httpOnly: true,
-                    path: "/"
+                    path: "/",
+                    maxAge: 60 * 10
                 });
             }
         } else {
