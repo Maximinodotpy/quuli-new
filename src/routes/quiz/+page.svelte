@@ -50,7 +50,7 @@
         </div>
     {:else if form?.is_correct == false}
         <div class="bg-red-100 dark:bg-red-800/25 p-4 rounded-lg">
-            <p class="text-red-500 dark:text-red-400">Leider falsch!</p>
+            <p class="text-red-500 dark:text-red-400">Leider falsch! "{data.question.answer}" wäre richtig gewesen.</p>
         </div>
     {/if}
 

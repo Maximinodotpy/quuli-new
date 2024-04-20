@@ -120,7 +120,7 @@
 
                             <SidebarDropdownItem label="Vorschlagen" href="/fragen/vorschlagen"></SidebarDropdownItem>
                             <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem>
-                            <SidebarDropdownItem label="Fragebögen"></SidebarDropdownItem>
+                            <!-- <SidebarDropdownItem label="Fragebögen"></SidebarDropdownItem> -->
                         </SidebarDropdownWrapper>
 
                         <SidebarItem label="Rangliste" href="/rangliste">
@@ -132,7 +132,7 @@
                     
                     <SidebarGroup title="About" border>
                         <SidebarItem label="Über Quuli" href="/ueber"></SidebarItem>
-                        <SidebarItem label="Kontakt"></SidebarItem>
+                        <SidebarItem label="Kontakt" href="/kontakt"></SidebarItem>
                     </SidebarGroup>
                 </SidebarWrapper>
             </Sidebar>

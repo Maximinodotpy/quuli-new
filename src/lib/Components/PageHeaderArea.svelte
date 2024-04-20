@@ -2,7 +2,7 @@
     import { Heading, P } from "flowbite-svelte";
 
     export let title = "Titel";
-    export let text = "Text";
+    export let text = "";
 
     export let set_page_title = true;
 </script>
