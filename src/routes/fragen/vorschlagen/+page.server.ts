@@ -5,15 +5,28 @@ import type { Actions } from "./$types"
 import { page } from "$app/stores"
 import { redirect } from "@sveltejs/kit"
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
     const categories: Category[] = await db.category.findMany({
         orderBy: {
             name: 'asc'
         }
     }) ?? []
 
+    const auth = await locals.auth()
+
+    let userAlreadyAnsweredAmount = 0
+
+    if (auth) {
+        userAlreadyAnsweredAmount = await db.questionResponse.count({
+            where: {
+                userId: auth.user?.id ?? ''
+            }
+        })
+    }
+
     return {
-        categories: categories
+        categories: categories,
+        userAlreadyAnsweredAmount: userAlreadyAnsweredAmount
     }
 }
 

@@ -12,6 +12,7 @@
     export let data: PageData;
 
     let formEl: HTMLFormElement;
+    let invisibleDefaultSubmitButton: HTMLButtonElement;
 
     // get amount of answers
     let answersCount = 2;
@@ -27,7 +28,7 @@
         if (form) {
             return;
         }
-        formEl.submit();
+        invisibleDefaultSubmitButton.click();
     }
 </script>
 
@@ -50,7 +51,7 @@
         </div>
     {/if}
 
-    <form method="post" class="grow flex flex-col gap-10" bind:this={formEl} action="?/check_answer">
+    <form method="post" class="grow flex flex-col gap-10" bind:this={formEl} action="?/check_answer" use:enhance>
         <div class="grid { ['md:grid-cols-2', 'md:grid-cols-1', 'md:grid-cols-2'][answersCount-2] } gap-8 grow">
             
             <label class="font-bold text-2xl border dark:border-slate-500 hover:bg-primary-200 dark:hover:bg-primary-800/25 transition-all p-8 rounded-xl" style="order: {String(moment(data.question.createdAt).unix()).at(-1)};" id="answer1" on:change={goCheck}>
@@ -78,6 +79,7 @@
             </label>
 
             <input type="hidden" name="question_id" value={data.question.id}>
+            <button formaction="?/check_answer" class="hidden" bind:this={invisibleDefaultSubmitButton}>Check</button>
         </div>
 
         <div class="flex justify-between">

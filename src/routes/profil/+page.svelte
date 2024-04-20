@@ -36,7 +36,7 @@
     <title>{ data.session?.user?.name }</title>
 </svelte:head>
 
-<div class="flex justify-between items-center">
+<div class="flex flex-col lg:flex-row mb-8 justify-between lg:items-center">
     <div class="flex items-center space-x-4 rtl:space-x-reverse text-4xl mb-8">
         <Avatar src="{ $page.data.session?.user?.image ?? '' }" size="xl" />
         <div class="space-y-1 font-medium dark:text-white">
@@ -50,12 +50,12 @@
     {#if data.total_answers}
         <div>
             <Rating id="example-1b" total={5} size={50} rating={data.right_answers / data.total_answers * 5} />
-            <p class="text-center">{data.right_answers} von {data.total_answers} Fragen richtig beantwortet</p>
+            <p class="lg:text-center">{data.right_answers} von {data.total_answers} Fragen richtig beantwortet</p>
         </div>
     {/if}
 </div>
 
-<Tabs style="underline">
+<Tabs style="underline" defaultClass="flex overflow-auto whitespace-nowrap space-x-2 rtl:space-x-reverse" tabStyle="pill">
     <TabItem title="Leistung">
 
         <Table class="w-full">
@@ -105,7 +105,7 @@
                     </div>
                 </div> -->
     
-                <div class="grid grid-cols-2">
+                <div class="grid gap-3 md:grid-cols-2">
                     <div>
                         <h2 class="text-2xl font-semibold">Benutzername</h2>
                         <p class="text-gray-500 dark:text-gray-400 text-sm">Dein öffentlicher Benutzername</p>
@@ -129,7 +129,7 @@
                     <!-- <div class="text-gray-500 dark:text-gray-400 text-sm">
                         Verbunden seit {moment(app.).locale('de').format('MMMM')} {moment(app.createdAt).locale('de').format('Y')}
                     </div> -->
-                    <pre>{JSON.stringify(app, null, 4)}</pre>
+                    <!-- <pre>{JSON.stringify(app, null, 4)}</pre> -->
                 </div>
             </div>
         {/each}

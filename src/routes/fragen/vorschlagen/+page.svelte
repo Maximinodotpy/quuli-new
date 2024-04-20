@@ -3,6 +3,8 @@
     import { Alert, Heading, Input, Label, Button, Select, P } from "flowbite-svelte";
     import type { ActionData, PageData } from "./$types";
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
+    import { AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS } from "$lib/const";
+    import { enhance } from "$app/forms";
 
     export let data: PageData;
 	export let form: ActionData;
@@ -31,13 +33,17 @@
     <Alert class="mb-4" type="error">Bitte <a href="/login" class="underline">melde</a> dich an um Fragen vorzuschlagen.</Alert>
 {/if}
 
-<!-- Form successful message -->
-{#if form?.success}
-    <Alert class="mb-4" type="green">Hurra deine Frage wurde erfolgreich vorgeschlagen In deinem <a href="/profil" class="underline">Profil</a> hast du eine Übersicht über alle deiner vorgeschlagenen Fragen.</Alert>
+{#if data.userAlreadyAnsweredAmount < AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS}
+    <Alert class="mb-4" type="error">Bitte <a href="/quiz" class="underline">beantworte</a> mindestens <b>{ AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS }</b> Fragen, bevor du selber welche vorschlägst. Du hast bis jetzt <b>{data.userAlreadyAnsweredAmount}</b> Fragen beantwortet.</Alert>
 {/if}
 
-<form method="post">
-    <fieldset disabled={!$page.data.session} class="flex flex-col gap-10" name="f">
+<!-- Form successful message -->
+{#if form?.success}
+    <Alert class="mb-4" color="green">Hurra deine Frage wurde erfolgreich vorgeschlagen In deinem <a href="/profil" class="underline">Profil</a> hast du eine Übersicht über alle deiner vorgeschlagenen Fragen.</Alert>
+{/if}
+
+<form method="post" use:enhance>
+    <fieldset disabled={!$page.data.session || data.userAlreadyAnsweredAmount < AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS} class="flex flex-col gap-10" name="f">
         <div class="grid md:grid-cols-2 gap-4">
             <div>
                 <Label for="frage" class="mb-2 text-xl">Frage</Label>

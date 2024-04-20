@@ -9,6 +9,10 @@ const categories = [
     { name: "Sport" },
     { name: "Politik" },
     { name: "Unterhaltung" },
+    { name: "Kunst" },
+    { name: "Technik" },
+    { name: "Literatur" },
+    { name: "Geographie" },
 ];
 
 // Add these categories to the db only if they are not already there
