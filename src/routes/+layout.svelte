@@ -1,6 +1,5 @@
 <script>
     import "../app.pcss";
-
     import { page } from '$app/stores';
     import { 
         Sidebar, 
@@ -19,18 +18,25 @@
         DropdownDivider,
         NavHamburger,
      } from 'flowbite-svelte';
+     import { signOut } from "@auth/sveltekit/client";
+    import { onMount } from "svelte";
+    import { QuestionCircleSolid, StarSolid, HomeSolid, PlaySolid } from 'flowbite-svelte-icons';
+    import { createPersistentStore } from "$lib/helpers";
+    import { writable } from "svelte/store";
 
      let showSidebar = false;
+
+     let isFragenDropdownOpen = writable(false);
 
      onMount(() => {
         // Set showSidebar to false on page size change
         window.addEventListener('resize', () => {
             showSidebar = false;
         });
+
+        isFragenDropdownOpen = createPersistentStore('isFragenDropdownOpen', false)
      });
 
-     import { signOut } from "@auth/sveltekit/client";
-    import { onMount } from "svelte";
 
     $: activeUrl = $page.url.pathname;
 </script>
@@ -73,17 +79,32 @@
             <Sidebar activeUrl={activeUrl}>
                 <SidebarWrapper divClass="h-full p-2">
                     <SidebarGroup title="Group 1">
-                        <SidebarItem label="Home" href="/"></SidebarItem>
-                        <SidebarItem label="Zum Quiz" href="/quiz"></SidebarItem>
+                        <SidebarItem label="Home" href="/">
+                            <svelte:fragment slot="icon">
+                                <HomeSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                            </svelte:fragment>
+                        </SidebarItem>
+                        <SidebarItem label="Zum Quiz" href="/quiz">
+                            <svelte:fragment slot="icon">
+                                <PlaySolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                            </svelte:fragment>
+                        </SidebarItem>
                         
-                        <SidebarDropdownWrapper label="Fragen">
+                        <SidebarDropdownWrapper label="Fragen" bind:isOpen={$isFragenDropdownOpen}>
+                            <svelte:fragment slot="icon">
+                                <QuestionCircleSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                            </svelte:fragment>
+
                             <SidebarDropdownItem label="Vorschlagen" href="/fragen/vorschlagen"></SidebarDropdownItem>
                             <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem>
                             <SidebarDropdownItem label="Fragebögen"></SidebarDropdownItem>
                         </SidebarDropdownWrapper>
 
-                        <SidebarItem label="Rangliste" href="/rangliste"></SidebarItem>
-                        <!-- <SidebarItem label="Profil" href="/profil"></SidebarItem> -->
+                        <SidebarItem label="Rangliste" href="/rangliste">
+                            <svelte:fragment slot="icon">
+                                <StarSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                            </svelte:fragment>
+                        </SidebarItem>
                     </SidebarGroup>
                     
                     <SidebarGroup title="About" border>

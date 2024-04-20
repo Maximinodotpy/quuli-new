@@ -9,6 +9,9 @@
         Tabs,
         TabItem,
         Rating,
+        Input,
+        Fileupload,
+        Button,
     } from "flowbite-svelte";
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
@@ -26,7 +29,7 @@
 
     export let data: PageData;
 
-    console.log(data);
+    /* console.log(data); */
 </script>
 
 <svelte:head>
@@ -71,7 +74,7 @@
         </Table>
 
     </TabItem>
-    <TabItem title="Vorgeschlagene Fragen" open>
+    <TabItem title="Vorgeschlagene Fragen" open={false}>
         <Table class="w-full">
             <TableHead>
                 <TableHeadCell>Frage</TableHeadCell>
@@ -86,5 +89,49 @@
                 {/each}
             </TableBody>
         </Table>
+    </TabItem>
+    <TabItem title="Profil Einstellungen" open={true}>
+        <form action="?/edit_user" method="post">
+            <div class="max-w-4xl mx-auto flex flex-col gap-12">
+                
+                <!-- <div class="grid grid-cols-2">
+                    <div>
+                        <h2 class="text-2xl font-semibold">Profilbild</h2>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Lade ein Profilbild hoch</p>
+                    </div>
+                    
+                    <div>
+                        <Fileupload accept="image/*" name="profile_picture" />
+                    </div>
+                </div> -->
+    
+                <div class="grid grid-cols-2">
+                    <div>
+                        <h2 class="text-2xl font-semibold">Benutzername</h2>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Dein öffentlicher Benutzername</p>
+                    </div>
+                    
+                    <Input type="text" name="username" placeholder="Benutzername" value={data.session?.user?.name} required />
+                </div>
+
+                <div class="flex justify-end">
+                    <Button type="submit">Speichern</Button>
+                </div>
+            </div>
+        </form>
+    </TabItem>
+    <TabItem title="Verbundene Apps">
+        {#each data.connected_accounts as app}
+            <div class="flex items-center space-x-4">
+                <!-- <Avatar src="{app.}" size="lg" /> -->
+                <div class="space-y-1 font-medium dark:text-white">
+                    <div>{app.provider}</div>
+                    <!-- <div class="text-gray-500 dark:text-gray-400 text-sm">
+                        Verbunden seit {moment(app.).locale('de').format('MMMM')} {moment(app.createdAt).locale('de').format('Y')}
+                    </div> -->
+                    <pre>{JSON.stringify(app, null, 4)}</pre>
+                </div>
+            </div>
+        {/each}
     </TabItem>
 </Tabs>

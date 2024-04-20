@@ -44,7 +44,7 @@
 
 <form method="post">
     <fieldset disabled={!$page.data.session} class="flex flex-col gap-10" name="f">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
             <div>
                 <Label for="frage" class="mb-2 text-xl">Frage</Label>
                 <Input name="frage" id="frage" type="text" required bind:value={question}/>
@@ -56,7 +56,7 @@
         </div>
 
         <div>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid md:grid-cols-3 gap-4">
                 <fieldset>
                     <Label for="falsch1" class="mb-2 text-xl">Falsche Antwort 1</Label>
                     <Input name="falsch1" id="falsch1" type="text" bind:value={wrongAnswer1} required />
