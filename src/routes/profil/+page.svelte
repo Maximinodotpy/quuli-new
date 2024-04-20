@@ -56,12 +56,12 @@
                 <TableHeadCell>Antwort</TableHeadCell>
             </TableHead>
             <TableBody>
-                {#each data.responses as response}
+                <!-- {#each data.responses as response}
                     <TableBodyRow>
                         <TableBodyCell>{response.question.question}</TableBodyCell>
                         <TableBodyCell>{response.question.answer}</TableBodyCell>
                     </TableBodyRow>
-                {/each}
+                {/each} -->
             </TableBody>
         </Table>
 
@@ -74,12 +74,12 @@
                 <TableHeadCell>Antwort</TableHeadCell>
             </TableHead>
             <TableBody>
-                {#each data.submitted_questions as question}
+                <!-- {#each data.submitted_questions as question}
                     <TableBodyRow>
                         <TableBodyCell>{question.question}</TableBodyCell>
                         <TableBodyCell>{question.answer}</TableBodyCell>
                     </TableBodyRow>
-                {/each}
+                {/each} -->
             </TableBody>
         </Table>
     </TabItem>
