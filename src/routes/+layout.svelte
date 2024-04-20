@@ -23,6 +23,9 @@
     import { QuestionCircleSolid, StarSolid, HomeSolid, PlaySolid } from 'flowbite-svelte-icons';
     import { createPersistentStore } from "$lib/helpers";
     import { writable } from "svelte/store";
+    import { navigating } from "$app/stores";
+    import { slide } from "svelte/transition";
+    import { expoOut } from "svelte/easing";
 
      let showSidebar = false;
 
@@ -45,7 +48,26 @@
 
 
     $: activeUrl = $page.url.pathname;
+
+    navigating.subscribe((value) => {
+        console.log(value);
+    });
 </script>
+
+{#if $navigating}
+    <!-- 
+    Loading animation for next page since svelte doesn't show any indicator. 
+    - delay 100ms because most page loads are instant, and we don't want to flash 
+    - long 12s duration because we don't actually know how long it will take
+    - exponential easing so fast loads (>100ms and <1s) still see enough progress,
+        while slow networks see it moving for a full 12 seconds
+    -->
+    <div class="navigation-loader" in:slide={{ delay: 100, duration: 12000, axis: "x", easing: expoOut }}>
+        { JSON.stringify($navigating) }
+    </div>
+{/if}
+
+{ JSON.stringify($navigating) }
 
 <div class="h-[100svh] flex flex-col overflow-hidden">
     <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 z-20 items-center">
@@ -128,3 +150,15 @@
         </div>
     </div>
 </div>
+
+<style lang="css">
+    .navigation-loader {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 5px;
+      z-index: 50;
+      background-color: #dbdbdb;
+    }
+</style>
