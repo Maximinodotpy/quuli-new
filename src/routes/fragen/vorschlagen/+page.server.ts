@@ -32,7 +32,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 
 export const actions: Actions = {
-    default: async ({ request, locals }) => {
+    add_question: async ({ request, locals }) => {
         // Check if the user is logged in
         const auth = await locals.auth()
         if (!auth) {
