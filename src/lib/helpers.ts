@@ -1,6 +1,6 @@
 import type { Question } from "@prisma/client";
 import { writable, type Writable } from "svelte/store";
-import { db } from "../db";
+import { db } from "./db";
 
 export function createPersistentStore<T>(key: string, initialValue: any): Writable<T> {
   const store = writable(initialValue);

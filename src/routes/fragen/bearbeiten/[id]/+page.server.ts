@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types";
-import { db } from "../../../../db";
+import { db } from "$lib/db";
 import type { Actions } from "../../vorschlagen/$types";
 import { checkQuestionFormData } from "$lib/helpers";
 import { redirect } from "@sveltejs/kit";

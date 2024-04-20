@@ -1,7 +1,6 @@
 import { json } from "@sveltejs/kit";
-import { db } from "../../../../db.js";
+import { db } from "$lib/db";
 import { RECENT_QUESTIONS_COOKIE_KEY } from "$lib/const.js";
-import type { Question } from "@prisma/client";
 import { getAmountOfPublicQuestions } from "$lib/helpers.js";
 
 export async function POST(event) {
@@ -40,11 +39,14 @@ export async function POST(event) {
         maxAge: 60 * 10
     });
     
-
-    const questions: Question[] = await db.question.findMany({
+    // Get all NORMAL questions that are not in the recent questions array
+    const questions = await db.question.findMany({
         where: {
+            status: 'NORMAL',
             NOT: {
-                id: { in: recent_questions_array || [] }
+                id: {
+                    in: recent_questions_array
+                }
             }
         }
     });

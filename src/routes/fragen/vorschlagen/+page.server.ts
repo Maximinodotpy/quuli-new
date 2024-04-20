@@ -1,9 +1,7 @@
-import { db } from "../../../db"
+import { db } from "$lib/db"
 import type { PageServerLoad } from "./$types"
 import type { Category } from "@prisma/client"
 import type { Actions } from "./$types"
-import { page } from "$app/stores"
-import { redirect } from "@sveltejs/kit"
 
 export const load: PageServerLoad = async ({ locals }) => {
     const categories: Category[] = await db.category.findMany({

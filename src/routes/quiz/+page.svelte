@@ -1,19 +1,18 @@
 <script lang="ts">
-    import { Heading } from 'flowbite-svelte';
+    import { Heading, Button } from 'flowbite-svelte';
     import moment from 'moment';
     import type { Question } from '@prisma/client';
     import { jsonToFormData } from '$lib/helpers';
     import { onMount } from 'svelte';
+    import type { PageData } from './$types';
+
+    export let data: PageData;
 
     let currentQuestion: Question;
 
-    enum Status {
-        Answering,
-        Correct,
-        Wrong,
-    }
+    type statusT = 'Answering' | 'Correct' | 'Wrong';
 
-    let status: Status = Status.Answering;
+    let status: statusT = 'Answering';
     
     let invisibleDefaultSubmitButton: HTMLButtonElement;
     let answersCount = 0;
@@ -38,7 +37,7 @@
     });
 
     function goCheck(answer: number) {
-        if (status == Status.Answering) {
+        if (status == 'Answering') {
             console.log('Checking answer ...');
     
             fetch('/api/questions/check-answer', {
@@ -48,9 +47,9 @@
                 console.log(results);
     
                 if (answer == 0) {
-                    status = Status.Correct;
+                    status = 'Correct';
                 } else {
-                    status = Status.Wrong;
+                    status = 'Wrong';
                 }
             });
         }
@@ -67,7 +66,7 @@
 
             currentQuestion = new_question;
 
-            status = Status.Answering;
+            status = 'Answering';
         });
     }
 </script>
@@ -82,11 +81,11 @@
     {:else}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
 
-        {#if status == Status.Correct}
+        {#if status == 'Correct'}
             <div class="bg-green-100 dark:bg-green-800/25 p-4 rounded-lg">
                 <p class="text-green-500 dark:text-green-400">"{currentQuestion.answer}" ist Richtig!</p>
             </div>
-        {:else if status == Status.Wrong}
+        {:else if status == 'Wrong'}
             <div class="bg-red-100 dark:bg-red-800/25 p-4 rounded-lg">
                 <p class="text-red-500 dark:text-red-400">Leider falsch! "{currentQuestion.answer}" wäre richtig gewesen.</p>
             </div>
@@ -120,7 +119,13 @@
                     <!-- { answersCount } -->
                 </div>
 
-                <button on:click={nextQuestion}>Nächste Frage</button>
+                <div class="flex gap-3">
+                    {#if !data?.session?.user}
+                        <Button color="alternative" href="/login">Anmelden um Fortschritt zu erfassen</Button>
+                    {/if}
+
+                    <Button on:click={nextQuestion}>Nächste Frage</Button>
+                </div>
             </div>
         </div>
     {/if}

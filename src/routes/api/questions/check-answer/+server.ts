@@ -1,5 +1,5 @@
 import { json } from "@sveltejs/kit";
-import { db } from "../../../../db.js";
+import { db } from "$lib/db";
 
 export async function POST(event) {
     const auth = await event.locals.auth();

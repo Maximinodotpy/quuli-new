@@ -1,5 +1,5 @@
 import type { Question } from "@prisma/client";
-import { db } from "../../db";
+import { db } from "$lib/db";
 import type { Actions, PageServerLoad } from "./$types";
 import { error, redirect } from "@sveltejs/kit";
 
