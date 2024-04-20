@@ -16,7 +16,9 @@
         return answer.trim() == "";
     }
 
-    function hasDuplicates(array: Array<any>) {
+    function hasDuplicates(array: Array<any>, remove_empty_strings = true) {
+        if (remove_empty_strings) array = array.filter(Boolean);
+
         return (new Set(array)).size !== array.length;
     }
 </script>
