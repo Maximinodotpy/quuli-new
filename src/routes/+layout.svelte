@@ -62,7 +62,7 @@
                     </DropdownItem>
                 </Dropdown>
             {:else}
-                <Button color="blue" href="/login">Anmelden / Registrieren</Button>
+                <Button color="blue" href="/login">Anmelden</Button>
             {/if}
             <DarkMode />
         </div>
