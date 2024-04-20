@@ -79,7 +79,7 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <Label for="category" class="mb-2 text-xl">Kategorie</Label>
-                <Select name="category" id="category">
+                <Select name="category" id="category" required>
                     {#each data.categories as cat}
                         <option value={cat.id}>{cat.name}</option>
                     {/each}
