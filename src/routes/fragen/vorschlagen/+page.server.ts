@@ -6,7 +6,11 @@ import { page } from "$app/stores"
 import { redirect } from "@sveltejs/kit"
 
 export const load: PageServerLoad = async () => {
-    const categories: Category[] = await db.category.findMany() ?? []
+    const categories: Category[] = await db.category.findMany({
+        orderBy: {
+            name: 'asc'
+        }
+    }) ?? []
 
     return {
         categories: categories
@@ -78,6 +82,14 @@ export const actions: Actions = {
             return {
                 success: false,
                 message: 'Keine falsche Antwort eingegeben'
+            }
+        }
+
+        // Check if the question is atleast 10 characters long
+        if (frage.length < 10) {
+            return {
+                success: false,
+                message: 'Die Frage muss mindestens 10 Zeichen lang sein'
             }
         }
 

@@ -10,6 +10,7 @@
     let wrongAnswer1 = "";
     let wrongAnswer2 = "";
     let wrongAnswer3 = "";
+    let question = "";
 
     function isAValidAnswer(answer: string) {
         // Is a valid answer if it is not empty without the whitespace around
@@ -46,7 +47,7 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <Label for="frage" class="mb-2 text-xl">Frage</Label>
-                <Input name="frage" id="frage" type="text" required/>
+                <Input name="frage" id="frage" type="text" required bind:value={question}/>
             </div>
             <div>
                 <Label for="antwort" class="mb-2 text-xl">Antwort</Label>
@@ -71,10 +72,14 @@
                 </fieldset>
 
                 <!-- Check if any of the answers are the same -->
+                {#if hasDuplicates([wrongAnswer1, wrongAnswer2, wrongAnswer3, answer, question])}
+                    <Alert class="col-span-3" type="error">Die Antworten und Frage dürfen nicht gleich sein.</Alert>
+                {/if}
 
-                <!-- {#if hasDuplicates([wrongAnswer1, wrongAnswer2, wrongAnswer3, answer]) && answer != "" && wrongAnswer1 != ''}
-                    <Alert class="col-span-3" type="error">Die Antworten dürfen nicht gleich sein.</Alert>
-                {/if} -->
+                <!-- Check if the question is atleast 10 Characters -->
+                {#if question.length < 10 && question != ''}
+                    <Alert class="col-span-3" type="error">Die Frage muss mindestens 10 Zeichen lang sein.</Alert>
+                {/if}
             </div>
         </div>
 
