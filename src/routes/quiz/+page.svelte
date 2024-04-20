@@ -37,9 +37,7 @@
 </svelte:head>
 
 <div class="flex flex-col h-full gap-10">
-    <Heading tag="h2" class="mb-10 mt-10">{ data.question.question }</Heading>
-
-    <!-- { JSON.stringify(form) } -->
+    <Heading tag="h2" class="md:mb-10 md:mt-10">{ data.question.question }</Heading>
 
     {#if form?.is_correct}
         <div class="bg-green-100 dark:bg-green-800/25 p-4 rounded-lg">
