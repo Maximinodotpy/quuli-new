@@ -46,8 +46,8 @@ export async function checkQuestionFormData(formData: FormData) {
   questionO.question = questionO.question.trim();
   questionO.answer = questionO.answer.trim();
   questionO.wrongAnswer1 = questionO.wrongAnswer1.trim();
-  questionO.wrongAnswer2 = questionO.wrongAnswer2.trim();
-  questionO.wrongAnswer3 = questionO.wrongAnswer3.trim();
+  questionO.wrongAnswer2 = questionO?.wrongAnswer2?.trim() || '';
+  questionO.wrongAnswer3 = questionO?.wrongAnswer3?.trim() || '';
 
   // Check if there is a question
   if (!questionO.question) {
