@@ -35,6 +35,55 @@
 
     onMount(() => {
         nextQuestion();
+
+        document.addEventListener('keydown', (event) => {
+            const buttonContainer = document.querySelector('#button_container')
+
+            /* // Dont allow multiple key presses
+            if (status != 'Answering') return; */
+            
+            // Get the first four children of this container and then sort them by their order css property
+            const buttons = Array.from(buttonContainer?.children ?? []).slice(0, 4).sort((a, b) => {
+                return parseInt(a.getAttribute('style')?.split('order: ')[1] ?? '0') - parseInt(b.getAttribute('style')?.split('order: ')[1] ?? '0');
+            });
+            
+            console.log(event);
+
+            if (event.key == '1') {
+                let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[0]);
+                console.log(numberToCheck);
+                
+                if (status == 'Answering') {
+                    goCheck(numberToCheck);
+                }
+            } else if (event.key == '2') {
+                let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[1]);
+                console.log(numberToCheck);
+                
+                if (status == 'Answering') {
+                    goCheck(numberToCheck);
+                }
+            } else if (event.key == '3') {
+                let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[2]);
+                console.log(numberToCheck);
+
+                if (status == 'Answering') {
+                    goCheck(numberToCheck);
+                }
+            } else if (event.key == '4') {
+                let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[3]);
+                console.log(numberToCheck);
+
+                if (status == 'Answering') {
+                    goCheck(numberToCheck);
+                }
+            }
+
+            // If the user presses enter, we want to go to the next question
+            if (event.key == 'Enter') {
+                nextQuestion();
+            }
+        });
     });
 
     function goCheck(answer: number) {
@@ -53,6 +102,25 @@
     
                 if (answer == 0) {
                     status = 'Correct';
+
+                    (async () => {
+                        const canvas : HTMLElement | null = document.getElementById("bg-canvas");
+
+                        console.log(canvas);
+
+                        if (!canvas) return;
+                        // you should  only initialize a canvas once, so save this function
+                        // we'll save it to the canvas itself for the purpose of this demo
+                        // @ts-ignore
+                        canvas.confetti = canvas.confetti || (await confetti.create(canvas, { resize: false }));
+
+                        // @ts-ignore
+                        canvas.confetti({
+                            spread: 100,
+                            particleCount: 40,
+                            origin: { y: 1, x: 0.5},
+                        });
+                    })();
                 } else {
                     status = 'Wrong';
                 }
@@ -90,9 +158,12 @@
 
 <svelte:head>
     <title>Quiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.10.1/tsparticles.confetti.bundle.min.js"></script>
 </svelte:head>
 
-<div class="flex flex-col h-full max-h-full gap-10 max-w-5xl mx-auto">
+
+<div class="flex flex-col h-full max-h-full gap-10 max-w-5xl mx-auto relative">
+    <canvas id="bg-canvas" class="absolute pointer-events-none w-full h-full"></canvas>
     {#if !currentQuestion}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">Frage wird geladen ...</Heading>
 
@@ -107,21 +178,21 @@
 
         <div class="grow flex flex-col gap-4 md:gap-10">
 
-            <div class="grid { ['md:grid-cols-2', 'md:grid-cols-1', 'md:grid-cols-2'][answersCount-2] } gap-4 md:gap-8 grow">
+            <div class="grid { ['md:grid-cols-2', 'md:grid-cols-1', 'md:grid-cols-2'][answersCount-2] } gap-4 md:gap-8 grow" id="button_container">
                 
-                <button on:click={() => { goCheck(0) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' ? 'bg-green-500 text-green-100': 'hover:bg-primary-200 dark:hover:bg-primary-800/25' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-1)};" id="answer1">
+                <button on:click={() => { goCheck(0) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' ? 'bg-green-500 text-green-100': 'hover:bg-primary-200 dark:hover:bg-primary-800/25' }" style="order: {String(moment().unix()).at(-1)};" id="answer1">
                     { currentQuestion.answer }
                 </button>
 
-                <button on:click={() => { goCheck(1) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 1? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-2)};" id="answer2">
+                <button on:click={() => { goCheck(1) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 1? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment().unix()).at(-2)};" id="answer2">
                     { currentQuestion.wrongAnswer1 } 
                 </button>
 
-                <button on:click={() => { goCheck(2 ?? '') }} class="{answersCount < 3 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 2? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-3)};" id="answer3">
+                <button on:click={() => { goCheck(2 ?? '') }} class="{answersCount < 3 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 2? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment().unix()).at(-3)};" id="answer3">
                     { currentQuestion.wrongAnswer2 }
                 </button>
 
-                <button on:click={() => { goCheck(3 ?? '') }} class="{answersCount < 4 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 3? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-4)};" id="answer4">
+                <button on:click={() => { goCheck(3 ?? '') }} class="{answersCount < 4 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 3? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment().unix()).at(-4)};" id="answer4">
                     { currentQuestion.wrongAnswer3 }
                 </button>
 
@@ -139,7 +210,7 @@
                         <Button color="alternative" href="/login">Anmelden um Fortschritt zu erfassen</Button>
                     {/if}
 
-                    <Button on:click={nextQuestion}>Nächste Frage</Button>
+                    <Button on:click={nextQuestion} title="enter">Nächste Frage</Button>
                 </div>
             </div>
         </div>
