@@ -104,4 +104,16 @@
             </AccordionItem>
         </Accordion>
     </div>
+    
+    <div>
+        <Heading tag="h2" class="mb-8">Tipps, Tricks und Sonstiges</Heading>
+
+        <Accordion>
+            <AccordionItem>
+                <span slot="header">Tastenkombinationen</span>
+                <P>enter, 1, 2, 3, 4</P>
+                <P>Übrigens <a href="https://maximmaeder.com/keyboard-shortcuts/" target="_blank" class="underline">hier</a> findet man auch noch andere Tastenkombinationen.</P>
+            </AccordionItem>
+        </Accordion>
+    </div>
 </div>
