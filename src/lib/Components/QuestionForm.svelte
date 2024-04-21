@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Alert, Heading, Input, Label, Button, Select, P } from "flowbite-svelte";
-    import { AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS, QUESTION_MIN_LENGTH } from "$lib/const";
+    import { QUESTION_MIN_LENGTH, QUESTION_MAX_LENGTH, ANSWER_MAX_LENGTH } from "$lib/const";
     import { enhance } from "$app/forms";
     import type { Category, Question } from "@prisma/client";
     import { hasDuplicates, isAValidAnswer } from "$lib/helpers";
@@ -21,17 +21,51 @@
     export let is_disabled: boolean = false;
     export let form_action: string = '';
     export let categories: Category[] = [];
+
+    
+    let warnings: Array<string> = []
+    let errors: Array<string> = []
+
+    $: {
+        warnings = []
+        errors = []
+
+        if (q_info.question.length < QUESTION_MIN_LENGTH && q_info.question != '') {
+            errors.push(`Die Frage muss mindestens ${QUESTION_MIN_LENGTH} Zeichen lang sein.`)
+        }
+
+        if (q_info.question.length > QUESTION_MAX_LENGTH) {
+            errors.push(`Die Frage darf maximal ${QUESTION_MAX_LENGTH} Zeichen lang sein.`)
+        }
+
+        // Check if any of the answers is longer than the max
+        if (q_info.answer.length > ANSWER_MAX_LENGTH ||
+            q_info.wrongAnswer1.length > ANSWER_MAX_LENGTH ||
+            (q_info.wrongAnswer2?.length || 0) > ANSWER_MAX_LENGTH ||
+            (q_info.wrongAnswer3?.length || 0) > ANSWER_MAX_LENGTH
+        ) {
+            errors.push(`Die Antworten dürfen maximal ${ANSWER_MAX_LENGTH} Zeiche lang sein.`)
+        }
+    
+        if (q_info.question.length > QUESTION_MIN_LENGTH && q_info.question[q_info.question.length - 1] != "?") {
+            warnings.push('Vergiss nicht ein Fragezeichen am Ende der Frage zu setzen, falls es bei dieser Frage Sinn macht.')
+        }
+    
+        if (hasDuplicates([q_info.wrongAnswer1, q_info.wrongAnswer2, q_info.wrongAnswer3, q_info.answer, q_info.question])) {
+            errors.push('Die Antworten und die Frage dürfen nicht gleich sein.')
+        }
+    }
 </script>
 
 <form method="post" use:enhance action="?/{form_action}">
     <fieldset disabled={is_disabled} class="flex flex-col gap-10">
         <div class="grid md:grid-cols-2 gap-4">
             <div>
-                <Label for="frage" class="mb-2 text-xl">Frage</Label>
+                <Label for="frage" class="mb-2 text-xl">Frage <sup class="opacity-50">{q_info.question.length}</sup></Label>
                 <Input name="frage" id="frage" type="text" required bind:value={q_info.question}/>
             </div>
             <div>
-                <Label for="antwort" class="mb-2 text-xl">Antwort</Label>
+                <Label for="antwort" class="mb-2 text-xl">Antwort <sup class="opacity-50">{q_info.answer.length}</sup></Label>
                 <Input name="antwort" id="antwort" type="text" required bind:value={q_info.answer} />
             </div>
         </div>
@@ -39,33 +73,18 @@
         <div>
             <div class="grid md:grid-cols-3 gap-4">
                 <fieldset>
-                    <Label for="falsch1" class="mb-2 text-xl">Falsche Antwort 1</Label>
+                    <Label for="falsch1" class="mb-2 text-xl">Falsche Antwort 1 <sup class="opacity-50">{q_info.wrongAnswer1.length}</sup></Label>
                     <Input name="falsch1" id="falsch1" type="text" bind:value={q_info.wrongAnswer1} required />
                 </fieldset>
 
                 <fieldset disabled={isAValidAnswer(q_info.wrongAnswer1)} class="disabled:opacity-50">
-                    <Label for="falsch2" class="mb-2 text-xl">Falsche Antwort 2</Label>
+                    <Label for="falsch2" class="mb-2 text-xl">Falsche Antwort 2 <sup class="opacity-50">{q_info.wrongAnswer2.length}</sup></Label>
                     <Input name="falsch2" id="falsch2" type="text" bind:value={q_info.wrongAnswer2} required={!isAValidAnswer(q_info.wrongAnswer3 ?? '')} />
                 </fieldset>
                 <fieldset disabled={isAValidAnswer(q_info.wrongAnswer2 ?? '')} class="disabled:opacity-50">
-                    <Label for="falsch3" class="mb-2 text-xl">Falsche Antwort 3</Label>
+                    <Label for="falsch3" class="mb-2 text-xl">Falsche Antwort 3 <sup class="opacity-50">{q_info.wrongAnswer3.length}</sup></Label>
                     <Input name="falsch3" id="falsch3" type="text" bind:value={q_info.wrongAnswer3}  />
                 </fieldset>
-
-                <!-- Check if any of the answers are the same -->
-                {#if hasDuplicates([q_info.wrongAnswer1, q_info.wrongAnswer2, q_info.wrongAnswer3, q_info.answer, q_info.question])}
-                    <Alert class="col-span-3 border-2" type="error">Die Antworten und die Frage dürfen nicht gleich sein.</Alert>
-                {/if}
-
-                <!-- Check if the question is atleast 10 Characters -->
-                {#if q_info.question.length < QUESTION_MIN_LENGTH && q_info.question != ''}
-                    <Alert class="col-span-3 border-2" type="error">Die Frage muss mindestens { QUESTION_MIN_LENGTH } Zeichen lang sein.</Alert>
-                {/if}
-
-                <!-- Ask the user if he forgot to add a question mark after the question -->
-                {#if q_info.question.length > QUESTION_MIN_LENGTH && q_info.question[q_info.question.length - 1] != "?"}
-                    <Alert class="col-span-3 border-2" color="blue">Vergiss nicht ein Fragezeichen am Ende der Frage zu setzen, falls es bei dieser Frage Sinn macht.</Alert>
-                {/if}
             </div>
         </div>
 
@@ -80,8 +99,22 @@
             </div>
         </div>
 
+        <div>
+            <div class="mb-4">
+                {#each errors as error}
+                    <Alert class="col-span-3 border-2" type="error">{error}</Alert>
+                {/each}
+            </div>
+            
+            <div>
+                {#each warnings as warning}
+                    <Alert class="col-span-3 border-2" color="blue">{warning}</Alert>
+                {/each}
+            </div>
+        </div>
+
         <div class="mt-8">
-            <Button type="submit">Einreichen</Button>
+            <Button type="submit" disabled={errors.length != 0}>Einreichen</Button>
         </div>
     </fieldset>
 </form>
