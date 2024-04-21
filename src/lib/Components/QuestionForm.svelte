@@ -50,6 +50,19 @@
         if (q_info.question.length > QUESTION_MIN_LENGTH && q_info.question[q_info.question.length - 1] != "?") {
             warnings.push('Vergiss nicht ein Fragezeichen am Ende der Frage zu setzen, falls es bei dieser Frage Sinn macht.')
         }
+
+        // Check if the question ends with multiple dots
+        if (q_info.question.length > QUESTION_MIN_LENGTH && q_info.question.endsWith('...')) {
+            // Check if all the answers end with 3 dots
+            if (
+                !q_info.answer.endsWith('...') && q_info.answer.length > 0 ||
+                !q_info.wrongAnswer1.endsWith('...') && q_info.wrongAnswer1.length > 0 ||
+                !q_info.wrongAnswer2.endsWith('...') && q_info.wrongAnswer2.length > 0 ||
+                !q_info.wrongAnswer3.endsWith('...') && q_info.wrongAnswer3.length > 0
+            ) {
+                warnings.push('Die Frage endet mit drei Punkten. Vielleicht macht es Sinn, dass auch die Antworten mit drei Punkten beginnen.')
+            }
+        }
     
         if (hasDuplicates([q_info.wrongAnswer1, q_info.wrongAnswer2, q_info.wrongAnswer3, q_info.answer, q_info.question])) {
             errors.push('Die Antworten und die Frage dürfen nicht gleich sein.')
@@ -102,13 +115,13 @@
         <div>
             <div class="mb-4">
                 {#each errors as error}
-                    <Alert class="col-span-3 border-2" type="error">{error}</Alert>
+                    <Alert class="col-span-3 border-2 mb-2" type="error">{error}</Alert>
                 {/each}
             </div>
             
             <div>
                 {#each warnings as warning}
-                    <Alert class="col-span-3 border-2" color="blue">{warning}</Alert>
+                    <Alert class="col-span-3 border-2 mb-2" color="blue">{warning}</Alert>
                 {/each}
             </div>
         </div>
