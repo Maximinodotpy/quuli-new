@@ -12,9 +12,12 @@
         TableHeadCell,
         Checkbox,
         TableSearch,
+        Avatar,
     } from "flowbite-svelte";
     import type { PageData } from "./$types";
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
+    import moment from "moment";
+    import { DATE_TIME_FORMAT } from "$lib/const";
 
     export let data: PageData;
 </script>
@@ -22,6 +25,15 @@
 <div class="max-w-5xl mx-auto min-h-full flex flex-col gap-16">
     <PageHeaderArea title="Über Quuli" text="Hier findest du Background infos über die Quiz Platform Quuli." />
     
+    <div class="flex flex-col md:flex-row gap-10 items-center">
+        <img src="https://avatars.githubusercontent.com/u/85794303?v=4" alt="Maxim Mäder" class="rounded-xl w-full md:w-48 shadow-md border dark:border-gray-600">
+        <div class="col-span-2 flex flex-col gap-2">
+            <Heading tag="h2">Maxim Mäder</Heading>
+            <P>Programming Enthusiast, Cowboy, Train Fan, Department Head Cartel Schaffhausen, Intergalactic Business Man, Rebel, Socialist and Mediamatician. IIOOA
+            </P>
+        </div>
+    </div>
+
     <div>
         <Heading tag="h2" class="mb-8">Zahlen</Heading>
 
@@ -42,6 +54,18 @@
                 <TableBodyRow>
                     <TableBodyCell tdClass="w-1/2 p-3 px-6">Beantwortungen</TableBodyCell>
                     <TableBodyCell tdClass="w-1/2 p-3 px-6">{ data.amount_responses_in_db }</TableBodyCell>
+                </TableBodyRow>
+                <TableBodyRow>
+                    <TableBodyCell tdClass="w-1/2 p-3 px-6">Letzte Benutzerregistrierung</TableBodyCell>
+                    <TableBodyCell tdClass="w-1/2 p-3 px-6">
+                        { moment(data.last_registered_user.createdAt).format(DATE_TIME_FORMAT) }
+                    </TableBodyCell>
+                </TableBodyRow>
+                <TableBodyRow>
+                    <TableBodyCell tdClass="w-1/2 p-3 px-6">Letzte Beantwortung</TableBodyCell>
+                    <TableBodyCell tdClass="w-1/2 p-3 px-6">
+                        { moment(data.last_response.createdAt).format(DATE_TIME_FORMAT) }
+                    </TableBodyCell>
                 </TableBodyRow>
             </TableBody>
         </Table>
