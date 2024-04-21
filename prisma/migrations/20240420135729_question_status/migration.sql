@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `question` ADD COLUMN `status` ENUM('NORMAL', 'DELETED') NOT NULL DEFAULT 'NORMAL';
