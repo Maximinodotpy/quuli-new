@@ -90,15 +90,15 @@
     <title>Quiz</title>
 </svelte:head>
 
-<div class="flex flex-col h-full gap-10 max-w-5xl mx-auto">
+<div class="flex flex-col h-full max-h-full gap-10 max-w-5xl mx-auto">
     {#if !currentQuestion}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">Frage wird geladen ...</Heading>
 
-        <div class="grid md:grid-cols-2 grow gap-6">
-            <Skeleton class="h-20" />
-            <Skeleton class="h-20" />
-            <Skeleton class="h-20" />
-            <Skeleton class="h-20" />
+        <div class="grid md:grid-cols-2 grow gap-6 overflow-hidden">
+            <Skeleton divClass="shrink-1" />
+            <Skeleton divClass="shrink-1" />
+            <Skeleton divClass="shrink-1 hidden md:block" />
+            <Skeleton divClass="shrink-1 hidden md:block" />
         </div>
     {:else}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
