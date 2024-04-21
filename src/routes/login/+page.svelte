@@ -32,17 +32,23 @@
             <!-- { JSON.stringify($page.data.session) } -->
             <div class="flex flex-col gap-8 justify-start items-center">
         
-                <Card class="flex flex-col gap-4 w-full">
-                    <Input
-                        type="email"
-                        placeholder="E-Mail"
-                        bind:value={email}
-                    />
-        
-                    <Button
-                        class="buttonPrimary"
-                        on:click={() => signIn("nodemailer", { email: email })}
-                    >Anmelden über E-Mail</Button>
+                <Card class="w-full">
+                    <form on:submit={(e) => {
+                        console.log("submit");
+
+                        signIn("nodemailer", { email: email });
+
+                        e.preventDefault();
+                    }} class="flex flex-col gap-4">
+                        <Input
+                            type="email"
+                            placeholder="E-Mail"
+                            bind:value={email}
+                            required
+                        />
+
+                        <Button type="submit">Anmelden über E-Mail</Button>
+                    </form>
                 </Card>
         
                 <div>Oder ...</div>

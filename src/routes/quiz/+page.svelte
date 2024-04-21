@@ -57,6 +57,8 @@
                     status = 'Wrong';
                 }
             });
+        } else {
+            nextQuestion();
         }
     }
 
