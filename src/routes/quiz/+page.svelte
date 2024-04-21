@@ -13,6 +13,7 @@
     type statusT = 'Answering' | 'Correct' | 'Wrong' | 'LoadingNew' | 'Checking';
 
     let status: statusT = 'Answering';
+    let chosenAnswer: number | undefined = undefined;
     
     let invisibleDefaultSubmitButton: HTMLButtonElement;
     let answersCount = 0;
@@ -39,6 +40,8 @@
     function goCheck(answer: number) {
         if (status == 'Answering') {
             status = 'Checking';
+
+            chosenAnswer = answer;
 
             console.log('Checking answer ...');
     
@@ -88,6 +91,9 @@
 </svelte:head>
 
 <div class="flex flex-col h-full gap-10 max-w-5xl mx-auto">
+    <!-- { chosenAnswer }
+    { status } -->
+
     {#if !currentQuestion}
         <p>Lade Frage ...</p>
 
@@ -95,32 +101,23 @@
     {:else}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
 
-        {#if status == 'Correct'}
-            <div class="bg-green-100 dark:bg-green-800/25 p-4 rounded-lg">
-                <p class="text-green-500 dark:text-green-400">"{currentQuestion.answer}" ist Richtig!</p>
-            </div>
-        {:else if status == 'Wrong'}
-            <div class="bg-red-100 dark:bg-red-800/25 p-4 rounded-lg">
-                <p class="text-red-500 dark:text-red-400">Leider falsch! "{currentQuestion.answer}" wäre richtig gewesen.</p>
-            </div>
-        {/if}
-
         <div class="grow flex flex-col gap-4 md:gap-10">
+
             <div class="grid { ['md:grid-cols-2', 'md:grid-cols-1', 'md:grid-cols-2'][answersCount-2] } gap-4 md:gap-8 grow">
                 
-                <button on:click={() => { goCheck(0) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 hover:bg-primary-200 dark:hover:bg-primary-800/25 transition-all p-4 md:p-8 rounded-xl" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-1)};" id="answer1">
+                <button on:click={() => { goCheck(0) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' ? 'bg-green-500 text-green-100': 'hover:bg-primary-200 dark:hover:bg-primary-800/25' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-1)};" id="answer1">
                     { currentQuestion.answer }
                 </button>
 
-                <button on:click={() => { goCheck(1) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 hover:bg-primary-200 dark:hover:bg-primary-800/25 transition-all p-4 md:p-8 rounded-xl" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-2)};" id="answer2">
+                <button on:click={() => { goCheck(1) }} class="font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 1? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-2)};" id="answer2">
                     { currentQuestion.wrongAnswer1 } 
                 </button>
 
-                <button on:click={() => { goCheck(2 ?? '') }} class="{answersCount < 3 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 hover:bg-primary-200 dark:hover:bg-primary-800/25 transition-all p-4 md:p-8 rounded-xl" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-3)};" id="answer3">
+                <button on:click={() => { goCheck(2 ?? '') }} class="{answersCount < 3 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 2? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-3)};" id="answer3">
                     { currentQuestion.wrongAnswer2 }
                 </button>
 
-                <button on:click={() => { goCheck(3 ?? '') }} class="{answersCount < 4 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 hover:bg-primary-200 dark:hover:bg-primary-800/25 transition-all p-4 md:p-8 rounded-xl" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-4)};" id="answer4">
+                <button on:click={() => { goCheck(3 ?? '') }} class="{answersCount < 4 ? 'hidden': ''} font-bold text-xl md:text-2xl border dark:border-slate-500 transition-all p-4 md:p-8 rounded-xl { status != 'Answering' && chosenAnswer == 3? 'bg-red-500 text-red-100': ''} { status == 'Answering' ? 'hover:bg-primary-200 dark:hover:bg-primary-800/25': '' }" style="order: {String(moment(currentQuestion.createdAt).unix()).at(-4)};" id="answer4">
                     { currentQuestion.wrongAnswer3 }
                 </button>
 
