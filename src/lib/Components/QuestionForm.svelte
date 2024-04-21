@@ -16,6 +16,7 @@
         createdById: '',
         createdAt: new Date(),
         updatedAt: new Date(),
+        status: 'NORMAL',
     };
     export let is_disabled: boolean = false;
     export let form_action: string = '';
@@ -68,7 +69,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
             <div>
                 <Label for="category" class="mb-2 text-xl">Kategorie</Label>
                 <Select name="category" id="category" required value={q_info.categoryId}>

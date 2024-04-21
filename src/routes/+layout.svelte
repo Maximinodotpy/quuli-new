@@ -140,7 +140,7 @@
 
         <button class="bg-neutral-900/50 absolute left-0 w-full h-full z-10 {showSidebar ? 'block': 'hidden'} md:hidden" on:click={() => { showSidebar = false }}></button>
 
-        <div class="w-full h-full overflow-y-auto p-8">
+        <div class="w-full h-full overflow-y-auto p-4 md:p-8">
             <slot></slot>
             <div class="pt-24"><Footer /></div>
         </div>

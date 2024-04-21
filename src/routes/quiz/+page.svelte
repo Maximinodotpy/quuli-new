@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Heading, Button } from 'flowbite-svelte';
+    import { Heading, Button, Skeleton } from 'flowbite-svelte';
     import moment from 'moment';
     import type { Question } from '@prisma/client';
     import { jsonToFormData } from '$lib/helpers';
@@ -8,9 +8,9 @@
 
     export let data: PageData;
 
-    let currentQuestion: Question;
+    let currentQuestion: Question | undefined = undefined;
 
-    type statusT = 'Answering' | 'Correct' | 'Wrong';
+    type statusT = 'Answering' | 'Correct' | 'Wrong' | 'LoadingNew' | 'Checking';
 
     let status: statusT = 'Answering';
     
@@ -38,11 +38,13 @@
 
     function goCheck(answer: number) {
         if (status == 'Answering') {
+            status = 'Checking';
+
             console.log('Checking answer ...');
     
             fetch('/api/questions/check-answer', {
                 method: 'POST',
-                body: jsonToFormData({ question_id: currentQuestion.id, answer })
+                body: jsonToFormData({ question_id: currentQuestion?.id, answer })
             }).then(response => response.json()).then(results => {
                 console.log(results);
     
@@ -58,9 +60,19 @@
     function nextQuestion() {
         console.log('Getting next question ...');
 
+        status = 'LoadingNew';
+        
+        let last_question_id = '';
+        if (currentQuestion && 'id' in currentQuestion) {
+            last_question_id = currentQuestion.id;
+        }
+
+        currentQuestion = undefined;
+
+
         fetch('/api/questions/next-public-question', {
             method: 'POST',
-            body: jsonToFormData({ last_question_id: currentQuestion?.id }),
+            body: jsonToFormData({ last_question_id }),
         }).then(response => response.json()).then((new_question: Question) => {
             console.log(new_question);
 
@@ -77,7 +89,9 @@
 
 <div class="flex flex-col h-full gap-10 max-w-5xl mx-auto">
     {#if !currentQuestion}
-        <p>Keine Fragen vorhanden.</p>
+        <p>Lade Frage ...</p>
+
+        <Skeleton class="h-20" />
     {:else}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
 
