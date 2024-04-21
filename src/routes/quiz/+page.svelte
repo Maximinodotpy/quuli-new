@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Heading, Button, Skeleton } from 'flowbite-svelte';
+    import { Heading, Button, Skeleton, TextPlaceholder } from 'flowbite-svelte';
     import moment from 'moment';
     import type { Question } from '@prisma/client';
     import { jsonToFormData } from '$lib/helpers';
@@ -91,13 +91,15 @@
 </svelte:head>
 
 <div class="flex flex-col h-full gap-10 max-w-5xl mx-auto">
-    <!-- { chosenAnswer }
-    { status } -->
-
     {#if !currentQuestion}
-        <p>Lade Frage ...</p>
+        <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">Frage wird geladen ...</Heading>
 
-        <Skeleton class="h-20" />
+        <div class="grid md:grid-cols-2 grow gap-6">
+            <Skeleton class="h-20" />
+            <Skeleton class="h-20" />
+            <Skeleton class="h-20" />
+            <Skeleton class="h-20" />
+        </div>
     {:else}
         <Heading tag="h2" class="md:mb-10 md:mt-10" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
 
