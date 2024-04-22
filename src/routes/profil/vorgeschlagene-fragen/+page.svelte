@@ -103,6 +103,22 @@
 
 <PageHeaderArea title="Vorgeschlagene Fragen" text="Bearbeite hier deine vorgeschlagenen Fragen." />
 
+<div class="mb-4">
+    <input type="text" placeholder="Suche">
+
+    <!-- Nach Kategorie filtern -->
+    <select name="" id="">
+        <option value="0">Alle Kategorien</option>
+        {#each data.categories as category}
+            <option value={category.id}>{category.name}</option>
+        {/each}
+    </select>
+
+    <!-- Verborgene Fragen nicht anzeigen -->
+    <input type="checkbox" name="hide_hidden" id="hide_hidden">
+    <label for="hide_hidden">Verborgene Fragen nicht anzeigen</label>
+</div>
+
 <div class="sticky md:-top-8 -top-4 bg-green-200 p-3 flex gap-4 items-center">
     <div>{ questions.filter(q => q.selected).length }/{ questions.length } Fragen Ausgewählt</div>
 
