@@ -3,7 +3,7 @@ import { db } from "./lib/db";
 export { handle } from "./auth"
 
 
-const categories = [
+export const categories = [
     { name: "Geschichte" },
     { name: "Wissenschafft" },
     { name: "Sport" },

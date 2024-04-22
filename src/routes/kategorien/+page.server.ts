@@ -7,6 +7,13 @@ export const load: PageServerLoad = async ({ params }) => {
         orderBy: {
             name: "asc",
         },
+        include: {
+            Questions: {
+                select: {
+                    id: true,
+                },
+            },
+        },
     });
 
     return {

@@ -68,12 +68,23 @@ export async function checkQuestionFormData(formData: FormData) {
 }
 
 
+interface GetQuestionsOptions {
+  idExceptions: string[];
+  categories: string[];
+}
 
-
-export async function getAllPublicQuestions() {
+export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [] }) {
   const questions = await db.question.findMany({
     where: {
-      status: 'NORMAL'
+      status: 'NORMAL',
+      NOT: {
+        id: {
+          in: GetQuestionsOptions.idExceptions,
+        },
+      },
+      categoryId: {
+        in: GetQuestionsOptions.categories,
+      },
     }
   });
 
