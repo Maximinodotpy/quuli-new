@@ -91,10 +91,18 @@ export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOpt
   return questions;
 }
 
-export async function getAmountOfPublicQuestions() {
+export async function getAmountOfPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [] }) {
   const amount = await db.question.count({
     where: {
-      status: 'NORMAL'
+      status: 'NORMAL',
+      NOT: {
+        id: {
+          in: GetQuestionsOptions.idExceptions,
+        },
+      },
+      categoryId: {
+        in: GetQuestionsOptions.categories,
+      },
     }
   });
 

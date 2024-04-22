@@ -18,6 +18,8 @@
     
     let invisibleDefaultSubmitButton: HTMLButtonElement;
     let answersCount = 0;
+
+    let category_ids: string[] = []
     
     $: {
         if (currentQuestion) {
@@ -35,20 +37,25 @@
     }
 
     onMount(() => {
+        
+        // Check if the get parameter cat is set
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.has('cat')) {
+            category_ids = urlParams.get('cat')?.split(',') ?? [];
+            
+            console.log('Kategorien gefunden', category_ids);
+        }
+        
         nextQuestion();
-
+        
         document.addEventListener('keydown', (event) => {
             const buttonContainer = document.querySelector('#button_container')
-
-            /* // Dont allow multiple key presses
-            if (status != 'Answering') return; */
             
             // Get the first four children of this container and then sort them by their order css property
             const buttons = Array.from(buttonContainer?.children ?? []).slice(0, 4).sort((a, b) => {
                 return parseInt(a.getAttribute('style')?.split('order: ')[1] ?? '0') - parseInt(b.getAttribute('style')?.split('order: ')[1] ?? '0');
             });
-            
-            console.log(event);
 
             if (event.key == SHORTCUTS.select_first_answer.key) {
                 let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[0]);
@@ -146,7 +153,7 @@
 
         fetch('/api/questions/next-public-question', {
             method: 'POST',
-            body: jsonToFormData({ last_question_id }),
+            body: jsonToFormData({ last_question_id, category_ids }),
         }).then(response => response.json()).then((new_question: Question) => {
             console.log(new_question);
 
