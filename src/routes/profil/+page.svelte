@@ -99,7 +99,7 @@
     
         </TabItem>
         <TabItem title="Vorgeschlagene Fragen" bind:open={$open_tabs['v']}>
-            <Table class="w-full">
+            <Table class="w-full overflow-hidden">
                 <TableHead>
                     <TableHeadCell>Frage</TableHeadCell>
                     <TableHeadCell>Antwort</TableHeadCell>
@@ -109,7 +109,7 @@
                 <TableBody>
                     {#each data.submitted_questions as question}
                         <TableBodyRow>
-                            <TableBodyCell class="w-1/4">
+                            <TableBodyCell class="w-1/4 whitespace-nowrap overflow-hidden">
                                 <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.question}</div>
                             </TableBodyCell>
                             <TableBodyCell class="w-1/4">
