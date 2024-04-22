@@ -79,98 +79,18 @@
         {/if}
     </div>
     
-    <Tabs style="underline" defaultClass="flex overflow-auto whitespace-nowrap space-x-2 rtl:space-x-reverse" tabStyle="pill">
-        <TabItem title="Leistung" bind:open={$open_tabs['l']}>
-    
-            <Table class="w-full">
-                <TableHead>
-                    <TableHeadCell>Frage</TableHeadCell>
-                    <TableHeadCell>Antwort</TableHeadCell>
-                </TableHead>
-                <TableBody>
-                    {#each data.responses as response}
-                        <TableBodyRow>
-                            <TableBodyCell>{response.question.question}</TableBodyCell>
-                            <TableBodyCell>{response.question.answer}</TableBodyCell>
-                        </TableBodyRow>
-                    {/each}
-                </TableBody>
-            </Table>
-    
-        </TabItem>
-        <TabItem title="Vorgeschlagene Fragen" bind:open={$open_tabs['v']}>
-            <Table class="w-full overflow-hidden">
-                <TableHead>
-                    <TableHeadCell>Frage</TableHeadCell>
-                    <TableHeadCell>Antwort</TableHeadCell>
-                    <TableHeadCell></TableHeadCell>
-                    <TableHeadCell></TableHeadCell>
-                </TableHead>
-                <TableBody>
-                    {#each data.submitted_questions as question}
-                        <TableBodyRow>
-                            <TableBodyCell class="w-1/4 whitespace-nowrap overflow-hidden">
-                                <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.question}</div>
-                            </TableBodyCell>
-                            <TableBodyCell class="w-1/4">
-                                <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.answer}</div>
-                            </TableBodyCell>
-                            <TableBodyCell>
-                                <Button href="/fragen/bearbeiten/{question.id}" size="xs">Bearbeiten</Button>
-                            </TableBodyCell>
-                            <TableBodyCell>
-                                <Button size="xs" on:click={() => { toggleQuestionStatus(question.id) }} >
-                                    {question.status == 'DELETED' ? 'Wiederherstellen' : 'Löschen'}
-                                </Button>
-                            </TableBodyCell>
-                        </TableBodyRow>
-                    {/each}
-                </TableBody>
-            </Table>
-        </TabItem>
-        <TabItem title="Profil Einstellungen" bind:open={$open_tabs['p']}>
-            <form action="?/edit_user" method="post">
-                <div class="max-w-4xl mx-auto flex flex-col gap-12">
-    
-                    <!-- <div class="grid grid-cols-2">
-                        <div>
-                            <h2 class="text-2xl font-semibold">Profilbild</h2>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm">Lade ein Profilbild hoch</p>
-                        </div>
-    
-                        <div>
-                            <Fileupload accept="image/*" name="profile_picture" />
-                        </div>
-                    </div> -->
-    
-                    <div class="grid gap-3 md:grid-cols-2">
-                        <div>
-                            <h2 class="text-2xl font-semibold">Benutzername</h2>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm">Dein öffentlicher Benutzername</p>
-                        </div>
-    
-                        <Input type="text" name="username" placeholder="Benutzername" value={data.session?.user?.name} required />
-                    </div>
-    
-                    <div class="flex justify-end">
-                        <Button type="submit">Speichern</Button>
-                    </div>
-                </div>
-            </form>
-        </TabItem>
-        <TabItem title="Verbundene Apps" bind:open={$open_tabs['va']}>
-            {#each data.connected_accounts as app}
-                <div class="flex items-center space-x-4">
-                    <!-- <Avatar src="{app.}" size="lg" /> -->
-                    <div class="space-y-1 font-medium dark:text-white">
-                        <div>{app.provider}</div>
-                        <!-- <div class="text-gray-500 dark:text-gray-400 text-sm">
-                            Verbunden seit {moment(app.).locale('de').format('MMMM')} {moment(app.createdAt).locale('de').format('Y')}
-                        </div> -->
-                        <!-- <pre>{JSON.stringify(app, null, 4)}</pre> -->
-                    </div>
-                </div>
+    <Table class="w-full">
+        <TableHead>
+            <TableHeadCell>Frage</TableHeadCell>
+            <TableHeadCell>Antwort</TableHeadCell>
+        </TableHead>
+        <TableBody>
+            {#each data.responses as response}
+                <TableBodyRow>
+                    <TableBodyCell>{response.question.question}</TableBodyCell>
+                    <TableBodyCell>{response.question.answer}</TableBodyCell>
+                </TableBodyRow>
             {/each}
-        </TabItem>
-    </Tabs>
+        </TableBody>
+    </Table>
 </div>

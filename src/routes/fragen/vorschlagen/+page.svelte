@@ -22,7 +22,7 @@
 
 <!-- Form successful message -->
 {#if form?.success}
-    <Alert class="mb-4 border-2" color="green">Hurra deine Frage wurde erfolgreich vorgeschlagen In deinem <a href="/profil" class="underline">Profil</a> hast du eine Übersicht über alle deiner vorgeschlagenen Fragen.</Alert>
+    <Alert class="mb-4 border-2" color="green">Hurra deine Frage wurde erfolgreich vorgeschlagen In deinem <a href="/profil/vorgeschlagene-fragen" class="underline">Profil</a> hast du eine Übersicht über alle deiner vorgeschlagenen Fragen.</Alert>
 {/if}
 
 <QuestionForm is_disabled={!$page.data.session || data.userAlreadyAnsweredAmount < AMOUNT_OF_ANSWERED_QUESTIONS_BEFORE_PROPOSALS} categories={data.categories} form_action="add_question"/>

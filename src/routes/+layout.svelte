@@ -85,6 +85,8 @@
                         <span class="block truncate text-sm font-medium">{$page.data.session.user?.email}</span>
                     </DropdownHeader>
                     <DropdownItem href="/profil">Profil</DropdownItem>
+                    <DropdownItem href="/profil/einstellungen">Einstellungen</DropdownItem>
+                    <DropdownItem href="/profil/vorgeschlagene-fragen">Vorgeschlagene Fragen</DropdownItem>
                     <DropdownDivider />
                     <DropdownItem>
                         <button on:click={(e) => signOut()}>Abmelden</button>
