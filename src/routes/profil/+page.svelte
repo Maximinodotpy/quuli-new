@@ -28,31 +28,6 @@
     });
 
     export let data: PageData;
-    
-    function toggleQuestionStatus(question_id: string) {
-        console.log('Toggling question status ...');
-        
-        // @ts-ignore
-        const status = data.submitted_questions.find(q => q.id == question_id).status == 'DELETED' ? 'NORMAL' : 'DELETED';
-
-        console.log('Desired status:', status);
-
-        fetch(`/api/questions/set-question-status`, {
-            method: "POST",
-            body: jsonToFormData({ question_id, status })
-        }).then(re => re.json()).then(re => {
-            console.log(re);
-
-            data.submitted_questions = data.submitted_questions.map(q => {
-                if (q.id == question_id) {
-                    q.status = status;
-                }
-                console.log(q, 'fff');
-                
-                return q;
-            });
-        });
-    }
 </script>
 
 <svelte:head>
