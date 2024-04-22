@@ -216,7 +216,10 @@
 
             <div class="flex justify-between">
                 <div>
-                    <!-- { answersCount } -->
+                    <!-- If the user is logged in and this question was contributed by them add a edit this question button -->
+                    {#if data?.session?.user && data?.session?.user?.id == currentQuestion?.createdById}
+                        <Button href="/fragen/bearbeiten/{currentQuestion.id}" color="alternative">Frage bearbeiten</Button>
+                    {/if}
                 </div>
 
                 <div class="flex gap-3">
