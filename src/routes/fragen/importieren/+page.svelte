@@ -78,8 +78,6 @@
 
     {:else if step == Steps.TableCorrection}
         <div>
-
-            {JSON.stringify(questionsList)}
             <!-- Show the question list in an interactive table with input -->
             <Table divClass="border dark:border-slate-600 rounded-xl overflow-hidden">
                 <TableHead>
@@ -101,13 +99,16 @@
             </Table>
             
         
-            <Button>Importieren</Button>
+            <Button on:click={() => { step = Steps.Import }}>Importieren</Button>
         </div>
 
     {:else if step == Steps.Import}
         <div>
-            <div class="font-mono">
-                <Textarea id="textarea-id" placeholder="Frage,Antwort,Falsch1,Falsch2,Falsch3" rows="4" name="message" wrappedClass="w-full" />
+            <!-- Show every question as SQL that could be copied and used in the db -->
+            <div>
+                {#each questionsList as question, q_index}
+                    <p>INSERT INTO question (id, question, answer, wrongAnswer1, wrongAnswer2, wrongAnswer3) VALUES ("{q_index}", "{question.question}", "{question.answer}", "{question.wrong1}", "{question.wrong2}", "{question.wrong3}");</p>
+                {/each}
             </div>
         
             <Button>Importieren</Button>

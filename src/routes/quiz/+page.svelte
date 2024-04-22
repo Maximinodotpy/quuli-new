@@ -154,12 +154,18 @@
         fetch('/api/questions/next-public-question', {
             method: 'POST',
             body: jsonToFormData({ last_question_id, category_ids }),
-        }).then(response => response.json()).then((new_question: Question) => {
+        }).then(response => {
+            console.log(response, 'response');
+            
+            return response.json()
+        }).then((new_question: Question) => {
             console.log(new_question);
 
             currentQuestion = new_question;
 
             status = 'Answering';
+        }).catch(e => {
+            console.error(e, 'fads');
         });
     }
 </script>

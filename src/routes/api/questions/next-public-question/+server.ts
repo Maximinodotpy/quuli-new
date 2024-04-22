@@ -48,8 +48,13 @@ export async function POST(event) {
         categories: category_ids
     });
 
+    console.log('Amount of questions:', questions.length);
+    
+
     // Get random question
     const question = questions[Math.floor(Math.random() * questions.length)];
+
+    console.log('Next public question:', question);
     
     return json(question);
 }

@@ -74,6 +74,15 @@ interface GetQuestionsOptions {
 }
 
 export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [] }) {
+  // In case there are no categories specified return all questions
+  const all_categories = await db.category.findMany();
+
+  if (GetQuestionsOptions.categories == null || GetQuestionsOptions.categories.length == 0 || GetQuestionsOptions.categories[0] == "") {
+    console.log('No categories specified');
+    
+    GetQuestionsOptions.categories = all_categories.map((category) => category.id);
+  }
+
   const questions = await db.question.findMany({
     where: {
       status: 'NORMAL',

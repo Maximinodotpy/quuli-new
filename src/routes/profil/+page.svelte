@@ -109,10 +109,10 @@
                 <TableBody>
                     {#each data.submitted_questions as question}
                         <TableBodyRow>
-                            <TableBodyCell>
+                            <TableBodyCell class="w-1/4">
                                 <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.question}</div>
                             </TableBodyCell>
-                            <TableBodyCell>
+                            <TableBodyCell class="w-1/4">
                                 <div class="{question.status == 'DELETED' ? 'line-through': ''}">{question.answer}</div>
                             </TableBodyCell>
                             <TableBodyCell>
