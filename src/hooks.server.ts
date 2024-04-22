@@ -13,6 +13,7 @@ const categories = [
     { name: "Technik" },
     { name: "Literatur" },
     { name: "Geographie" },
+    { name: "Sonstiges" },
 ];
 
 // Add these categories to the db only if they are not already there
