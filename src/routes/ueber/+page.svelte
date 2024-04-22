@@ -13,11 +13,17 @@
         Checkbox,
         TableSearch,
         Avatar,
+        Kbd,
     } from "flowbite-svelte";
     import type { PageData } from "./$types";
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
     import moment from "moment";
-    import { DATE_TIME_FORMAT } from "$lib/const";
+    import { DATE_TIME_FORMAT, SHORTCUTS } from "$lib/const";
+
+    console.log(SHORTCUTS);
+    console.log(SHORTCUTS);
+    console.log(Object.values(SHORTCUTS));
+        
 
     export let data: PageData;
 </script>
@@ -111,8 +117,24 @@
         <Accordion>
             <AccordionItem>
                 <span slot="header">Tastenkombinationen</span>
-                <P>enter, 1, 2, 3, 4</P>
-                <P>Übrigens <a href="https://maximmaeder.com/keyboard-shortcuts/" target="_blank" class="underline">hier</a> findet man auch noch andere Tastenkombinationen.</P>
+                <div class="flex flex-col gap-4">
+                    <P>Hier findest du eine kleine Auswahl an Tastenkombinationen, mit denen du auf Quuli schneller unterwegs bist.</P>
+                    <Table shadow striped>
+                        <TableHead>
+                            <TableHeadCell>Was macht's</TableHeadCell>
+                            <TableHeadCell>Taste</TableHeadCell>
+                        </TableHead>
+                        <TableBody>
+                            {#each Object.values(SHORTCUTS) as shortcut}
+                                <TableBodyRow>
+                                    <TableBodyCell>{ shortcut.name }</TableBodyCell>
+                                    <TableBodyCell>{ shortcut.key }</TableBodyCell>
+                                </TableBodyRow>
+                            {/each}
+                        </TableBody>
+                    </Table>
+                    <P>Übrigens <a href="https://maximmaeder.com/keyboard-shortcuts/" target="_blank" class="underline">hier</a> findet man auch noch andere Tastenkombinationen.</P>
+                </div>
             </AccordionItem>
         </Accordion>
     </div>

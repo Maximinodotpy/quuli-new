@@ -5,6 +5,7 @@
     import { jsonToFormData } from '$lib/helpers';
     import { onMount } from 'svelte';
     import type { PageData } from './$types';
+    import { SHORTCUTS } from '$lib/const';
 
     export let data: PageData;
 
@@ -49,28 +50,28 @@
             
             console.log(event);
 
-            if (event.key == '1') {
+            if (event.key == SHORTCUTS.select_first_answer.key) {
                 let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[0]);
                 console.log(numberToCheck);
                 
                 if (status == 'Answering') {
                     goCheck(numberToCheck);
                 }
-            } else if (event.key == '2') {
+            } else if (event.key == SHORTCUTS.select_second_answer.key) {
                 let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[1]);
                 console.log(numberToCheck);
                 
                 if (status == 'Answering') {
                     goCheck(numberToCheck);
                 }
-            } else if (event.key == '3') {
+            } else if (event.key == SHORTCUTS.select_third_answer.key) {
                 let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[2]);
                 console.log(numberToCheck);
 
                 if (status == 'Answering') {
                     goCheck(numberToCheck);
                 }
-            } else if (event.key == '4') {
+            } else if (event.key == SHORTCUTS.select_fourth_answer.key) {
                 let numberToCheck =Array.from(buttonContainer?.children || []).indexOf(buttons[3]);
                 console.log(numberToCheck);
 
@@ -80,7 +81,7 @@
             }
 
             // If the user presses enter, we want to go to the next question
-            if (event.key == 'Enter') {
+            if (event.key == SHORTCUTS.skip_question.key) {
                 nextQuestion();
             }
         });
