@@ -20,7 +20,7 @@
      } from 'flowbite-svelte';
      import { signOut } from "@auth/sveltekit/client";
     import { onMount } from "svelte";
-    import { QuestionCircleSolid, StarSolid, HomeSolid, PlaySolid } from 'flowbite-svelte-icons';
+    import { QuestionCircleSolid, StarSolid, HomeSolid, PlaySolid, BookmarkSolid } from 'flowbite-svelte-icons';
     import { createPersistentStore } from "$lib/helpers";
     import { writable } from "svelte/store";
     import { navigating } from "$app/stores";
@@ -112,6 +112,11 @@
                                 <PlaySolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                             </svelte:fragment>
                         </SidebarItem>
+                        <!-- <SidebarItem label="Kategorien" href="/kategorien">
+                            <svelte:fragment slot="icon">
+                                <BookmarkSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                            </svelte:fragment>
+                        </SidebarItem> -->
                         
                         <SidebarDropdownWrapper label="Fragen" bind:isOpen={$isFragenDropdownOpen}>
                             <svelte:fragment slot="icon">
@@ -119,7 +124,7 @@
                             </svelte:fragment>
 
                             <SidebarDropdownItem label="Vorschlagen" href="/fragen/vorschlagen"></SidebarDropdownItem>
-                            <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem>
+                            <!-- <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem> -->
                             <!-- <SidebarDropdownItem label="Fragebögen"></SidebarDropdownItem> -->
                         </SidebarDropdownWrapper>
 
