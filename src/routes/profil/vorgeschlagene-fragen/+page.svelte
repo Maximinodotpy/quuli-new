@@ -8,7 +8,10 @@
 
     console.log(data);
 
-    type InteractiveQuestion = Question & { selected?: boolean };
+    type InteractiveQuestion = Question & {
+        selected?: boolean,
+        isLoading?: boolean,
+    };
 
     export let questions: InteractiveQuestion[] = data.questions;
 
@@ -64,6 +67,14 @@
             status = force;
         }
 
+        // Set question to loading
+        questions = questions.map(q => {
+            if (q.id == question_id) {
+                q.isLoading = true;
+            }
+            return q;
+        });
+
         console.log('Desired status:', status);
 
         fetch(`/api/questions/set-question-status`, {
@@ -89,6 +100,14 @@
 
     function setQuestionCategory(question_id: string, category_id: string) {
         console.log('Setting question category ...');
+
+        // Set question to loading
+        questions = questions.map(q => {
+            if (q.id == question_id) {
+                q.isLoading = true;
+            }
+            return q;
+        });
 
         fetch(`/api/questions/set-question-category`, {
             method: "POST",
@@ -119,10 +138,9 @@
 
 <PageHeaderArea title="Vorgeschlagene Fragen" text="Bearbeite hier deine vorgeschlagenen Fragen." />
 
-<div class="mb-4">
+<!-- <div class="mb-4">
     <input type="text" placeholder="Suche">
 
-    <!-- Nach Kategorie filtern -->
     <select name="" id="">
         <option value="0">Alle Kategorien</option>
         {#each data.categories as category}
@@ -130,12 +148,11 @@
         {/each}
     </select>
 
-    <!-- Verborgene Fragen nicht anzeigen -->
     <input type="checkbox" name="hide_hidden" id="hide_hidden">
     <label for="hide_hidden">Verborgene Fragen nicht anzeigen</label>
-</div>
+</div> -->
 
-<div class="sticky md:-top-8 -top-4 bg-green-200 p-3 flex gap-4 items-center">
+<div class="sticky md:-top-8 -top-4 bg-green-200 dark:bg-green-800 p-3 flex gap-4 items-center">
     <div>{ questions.filter(q => q.selected).length }/{ questions.length } Fragen Ausgewählt</div>
 
     <div class="flex gap-2">
@@ -161,9 +178,9 @@
     </div>
 </div>
 
-<div class="flex flex-col divide-y-2">
+<div class="flex flex-col divide-y-2 divide-gray-700">
     {#each questions as question}
-        <div class="flex justify-between p-4 hover:bg-gray-200 transition-all whitespace-nowrap">
+        <div class="flex justify-between p-4 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
             <div class="flex items-center gap-2 { question.status == 'DELETED'? 'line-through text-red-500': '' }">
                 <input type="checkbox" name="" id="" style="aspect-ratio: 1/1;" class="h-full shrink-0 aspect-square" bind:checked={question.selected}>
                 <h3>{question.question}</h3>
@@ -171,7 +188,7 @@
             <div class="w-[60%] flex justify-between">
                 <p>{question.answer}/{question?.category?.name}</p>
                 <div class="grid grid-cols-2 gap-4 w-[40%]">
-                    <button>Bearbeiten</button>
+                    <a href={`/fragen/bearbeiten/${question.id}`}>Bearbeiten</a>
                     <button on:click={() => { toggleQuestionStatus(question.id) }}>
                         {#if question.status == 'DELETED'}
                             Anzeigen
