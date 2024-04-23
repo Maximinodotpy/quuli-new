@@ -27,6 +27,9 @@
     import { slide } from "svelte/transition";
     import { expoOut } from "svelte/easing";
     import Footer from "$lib/Components/Footer.svelte";
+    import { pwaInfo } from 'virtual:pwa-info'; 
+
+    $: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '' 
 
      let showSidebar = false;
 
@@ -50,6 +53,10 @@
 
     $: activeUrl = $page.url.pathname;
 </script>
+
+<svelte:head> 
+ 	{@html webManifestLink} 
+</svelte:head>
 
 {#if $navigating}
     <!-- 
@@ -100,7 +107,7 @@
     </div>
 
     <div class="flex grow overflow-hidden">
-        <div class="w-64 border-r h-full dark:border-slate-700 {showSidebar ? 'block': 'hidden'} md:block absolute md:static bg-white dark:bg-slate-800 z-20">
+        <div class="w-64 border-r h-full dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-slate-800 z-20 flex-col justify-between">
             <Sidebar activeUrl={activeUrl}>
                 <SidebarWrapper divClass="h-full p-2">
                     <SidebarGroup title="Group 1">
@@ -143,6 +150,10 @@
                     </SidebarGroup>
                 </SidebarWrapper>
             </Sidebar>
+
+            <!-- <div class="p-4">
+                <Button class="w-full">App Herunterladen</Button>
+            </div> -->
         </div>
 
         <button class="bg-neutral-900/50 absolute left-0 w-full h-full z-10 {showSidebar ? 'block': 'hidden'} md:hidden" on:click={() => { showSidebar = false }}></button>
