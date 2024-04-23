@@ -19,6 +19,9 @@ export async function POST(event) {
         },
         data: {
             status: status
+        },
+        include: {
+            category: true
         }
     });
 

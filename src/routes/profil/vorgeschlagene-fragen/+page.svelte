@@ -6,6 +6,8 @@
 
     export let data: PageData;
 
+    console.log(data);
+
     type InteractiveQuestion = Question & { selected?: boolean };
 
     export let questions: InteractiveQuestion[] = data.questions;
@@ -67,10 +69,11 @@
         fetch(`/api/questions/set-question-status`, {
             method: "POST",
             body: jsonToFormData({ question_id, status })
-        }).then(re => re.json()).then(re => {
+        }).then(re => re.json()).then(new_question => {
             questions = questions.map(q => {
                 if (q.id == question_id) {
-                    q.status = status as QuestionStatus;
+                    new_question.selected = q.selected;
+                    return new_question;
                 }
                 
                 return q;
@@ -86,7 +89,20 @@
 
     function setQuestionCategory(question_id: string, category_id: string) {
         console.log('Setting question category ...');
-    }    
+
+        fetch(`/api/questions/set-question-category`, {
+            method: "POST",
+            body: jsonToFormData({ question_id, new_category_id: category_id })
+        }).then(re => re.json()).then((new_question) => {
+            questions = questions.map(q => {
+                if (q.id == question_id) {
+                    new_question.selected = q.selected;
+                    return new_question;
+                }
+                return q;
+            })
+        }); 
+    }
 
     function hideSelectedQuestions() {
         getAllSelectedQuestions().forEach(q => {
@@ -153,7 +169,7 @@
                 <h3>{question.question}</h3>
             </div>
             <div class="w-[60%] flex justify-between">
-                <p>{question.answer}</p>
+                <p>{question.answer}/{question?.category?.name}</p>
                 <div class="grid grid-cols-2 gap-4 w-[40%]">
                     <button>Bearbeiten</button>
                     <button on:click={() => { toggleQuestionStatus(question.id) }}>

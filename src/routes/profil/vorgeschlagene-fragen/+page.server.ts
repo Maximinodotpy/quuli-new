@@ -13,6 +13,9 @@ export const load: PageServerLoad = async ({ locals }) => {
     const questions = await db.question.findMany({
         where: {
             createdById: auth.user?.id
+        },
+        include: {
+            category: true
         }
     })
     
