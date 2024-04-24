@@ -16,6 +16,17 @@ export const load: PageServerLoad = async ({ params }) => {
         },
     });
 
+    // Sort it so Sonstiges is always last
+    categories.sort((a, b) => {
+        if (a.name === "Sonstiges") {
+            return 1;
+        }
+        if (b.name === "Sonstiges") {
+            return -1;
+        }
+        return a.name.localeCompare(b.name);
+    });
+
     return {
         categories,
     };
