@@ -2,7 +2,7 @@
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
     import type { Question, Category } from "@prisma/client";
     import { jsonToFormData } from "$lib/helpers";
-    import { Input, Select, CheckboxButton, Dropdown, DropdownItem, Button } from "flowbite-svelte";
+    import { Input, Select, CheckboxButton, Dropdown, DropdownItem, Button, Checkbox } from "flowbite-svelte";
     import { getCategories } from "$lib/helpers";
 
     type InteractiveQuestion = Question & {
@@ -202,7 +202,7 @@
     <CheckboxButton color="alternative" bind:checked={hide_hidden}>Verborgene Fragen nicht anzeigen</CheckboxButton>
 </div>
 
-<div class="sticky md:-top-8 -top-4 border shadow-md dark:border-gray-600 bg-white dark:bg-slate-800 p-3 flex gap-4 items-center">
+<div class="sticky md:-top-[33px] -top-4 border shadow-md dark:border-slate-700 bg-white dark:bg-gray-800 p-3 flex gap-4 items-center rounded-xl">
     <Button color="alternative">
         { sought_after.filter(q => q.selected).length }/{ sought_after.length } sichtbare Fragen Ausgewählt
     </Button>
@@ -229,12 +229,13 @@
     </div>
 </div>
 
-<div class="flex flex-col divide-y-[1px] divide-gray-300 max-w-full overflow-hidden">
+<div class="flex flex-col divide-y-[1px] divide-gray-300 dark:divide-gray-700 max-w-full overflow-hidden">
     {#each sought_after as question}
-        <div class="flex flex-col lg:flex-row justify-between p-2 lg:p-4 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
-            <div class="flex items-center gap-2 overflow-hidden max-w-full { question.status == 'DELETED'? 'line-through text-red-500': '' }">
-                <input type="checkbox" name="" id="" style="aspect-ratio: 1/1;" class="h-full shrink-0 aspect-square" bind:checked={question.selected}>
-                <h3>{question.question}</h3>
+        <div class="flex flex-col lg:flex-row justify-between p-2 lg:p-4 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
+            <div class="flex items-center gap-2 pl-1 overflow-hidden max-w-full { question.status == 'DELETED'? 'line-through text-red-500': '' }">
+                <!-- <input type="checkbox" name="" id="" style="aspect-ratio: 1/1;" class="h-full shrink-0 aspect-square" bind:checked={question.selected}>
+                <h3>{question.question}</h3> -->
+                <Checkbox bind:checked={question.selected}>{question.question}</Checkbox>
             </div>
             <div class="w-[60%] flex justify-between">
                 <p>{question.answer}/{question?.category?.name}</p>

@@ -74,7 +74,7 @@
 {/if}
 
 <div class="h-[100svh] flex flex-col overflow-hidden">
-    <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 z-20 items-center">
+    <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-gray-800 z-20 items-center">
         <NavHamburger onClick={() => showSidebar = !showSidebar}/>
 
         <div class="text-2xl w-64 pl-4 font-bold">
@@ -109,7 +109,7 @@
     </div>
 
     <div class="flex grow overflow-hidden">
-        <div class="w-64 border-r h-full dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-slate-800 z-20 flex-col justify-between">
+        <div class="w-64 border-r h-full dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-20 flex-col justify-between">
             <Sidebar activeUrl={activeUrl}>
                 <SidebarWrapper divClass="h-full p-2">
                     <SidebarGroup title="Group 1">

@@ -24,7 +24,6 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-
   // Name this table account (lowercase) instead of Account
   @@map("account")
 }
@@ -40,16 +39,19 @@ model Session {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  name          String?
-  email         String?     @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  createdAt     DateTime    @default(now())
-  Questions     Question[]
-  Responses     QuestionResponse[]
+  id                       String             @id @default(cuid())
+  name                     String?
+  email                    String?            @unique
+  emailVerified            DateTime?
+  image                    String?
+  accounts                 Account[]
+  sessions                 Session[]
+  createdAt                DateTime           @default(now())
+  Questions                Question[]
+  Responses                QuestionResponse[]
+  createdQuestionnaires    Questionnaire[]    @relation("CreatedBy")
+  questionnaireMemberships Questionnaire[]    @relation("QuestionnaireMembers")
+  questionnaireEditorships Questionnaire[]    @relation("QuestionnaireEditors")
 
   @@map("user")
 }
@@ -60,31 +62,26 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-
   @@map("verificationtoken")
 }
 
 model Question {
-  id           String  @id @default(cuid())
-  question     String
-  answer       String
-  wrongAnswer1 String
-  wrongAnswer2 String?
-  wrongAnswer3 String?
-
-  status QuestionStatus @default(NORMAL)
-
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
-
-  createdBy   User   @relation(fields: [createdById], references: [id])
-  createdById String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  responses QuestionResponse[]
-  //questionnaire Questionnaire
+  id              String             @id @default(cuid())
+  question        String
+  answer          String
+  wrongAnswer1    String
+  wrongAnswer2    String?
+  wrongAnswer3    String?
+  status          QuestionStatus     @default(NORMAL)
+  category        Category           @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  createdBy       User               @relation(fields: [createdById], references: [id])
+  createdById     String
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  responses       QuestionResponse[]
+  questionnaire   Questionnaire?     @relation(fields: [questionnaireId], references: [id])
+  questionnaireId String?
 
   @@map("question")
 }
@@ -102,12 +99,12 @@ model Category {
 }
 
 model QuestionResponse {
-  id           String  @id @default(cuid())
-  questionId   String
-  userId       String
+  id         String   @id @default(cuid())
+  questionId String
+  userId     String
   // 0 Means the right answer, 1 means the first wrong answer, 2 means the second wrong answer, 3 means the third wrong answer
-  response     Int
-  createdAt    DateTime @default(now())
+  response   Int
+  createdAt  DateTime @default(now())
 
   question Question @relation(fields: [questionId], references: [id])
   user     User     @relation(fields: [userId], references: [id])
@@ -115,25 +112,30 @@ model QuestionResponse {
   @@map("questionresponse")
 }
 
-
 enum QuestionStatus {
   NORMAL
   DELETED
 }
 
-// model Questionnaire {
-//   id           String  @id @default(cuid())
-//   name         String
-//   description  String?
-//   image        String?
-//   questions    Question[]
-//   createdBy    User    @relation(fields: [createdById], references: [id])
-//   createdById  String
-//   editors      User[]
-//   members      User[]
-//   public       Boolean @default(false)
-//   createdAt    DateTime @default(now())
-//   updatedAt    DateTime @updatedAt
-// 
-//   @@map("questionnaire")
-// }
+model Questionnaire {
+  id          String                  @id @default(cuid())
+  name        String
+  description String?
+  image       String?
+  questions   Question[]
+  createdBy   User                    @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById String
+  editors     User[]                  @relation("QuestionnaireEditors")
+  members     User[]                  @relation("QuestionnaireMembers")
+  visibility  QuestionnaireVisibility @default(UNLISTED)
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+
+  @@map("questionnaire")
+}
+
+enum QuestionnaireVisibility {
+  PUBLIC
+  UNLISTED
+  PRIVATE
+}

@@ -43,8 +43,16 @@
             </div>
         {/if}
     </div>
+
+    <!-- Show a little indication in case this is the logged in users profile -->
+    {#if data.session?.user?.id == data.user?.id}
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Das ist dein Profil!</strong>
+            <span class="block sm:inline">Was du hier siehst können auch andere Benutzer auf Quuli sehen.</span>
+        </div>
+    {/if}
     
-    <Table class="w-full">
+    <!-- <Table class="w-full">
         <TableHead>
             <TableHeadCell>Frage</TableHeadCell>
             <TableHeadCell>Antwort</TableHeadCell>
@@ -57,5 +65,5 @@
                 </TableBodyRow>
             {/each}
         </TableBody>
-    </Table>
+    </Table> -->
 </div>
