@@ -24,11 +24,16 @@
     });
 </script>
 
-<div class="max-w-lg mx-auto h-full flex items-center">
+<div class="max-w-sm mx-auto h-full flex items-center">
     <div>
         <div class="mb-6">
             <Heading class="mb-4 text-center">Anmelden</Heading>
-            <P>Melde dich an, um noch mehr Features von Quuli freizuschalten! Verwende dazu einfach deine E-Mail Adresse. Du wirst dann einen Link erhalten der dich anmeldet bzw. registriert. Falls du gerade keinen Zugangn zu deiner Mail hast um etwas zu bestätigen dann kannst du dich auch <span class="underline hover:cursor-pointer" on:click={() => { isUsingCredentials = false }}>per E-Mail und Password anmelden</span>.</P>
+            <P>Melde dich an, um noch mehr Features von Quuli freizuschalten! Verwende dazu einfach deine E-Mail Adresse. Du wirst dann einen Link erhalten der dich anmeldet bzw. registriert. <!-- Falls du gerade keinen Zugangn zu deiner Mail hast um etwas zu bestätigen dann kannst du dich auch <span class="underline hover:cursor-pointer" on:click={() => {
+                console.log('falöskjdfalksdj');
+                isUsingCredentials = !isUsingCredentials;
+                console.log(isUsingCredentials);
+                
+             }}>per E-Mail und Password anmelden</span>. --></P>
         </div>
         
         <div>
