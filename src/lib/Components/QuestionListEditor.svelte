@@ -19,12 +19,15 @@
     // Category Filter
     let category_filter: string = '0';
     // Hide Hidden
-    let hide_hidden: boolean = false;
+    let hide_hidden: boolean = true;
 
     let categories: Category[] = []
 
     $: {
+        console.log('');
         console.log('Filtering questions ...');
+
+        console.log('Old Amount: ', questions.length);
         
         sought_after = questions.filter(q => {
             if (search_string.length > 0 && !q.question.toLowerCase().includes(search_string.toLowerCase())) {
@@ -42,6 +45,8 @@
 
             return true
         });
+
+        console.log('New Amount: ', sought_after.length);
 
         // Unselect all that are not visible
         sought_after = sought_after.map(q => {
@@ -79,15 +84,15 @@
     })
 
     function selectAll() {
-        questions = sought_after.map(q => ({ ...q, selected: true }));
+        questions = questions.map(q => ({ ...q, selected: true }));
     }
 
     function selectNone() {
-        questions = sought_after.map(q => ({ ...q, selected: false }));
+        questions = questions.map(q => ({ ...q, selected: false }));
     }
 
     function invertSelection() {
-        questions = sought_after.map(q => ({ ...q, selected: !q.selected }));
+        questions = questions.map(q => ({ ...q, selected: !q.selected }));
     }
 
     function getAllSelectedQuestions() {
