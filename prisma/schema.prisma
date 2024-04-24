@@ -84,7 +84,7 @@ model Question {
   updatedAt DateTime @updatedAt
 
   responses QuestionResponse[]
-  questionnaire Questionnaire
+  //questionnaire Questionnaire
 
   @@map("question")
 }
