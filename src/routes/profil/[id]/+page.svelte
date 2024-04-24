@@ -51,19 +51,4 @@
             <span class="block sm:inline">Was du hier siehst können auch andere Benutzer auf Quuli sehen.</span>
         </div>
     {/if}
-    
-    <!-- <Table class="w-full">
-        <TableHead>
-            <TableHeadCell>Frage</TableHeadCell>
-            <TableHeadCell>Antwort</TableHeadCell>
-        </TableHead>
-        <TableBody>
-            {#each data.responses as response}
-                <TableBodyRow>
-                    <TableBodyCell>{response.question.question}</TableBodyCell>
-                    <TableBodyCell>{response.question.answer}</TableBodyCell>
-                </TableBodyRow>
-            {/each}
-        </TableBody>
-    </Table> -->
 </div>

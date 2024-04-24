@@ -13,6 +13,9 @@
     import { onMount } from "svelte";
 
     let email = "";
+    let password = "";
+
+    let isUsingCredentials = false;
 
     onMount(() => {
         if ($page.data.session) {
@@ -21,11 +24,11 @@
     });
 </script>
 
-<div class="max-w-sm mx-auto h-full flex items-center">
+<div class="max-w-lg mx-auto h-full flex items-center">
     <div>
         <div class="mb-6">
             <Heading class="mb-4 text-center">Anmelden</Heading>
-            <P>Melde dich an, um noch mehr Features von Quuli freizuschalten! Verwende dazu einfach deine E-Mail Adresse.</P>
+            <P>Melde dich an, um noch mehr Features von Quuli freizuschalten! Verwende dazu einfach deine E-Mail Adresse. Du wirst dann einen Link erhalten der dich anmeldet bzw. registriert. Falls du gerade keinen Zugangn zu deiner Mail hast um etwas zu bestätigen dann kannst du dich auch <span class="underline hover:cursor-pointer" on:click={() => { isUsingCredentials = false }}>per E-Mail und Password anmelden</span>.</P>
         </div>
         
         <div>
@@ -36,10 +39,15 @@
                     <form on:submit={(e) => {
                         console.log("submit");
 
-                        signIn("nodemailer", { email: email });
+                        if (isUsingCredentials) {
+                            signIn("credentials", { email, password });
+                        } else {
+                            signIn("nodemailer", { email });
+                        }
 
                         e.preventDefault();
                     }} class="flex flex-col gap-4">
+
                         <Input
                             type="email"
                             placeholder="E-Mail"
@@ -47,17 +55,36 @@
                             required
                         />
 
-                        <Button type="submit">Anmelden über E-Mail</Button>
+                        {#if isUsingCredentials}
+                            <Input
+                                type="text"
+                                placeholder="Password"
+                                bind:value={password}
+                                required={isUsingCredentials}
+                            />
+                        {/if}
+
+                        <Button type="submit">
+                            Anmelden über E-Mail
+                            { isUsingCredentials ? " und Passwort" : ""}
+                        </Button>
                     </form>
                 </Card>
         
                 <div>Oder ...</div>
         
-                <div class="flex flex-col w-full max-w-sm px-6">
+                <div class="flex flex-col w-full max-w-sm px-6 gap-2">
                     <Button
                         color="dark"
                         on:click={() => signIn("github")}
                     >Anmelden über Github</Button>
+                    <!-- <Button
+                        color="alternative"
+                        on:click={() => isUsingCredentials = !isUsingCredentials}
+                    >
+                        {isUsingCredentials ? "Anmelden über E-Mail und Password" : "Anmelden über E-Mail"}
+                        {isUsingCredentials}
+                    </Button> -->
                 </div>
             </div>
         </div>
