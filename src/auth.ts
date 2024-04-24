@@ -89,10 +89,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
             session.userId = user?.id
             return session
         },
-        /* async signIn({ user, account, profile, email, credentials }) {
-            console.log("signIn callback", user, account, profile, email, credentials);
-            return true
-        }, */
     }
 })
 
