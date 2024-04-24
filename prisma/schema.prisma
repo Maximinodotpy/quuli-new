@@ -84,6 +84,7 @@ model Question {
   updatedAt DateTime @updatedAt
 
   responses QuestionResponse[]
+  questionnaire Questionnaire
 
   @@map("question")
 }
@@ -118,4 +119,21 @@ model QuestionResponse {
 enum QuestionStatus {
   NORMAL
   DELETED
+}
+
+model Questionnaire {
+  id           String  @id @default(cuid())
+  name         String
+  description  String?
+  image        String?
+  questions    Question[]
+  createdBy    User    @relation(fields: [createdById], references: [id])
+  createdById  String
+  editors      User[]
+  members      User[]
+  public       Boolean @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("questionnaire")
 }

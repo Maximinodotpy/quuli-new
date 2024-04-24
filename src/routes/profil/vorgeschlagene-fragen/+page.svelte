@@ -13,7 +13,46 @@
         isLoading?: boolean,
     };
 
-    export let questions: InteractiveQuestion[] = data.questions;
+    let questions: InteractiveQuestion[] = data.questions;
+
+    let sought_after: InteractiveQuestion[] = [];
+
+    // Search String
+    let search_string: string = '';
+    // Category Filter
+    let category_filter: string = '0';
+    // Hide Hidden
+    let hide_hidden: boolean = false;
+
+    $: {
+        console.log('Filtering questions ...');
+        
+        sought_after = questions.filter(q => {
+            if (search_string.length > 0 && !q.question.toLowerCase().includes(search_string.toLowerCase())) {
+                return false;
+            }
+
+            // Hide hidden questions if the user wants
+            if (hide_hidden && q.status == 'DELETED') {
+                return false;
+            }
+
+            if (category_filter != '0' && q.categoryId != category_filter) {
+                return false;
+            }
+
+            return true
+        });
+
+        // Unselect all that are not visible
+        sought_after = sought_after.map(q => {
+            if (!questions.find(qq => qq.id == q.id)) {
+                return { ...q, selected: false };
+            }
+
+            return q;
+        });
+    }
 
     let bulkActions = [
         {
@@ -33,19 +72,19 @@
     let currentBulkAction: string = 'null';
 
     function selectAll() {
-        questions = questions.map(q => ({ ...q, selected: true }));
+        sought_after = sought_after.map(q => ({ ...q, selected: true }));
     }
 
     function selectNone() {
-        questions = questions.map(q => ({ ...q, selected: false }));
+        sought_after = sought_after.map(q => ({ ...q, selected: false }));
     }
 
     function invertSelection() {
-        questions = questions.map(q => ({ ...q, selected: !q.selected }));
+        sought_after = sought_after.map(q => ({ ...q, selected: !q.selected }));
     }
 
     function getAllSelectedQuestions() {
-        return questions.filter(q => q.selected);
+        return sought_after.filter(q => q.selected);
     }
 
     function bulkActionCallback() {
@@ -61,7 +100,7 @@
         console.log('Toggling question status ...');
         
         // @ts-ignore
-        let status = questions.find(q => q.id == question_id).status == 'DELETED' ? 'NORMAL' : 'DELETED';
+        let status = sought_after.find(q => q.id == question_id).status == 'DELETED' ? 'NORMAL' : 'DELETED';
 
         if (force) {
             status = force;
@@ -138,22 +177,24 @@
 
 <PageHeaderArea title="Vorgeschlagene Fragen" text="Bearbeite hier deine vorgeschlagenen Fragen." />
 
-<!-- <div class="mb-4">
-    <input type="text" placeholder="Suche">
+<div class="mb-4 flex flex-col lg:flex-row gap-3">
+    <input type="text" placeholder="Suche" bind:value={search_string}>
 
-    <select name="" id="">
+    <select name="" id="" bind:value={category_filter}>
         <option value="0">Alle Kategorien</option>
         {#each data.categories as category}
             <option value={category.id}>{category.name}</option>
         {/each}
     </select>
 
-    <input type="checkbox" name="hide_hidden" id="hide_hidden">
-    <label for="hide_hidden">Verborgene Fragen nicht anzeigen</label>
-</div> -->
+    <div class="flex items-center gap-2 p-2">
+        <input type="checkbox" name="hide_hidden" id="hide_hidden" bind:checked={hide_hidden}>
+        <label for="hide_hidden">Verborgene Fragen nicht anzeigen</label>
+    </div>
+</div>
 
 <div class="sticky md:-top-8 -top-4 bg-green-200 dark:bg-green-800 p-3 flex gap-4 items-center">
-    <div>{ questions.filter(q => q.selected).length }/{ questions.length } Fragen Ausgewählt</div>
+    <div>{ sought_after.filter(q => q.selected).length }/{ sought_after.length } Fragen Ausgewählt</div>
 
     <div class="flex gap-2">
         <button on:click={selectAll}>Alle</button>
@@ -178,10 +219,10 @@
     </div>
 </div>
 
-<div class="flex flex-col divide-y-2 divide-gray-700">
-    {#each questions as question}
-        <div class="flex justify-between p-4 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
-            <div class="flex items-center gap-2 { question.status == 'DELETED'? 'line-through text-red-500': '' }">
+<div class="flex flex-col divide-y-[1px] divide-gray-300 max-w-full overflow-hidden">
+    {#each sought_after as question}
+        <div class="flex flex-col lg:flex-row justify-between p-2 lg:p-4 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
+            <div class="flex items-center gap-2 overflow-hidden max-w-full { question.status == 'DELETED'? 'line-through text-red-500': '' }">
                 <input type="checkbox" name="" id="" style="aspect-ratio: 1/1;" class="h-full shrink-0 aspect-square" bind:checked={question.selected}>
                 <h3>{question.question}</h3>
             </div>
