@@ -3,6 +3,7 @@
     import type { PageData } from "./$types";
     import type { Question, QuestionStatus } from "@prisma/client";
     import { jsonToFormData } from "$lib/helpers";
+    import { Input, Select, CheckboxButton, Dropdown, DropdownItem, Button } from "flowbite-svelte";
 
     export let data: PageData;
 
@@ -72,15 +73,15 @@
     let currentBulkAction: string = 'null';
 
     function selectAll() {
-        sought_after = sought_after.map(q => ({ ...q, selected: true }));
+        questions = sought_after.map(q => ({ ...q, selected: true }));
     }
 
     function selectNone() {
-        sought_after = sought_after.map(q => ({ ...q, selected: false }));
+        questions = sought_after.map(q => ({ ...q, selected: false }));
     }
 
     function invertSelection() {
-        sought_after = sought_after.map(q => ({ ...q, selected: !q.selected }));
+        questions = sought_after.map(q => ({ ...q, selected: !q.selected }));
     }
 
     function getAllSelectedQuestions() {
@@ -90,6 +91,8 @@
     function bulkActionCallback() {
         let action_group = bulkActions.find(a => a.actions.find(a => a.name == currentBulkAction));
         let action = action_group?.actions.find(a => a.name == currentBulkAction);
+
+        console.log(getAllSelectedQuestions(), 'fasdf');
 
         if (action) {
             action.action();
@@ -177,35 +180,33 @@
 
 <PageHeaderArea title="Vorgeschlagene Fragen" text="Bearbeite hier deine vorgeschlagenen Fragen." />
 
-<div class="mb-4 flex flex-col lg:flex-row gap-3">
-    <input type="text" placeholder="Suche" bind:value={search_string}>
+<div class="mb-4 flex flex-col lg:flex-row gap-3 whitespace-nowrap">
+    <Input type="text" placeholder="Suche" bind:value={search_string} />
 
-    <select name="" id="" bind:value={category_filter}>
+    <Select name="" id="" bind:value={category_filter}>
         <option value="0">Alle Kategorien</option>
         {#each data.categories as category}
             <option value={category.id}>{category.name}</option>
         {/each}
-    </select>
+    </Select>
 
-    <div class="flex items-center gap-2 p-2">
-        <input type="checkbox" name="hide_hidden" id="hide_hidden" bind:checked={hide_hidden}>
-        <label for="hide_hidden">Verborgene Fragen nicht anzeigen</label>
-    </div>
+    <CheckboxButton color="alternative" bind:checked={hide_hidden}>Verborgene Fragen nicht anzeigen</CheckboxButton>
 </div>
 
-<div class="sticky md:-top-8 -top-4 bg-green-200 dark:bg-green-800 p-3 flex gap-4 items-center">
-    <div>{ sought_after.filter(q => q.selected).length }/{ sought_after.length } Fragen Ausgewählt</div>
-
-    <div class="flex gap-2">
-        <button on:click={selectAll}>Alle</button>
-        <button on:click={selectNone}>Keine</button>
-        <button on:click={invertSelection}>Invertieren</button>
-    </div>
+<div class="sticky md:-top-8 -top-4 border shadow-md dark:border-gray-600 bg-white dark:bg-slate-800 p-3 flex gap-4 items-center">
+    <Button color="alternative">
+        { sought_after.filter(q => q.selected).length }/{ sought_after.length } sichtbaren Fragen Ausgewählt
+    </Button>
+    <Dropdown>
+        <DropdownItem on:click={selectAll} >Alles auswählen</DropdownItem>
+        <DropdownItem on:click={selectNone}>Alles abwählen</DropdownItem>
+        <DropdownItem on:click={invertSelection}>Auswahl umkehren</DropdownItem>
+    </Dropdown>
 
     <div class="ml-auto flex gap-3 items-center">
-        <div>Massenaktionen</div>
+        <!-- <div>Massenaktionen</div> -->
 
-        <select name="" id="" bind:value={currentBulkAction}>
+        <Select name="" id="" bind:value={currentBulkAction}>
             {#each bulkActions as action}
                 <optgroup label={action.group}>
                     {#each action.actions as a}
@@ -213,7 +214,7 @@
                     {/each}
                 </optgroup>
             {/each}
-        </select>
+        </Select>
 
         <button on:click={bulkActionCallback}>Ausführen</button>
     </div>
