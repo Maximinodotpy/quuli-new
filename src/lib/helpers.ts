@@ -1,18 +1,19 @@
 import type { Question } from "@prisma/client";
 import { writable, type Writable } from "svelte/store";
 import { db } from "./db";
+import { browser } from "$app/environment";
 
 export function createPersistentStore<T>(key: string, initialValue: any): Writable<T> {
   const store = writable(initialValue);
 
-    const json = localStorage.getItem(key);
-    if (json) {
+  const json = localStorage.getItem(key);
+  if (json) {
     store.set(JSON.parse(json));
-    }
+  }
 
-    store.subscribe((value) => {
+  store.subscribe((value) => {
     localStorage.setItem(key, JSON.stringify(value));
-    });
+  });
 
 
   return store;
@@ -79,7 +80,7 @@ export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOpt
 
   if (GetQuestionsOptions.categories == null || GetQuestionsOptions.categories.length == 0 || GetQuestionsOptions.categories[0] == "") {
     console.log('No categories specified');
-    
+
     GetQuestionsOptions.categories = all_categories.map((category) => category.id);
   }
 
@@ -132,4 +133,36 @@ export function jsonToFormData(json: any) {
 export function formToFormData(form: HTMLFormElement) {
   const formData = new FormData(form);
   return formData;
+}
+
+
+export async function getCategories() {
+  let categories = [];
+
+  if (browser) {
+    // Should use fetch so the frontend can also call this
+    const response = await fetch('/api/categories/get-all', {
+      method: 'POST',
+    })
+    categories = await response.json();
+  } else {
+    categories = await db.category.findMany({
+      orderBy: {
+        name: 'asc'
+      }
+    })
+
+    // Reorde the categories so Sonstiges is always last
+    categories = categories.sort((a, b) => {
+      if (a.name == 'Sonstiges') {
+        return 1;
+      } else if (b.name == 'Sonstiges') {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  return categories
 }
