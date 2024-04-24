@@ -3,12 +3,12 @@ import { db } from "$lib/db";
 import type { Actions, PageServerLoad } from "./$types";
 import { error, redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, params }) => {
     const auth = await locals.auth()
 
-    if (!auth) {
-        redirect(308, "/")
-    }
+    console.log('Params: ', params.id);
+    
+    const userId = params.id;
 
     // Get responses for this user
     const responses = await db.questionResponse.findMany({
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
             question: true
         },
         where: {
-            userId: auth.user?.id
+            userId: userId
         },
         take: 10,
     })
@@ -25,14 +25,20 @@ export const load: PageServerLoad = async ({ locals }) => {
     const right_answers = await db.questionResponse.count({
         where: {
             response: 0,
-            userId: auth.user?.id,
+            userId: userId,
         }
     })
 
     // Total answers
     const total_answers = await db.questionResponse.count({
         where: {
-            userId: auth.user?.id
+            userId: userId
+        }
+    })
+
+    const user = await db.user.findUnique({
+        where: {
+            id: userId
         }
     })
     
@@ -40,5 +46,6 @@ export const load: PageServerLoad = async ({ locals }) => {
         responses: responses,
         right_answers: right_answers,
         total_answers: total_answers,
+        user: user,
     }
 }

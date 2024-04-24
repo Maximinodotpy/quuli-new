@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import "../app.pcss";
     import { page } from '$app/stores';
     import { 
@@ -52,6 +52,8 @@
 
 
     $: activeUrl = $page.url.pathname;
+
+    console.log(page);
 </script>
 
 <svelte:head> 
@@ -91,7 +93,7 @@
                         <span class="block text-sm">{$page.data.session.user?.name}</span>
                         <span class="block truncate text-sm font-medium">{$page.data.session.user?.email}</span>
                     </DropdownHeader>
-                    <DropdownItem href="/profil">Profil</DropdownItem>
+                    <DropdownItem href="/profil/{$page.data?.session?.user?.id}">Profil</DropdownItem>
                     <DropdownItem href="/profil/einstellungen">Einstellungen</DropdownItem>
                     <DropdownItem href="/profil/vorgeschlagene-fragen">Vorgeschlagene Fragen</DropdownItem>
                     <DropdownDivider />

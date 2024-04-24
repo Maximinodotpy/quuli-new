@@ -16,7 +16,7 @@
 
     onMount(() => {
         if ($page.data.session) {
-            goto("/profil");
+            goto("/profil/" + $page?.data?.session?.user?.id);
         }
     });
 </script>

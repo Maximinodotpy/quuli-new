@@ -30,7 +30,7 @@
             {#each users as user, i}
                 <TableBodyRow>
                     <TableBodyCell tdClass="opacity-50 p-4 px-6">{i + 1}</TableBodyCell>
-                    <TableBodyCell>{user.name}</TableBodyCell>
+                    <TableBodyCell><a href="/profil/{user.id}">{user.name}</a></TableBodyCell>
                     <TableBodyCell tdClass="p-4 px-6 text-right">{whereRankedInfo(user)}</TableBodyCell>
                 </TableBodyRow>
             {/each}
