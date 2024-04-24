@@ -34,7 +34,7 @@
 
                     <div class="absolute z-20 bottom-0 h-1/2 left-0 bg-gradient-to-b from-transparent to-black w-full flex justify-between items-end p-4 whitespace-nowrap ">
                         <Heading tag="h3" customSize="font-bold text-2xl !text-white text-center lg:text-left">{ category.name }</Heading>
-                        <div class="!text-white hidden lg:block">{ category.Questions.length } Fragen</div>
+                        <!-- <div class="!text-white hidden lg:block">{ category.Questions.length } Fragen</div> -->
                     </div>
                 </a>
             {/if}

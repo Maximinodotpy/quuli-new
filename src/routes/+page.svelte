@@ -8,9 +8,9 @@
 </script>
 
 <div class="max-w-5xl mx-auto pt-10 flex flex-col gap-24 mb-48">
-    <div>
+    <div class="max-h-full">
         <PageHeaderArea title="Quuli is Back ..." text="... und diese erweiterte Version bringt eine ganze Reihe an leckeren Features mit sich!" />
-        <img src="logo.svg" alt="" class="p-8">
+        <img src="logo.svg" alt="" class="p-8 bg-white rounded-3xl">
     </div>
 
     <div>
