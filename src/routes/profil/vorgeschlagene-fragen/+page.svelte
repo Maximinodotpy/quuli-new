@@ -195,7 +195,7 @@
 
 <div class="sticky md:-top-8 -top-4 border shadow-md dark:border-gray-600 bg-white dark:bg-slate-800 p-3 flex gap-4 items-center">
     <Button color="alternative">
-        { sought_after.filter(q => q.selected).length }/{ sought_after.length } sichtbaren Fragen Ausgewählt
+        { sought_after.filter(q => q.selected).length }/{ sought_after.length } sichtbare Fragen Ausgewählt
     </Button>
     <Dropdown>
         <DropdownItem on:click={selectAll} >Alles auswählen</DropdownItem>
