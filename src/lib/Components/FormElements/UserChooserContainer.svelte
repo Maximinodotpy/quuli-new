@@ -32,9 +32,9 @@
 
 <InputContainer id={id} title={title} description={description} >
     <div class="relative">
-        <div class="p-2 mb-2">
+        <div class="mb-4">
             {#each chosen_users as user}
-                <button class="bg-gray-200 py-1 px-2 rounded-lg mr-1" on:click={() => {
+                <button class="bg-gray-200 dark:bg-gray-700 py-1 px-2 rounded-lg mr-1" on:click={() => {
                     chosen_users = chosen_users.filter(u => u.id !== user.id);
                 }} >{user.name}</button>
             {/each}
@@ -46,7 +46,7 @@
         <div class="group">
             <Input placeholder="Nach Benutzer suchen" bind:value={search_query} />
 
-            <div class="p-2 absolute top-[110%] bg-white z-20 group-focus-within:block hidden w-full shadow-xl border rounded-lg">
+            <div class="p-2 absolute top-[110%] bg-white dark:bg-gray-700 z-20 group-focus-within:block hidden w-full shadow-xl rounded-lg">
                 {#if current_search_results.length > 0}
                     <ul>
                         {#each current_search_results as user}
