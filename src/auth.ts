@@ -84,8 +84,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     ],
     callbacks: {
         session: async ({session, user}) => {
-            /* console.log("session callback", session);
-            console.log(user); */
             session.userId = user?.id
             return session
         },
