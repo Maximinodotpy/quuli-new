@@ -20,7 +20,8 @@
      } from 'flowbite-svelte';
      import { signOut } from "@auth/sveltekit/client";
     import { onMount } from "svelte";
-    import { QuestionCircleSolid, StarSolid, HomeSolid, PlaySolid, BookmarkSolid } from 'flowbite-svelte-icons';
+    import { QuestionCircleSolid, StarSolid, HomeSolid, PlaySolid, BookmarkSolid, PenSolid, AdjustmentsHorizontalSolid, BookOpenSolid, EnvelopeSolid
+ } from 'flowbite-svelte-icons';
     import { createPersistentStore } from "$lib/helpers";
     import { writable } from "svelte/store";
     import { navigating } from "$app/stores";
@@ -140,10 +141,27 @@
                     <!-- A Sidebar group that is only visible if the user is logged showing his several places of intrest -->
                     {#if $page.data.session}
                         <SidebarGroup title="Interessen" border>
-                            <SidebarItem label="Profil" href="/profil/{$page.data.session.user?.id}"></SidebarItem>
-                            <SidebarItem label="Einstellungen" href="/profil/einstellungen"></SidebarItem>
-                            <SidebarItem label="Meine Vorschläge" href="/profil/vorgeschlagene-fragen"></SidebarItem>
-                            <SidebarItem label="Meine Fragebögen" href="/profil/frageboegen"></SidebarItem>
+                            <SidebarItem label="Profil" href="/profil/{$page.data.session.user?.id}">
+                                <svelte:fragment slot="icon">
+                                    <Avatar src="{$page.data.session.user?.image ?? ''}" size="xs" />
+                                </svelte:fragment>
+                            </SidebarItem>
+                            <SidebarItem label="Einstellungen" href="/profil/einstellungen">
+                                <svelte:fragment slot="icon">
+                                    <AdjustmentsHorizontalSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                                </svelte:fragment>
+                            </SidebarItem>
+                            <SidebarItem label="Meine Vorschläge" href="/profil/vorgeschlagene-fragen">
+                                <svelte:fragment slot="icon">
+                                    <EnvelopeSolid
+                                    class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                                </svelte:fragment>
+                            </SidebarItem>
+                            <SidebarItem label="Meine Fragebögen" href="/profil/frageboegen">
+                                <svelte:fragment slot="icon">
+                                    <BookOpenSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                                </svelte:fragment>
+                            </SidebarItem>
                         </SidebarGroup>
                     {/if}
                     
