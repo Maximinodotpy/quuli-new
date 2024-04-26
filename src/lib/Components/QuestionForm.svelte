@@ -4,6 +4,8 @@
     import { enhance } from "$app/forms";
     import type { Category, Question } from "@prisma/client";
     import { hasDuplicates, isAValidAnswer } from "$lib/helpers";
+    import { getCategories } from "$lib/helpers";
+    import { onMount } from "svelte";
 
     export let q_info: Question = {
         id: '',
@@ -22,6 +24,11 @@
     export let form_action: string = '';
     export let categories: Category[] = [];
 
+    onMount(async () => {
+        categories = await getCategories();
+    });
+
+    export let categoriesEnabled: boolean = true;
     
     let warnings: Array<string> = []
     let errors: Array<string> = []
@@ -101,8 +108,8 @@
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
-            <div>
+        {#if categoriesEnabled}
+            <div class="grid md:grid-cols-2 gap-4">
                 <Label for="category" class="mb-2 text-xl">Kategorie</Label>
                 <Select name="category" id="category" required value={q_info.categoryId}>
                     {#each categories as cat}
@@ -110,7 +117,7 @@
                     {/each}
                 </Select>
             </div>
-        </div>
+        {/if}
 
         <div>
             <div class="mb-4">

@@ -72,9 +72,10 @@ export async function checkQuestionFormData(formData: FormData) {
 interface GetQuestionsOptions {
   idExceptions: string[];
   categories: string[];
+  questionnaireId?: string | null;
 }
 
-export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [] }) {
+export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [], questionnaireId: null}) {
   // In case there are no categories specified return all questions
   const all_categories = await db.category.findMany();
 
@@ -84,37 +85,45 @@ export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOpt
     GetQuestionsOptions.categories = all_categories.map((category) => category.id);
   }
 
-  const questions = await db.question.findMany({
-    where: {
-      status: 'NORMAL',
-      NOT: {
-        id: {
-          in: GetQuestionsOptions.idExceptions,
+  let questions;
+
+  if (GetQuestionsOptions.questionnaireId) {
+    questions = await db.question.findMany({
+      where: {
+        status: 'NORMAL',
+        NOT: {
+          id: {
+            in: GetQuestionsOptions.idExceptions,
+          },
         },
-      },
-      categoryId: {
-        in: GetQuestionsOptions.categories,
-      },
-    }
-  });
+        categoryId: {
+          in: GetQuestionsOptions.categories,
+        },
+        questionnaireId: GetQuestionsOptions.questionnaireId,
+      }
+    });
+  } else {
+    questions = await db.question.findMany({
+      where: {
+        status: 'NORMAL',
+        NOT: {
+          id: {
+            in: GetQuestionsOptions.idExceptions,
+          },
+        },
+        categoryId: {
+          in: GetQuestionsOptions.categories,
+        },
+      }
+    });
+  }
 
   return questions;
 }
 
 export async function getAmountOfPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [] }) {
-  const amount = await db.question.count({
-    where: {
-      status: 'NORMAL',
-      NOT: {
-        id: {
-          in: GetQuestionsOptions.idExceptions,
-        },
-      },
-      categoryId: {
-        in: GetQuestionsOptions.categories,
-      },
-    }
-  });
+  const list = await getAllPublicQuestions(GetQuestionsOptions);
+  const amount = list.length;
 
   return amount;
 }

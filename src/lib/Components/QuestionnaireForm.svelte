@@ -4,38 +4,38 @@
     import UserChooserContainer from "./FormElements/UserChooserContainer.svelte";
     import CheckboxInputContainer from "./FormElements/CheckboxInputContainer.svelte";
     import SelectContainer from "./FormElements/SelectContainer.svelte";
-    import type { Questionnaire } from "@prisma/client";
+    import type { Questionnaire, User } from "@prisma/client";
 
     type QuestionnaireWithUsers = Questionnaire & {
-        editors: string[];
-        members: string[];
+        editorIds: string[];
+        editors?: User[];
+        memberIds: string[];
+        members?: User[];
     };
 
-    let questionnaire: QuestionnaireWithUsers = {
+    export let questionnaire: QuestionnaireWithUsers = {
         name: "",
         description: "",
-        editors: [],
-        members: [],
+        editorIds: [],
+        memberIds: [],
         visibility: "PRIVATE",
         id: ''
     };
+
+    export let form_action: string = '?/create_questionnaire'
 </script>
 
 <div>
-    <form action="?/create_questionnaire" class="flex flex-col gap-8" method="post">
+    <form action={form_action} class="flex flex-col gap-8" method="post">
         <TextInputContainer title="Name" id="name" description="" bind:value={questionnaire.name} required={true} />
-        <TextInputContainer title="Beschreibung" id="description" description="" text_type="textcontainer"/>
+        <TextInputContainer title="Beschreibung" id="description" description="" text_type="textcontainer" bind:value={questionnaire.description}/>
     
-        <UserChooserContainer title="Bearbeitende" id="editors" description=""/>
+        <UserChooserContainer title="Bearbeitende" id="editors" description="" chosen_users={questionnaire.editors}/>
         <SelectContainer title="Sichtbarkeit" id="visibility" description="" selected="PRIVATE" options={[{label: "Öffentlich", value: "PUBLIC"}, {label: "Privat", value: "PRIVATE"}]}/>
-        <UserChooserContainer title="Mitglieder" id="members" description=""/>
+        <UserChooserContainer title="Mitglieder" id="members" description="" chosen_users={questionnaire.members}/>
     
         <div>
-            <Button type="submit">Erstellen</Button>
+            <Button type="submit">Absenden</Button>
         </div>
-
-        {questionnaire.name}
-
-        <input type="submit" value="Einreichen">
     </form>
 </div>

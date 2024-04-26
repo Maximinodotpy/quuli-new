@@ -5,10 +5,10 @@
     import AvatarList from "$lib/Components/AvatarList.svelte";
     import { Button } from "flowbite-svelte";
 
-    export let data: PageData
+    export let data: PageData;
 </script>
 
-<pre>{ JSON.stringify(data, null, 2) }</pre>
+<!-- <pre>{ JSON.stringify(data, null, 2) }</pre> -->
 
 <div class="mx-auto max-w-3xl">
     <PageHeaderArea title="Fragebogen: {data.questionnaire.name}" text={data.questionnaire.description ?? ''} />
@@ -48,7 +48,7 @@
         {:else}
             <div>
                 <p>Keine Fragen vorhanden</p>
-                <Button>Fragen Bearbeiten</Button>
+                <Button href="/fragebogen/{data.questionnaire.id}/fragen-bearbeiten">Fragen Bearbeiten</Button>
             </div>
         {/each}
     </div>
