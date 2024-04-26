@@ -10,6 +10,7 @@
         Card,
         Heading,
     } from "flowbite-svelte";
+    import Avatar from "./Avatar.svelte";
 
     export let users: User[] = []
     export let title: string = ''
@@ -30,7 +31,9 @@
             {#each users as user, i}
                 <TableBodyRow>
                     <TableBodyCell tdClass="opacity-50 p-4 px-6">{i + 1}</TableBodyCell>
-                    <TableBodyCell><a href="/profil/{user.id}">{user.name}</a></TableBodyCell>
+                    <TableBodyCell>
+                        <Avatar {user} />
+                    </TableBodyCell>
                     <TableBodyCell tdClass="p-4 px-6 text-right">{whereRankedInfo(user)}</TableBodyCell>
                 </TableBodyRow>
             {/each}

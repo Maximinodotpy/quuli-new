@@ -7,14 +7,18 @@
 
     type inputTypes = "text" | "email" | "password" | "number" | "tel" | "url" | "textcontainer";
     export let text_type: inputTypes = "text";
+
+    export let value: string = '';
+
+    export let required: boolean = false;
 </script>
 
 <InputContainer id={id} title={title} description={description} >
     <div>
         {#if text_type === "textcontainer"}
-            <Textarea id={id}/>
+            <Textarea name={id} id={id} bind:value={value} required={required}/>
         {:else}
-            <Input id={id} type={text_type} />
+            <Input name={id} id={id} type={text_type} bind:value={value} required={required}/>
         {/if}
     </div>
 </InputContainer>

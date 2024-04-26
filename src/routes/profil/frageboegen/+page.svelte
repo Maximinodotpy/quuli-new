@@ -4,6 +4,7 @@
     import {
         Tabs,
         TabItem,
+        Button
     } from "flowbite-svelte"
 
     export let data: PageData
@@ -14,9 +15,8 @@
 <div class="flex flex-col">
     <Tabs>
         <TabItem title="Erschaffen" open>
-            <div class="flex flex-col">
-                <p>Keine Fragebögen erstellt</p>
-            </div>
+            <p class="mb-6">Keine Fragebögen erstellt</p>
+            <Button href="/fragebogen/neu">Jetzt erstellen</Button>
         </TabItem>
         <TabItem title="Bearbeiten">
             <div class="flex flex-col">
