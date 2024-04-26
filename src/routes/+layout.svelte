@@ -27,9 +27,6 @@
     import { slide } from "svelte/transition";
     import { expoOut } from "svelte/easing";
     import Footer from "$lib/Components/Footer.svelte";
-    import { pwaInfo } from 'virtual:pwa-info'; 
-
-    $: webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '' 
 
      let showSidebar = false;
 
@@ -52,13 +49,7 @@
 
 
     $: activeUrl = $page.url.pathname;
-
-    console.log(page);
 </script>
-
-<svelte:head> 
- 	{@html webManifestLink} 
-</svelte:head>
 
 {#if $navigating}
     <!-- 
@@ -145,6 +136,16 @@
                             </svelte:fragment>
                         </SidebarItem>
                     </SidebarGroup>
+
+                    <!-- A Sidebar group that is only visible if the user is logged showing his several places of intrest -->
+                    {#if $page.data.session}
+                        <SidebarGroup title="Interessen" border>
+                            <SidebarItem label="Profil" href="/profil/{$page.data.session.user?.id}"></SidebarItem>
+                            <SidebarItem label="Einstellungen" href="/profil/einstellungen"></SidebarItem>
+                            <SidebarItem label="Meine Vorschläge" href="/profil/vorgeschlagene-fragen"></SidebarItem>
+                            <SidebarItem label="Meine Fragebögen" href="/profil/frageboegen"></SidebarItem>
+                        </SidebarGroup>
+                    {/if}
                     
                     <SidebarGroup title="About" border>
                         <SidebarItem label="Über Quuli" href="/ueber"></SidebarItem>
