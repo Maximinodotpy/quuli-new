@@ -56,6 +56,7 @@ export const actions: Actions = {
         let falsch3 = String(data.get('falsch3') || '')
 
         const category = String(data.get('category')) ?? ''
+        const questionnaire_id = String(data.get('questionnaire')) ?? ''
 
         // Trim all the strings
         frage = frage.trim()
@@ -71,6 +72,7 @@ export const actions: Actions = {
         console.log(falsch2);
         console.log(falsch3);
         console.log(category);
+        console.log(questionnaire_id);
 
         // Check if there is a question
         if (!frage) {
@@ -105,7 +107,7 @@ export const actions: Actions = {
         }
 
         // Add this to the database
-        await db.question.create({
+        const new_question = await db.question.create({
             data: {
                 question: frage,
                 answer: antwort,
@@ -116,6 +118,24 @@ export const actions: Actions = {
                 createdById: auth.user?.id ?? ''
             }
         })
+
+        // add it to the questionnaire
+        if (questionnaire_id) {
+            await db.questionnaire.update({
+                where: {
+                    id: questionnaire_id
+                },
+                data: {
+                    questions: {
+                        connect: {
+                            id: new_question.id
+                        }
+                    }
+                }
+            })
+
+            console.log('Added question to questionnaire ... ', questionnaire_id);
+        }
 
         return {
             success: true

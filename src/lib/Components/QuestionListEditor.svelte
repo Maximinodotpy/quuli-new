@@ -22,6 +22,7 @@
     let hide_hidden: boolean = true;
 
     let categories: Category[] = []
+    export let categoriesEnabled: boolean = true;
 
     $: {
         console.log('');
@@ -73,15 +74,19 @@
     ];
     let currentBulkAction: string = 'null';
 
-    getCategories().then(cat => {
-        categories = cat;
-        console.log(categories);
-
-        bulkActions[1].actions = categories.map(c => ({
-            name: c.name,
-            action: () => setBulkCategory(c.id)
-        }));
-    })
+    if (categoriesEnabled) {
+        getCategories().then(cat => {
+            categories = cat;
+            console.log(categories);
+    
+            bulkActions[1].actions = categories.map(c => ({
+                name: c.name,
+                action: () => setBulkCategory(c.id)
+            }));
+        })
+    } else {
+        bulkActions.splice(1, 1);
+    }
 
     function selectAll() {
         questions = questions.map(q => ({ ...q, selected: true }));
@@ -192,12 +197,14 @@
 <div class="mb-4 flex flex-col lg:flex-row gap-3 whitespace-nowrap">
     <Input type="text" placeholder="Suche" bind:value={search_string} />
 
-    <Select name="" id="" bind:value={category_filter}>
-        <option value="0">Alle Kategorien</option>
-        {#each categories as category}
-            <option value={category.id}>{category.name}</option>
-        {/each}
-    </Select>
+    {#if categoriesEnabled}
+        <Select name="" id="" bind:value={category_filter}>
+            <option value="0">Alle Kategorien</option>
+            {#each categories as category}
+                <option value={category.id}>{category.name}</option>
+            {/each}
+        </Select>
+    {/if}
 
     <CheckboxButton color="alternative" bind:checked={hide_hidden}>Verborgene Fragen nicht anzeigen</CheckboxButton>
 </div>

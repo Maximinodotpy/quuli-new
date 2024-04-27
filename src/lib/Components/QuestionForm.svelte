@@ -21,7 +21,7 @@
         status: 'NORMAL',
     };
     export let is_disabled: boolean = false;
-    export let form_action: string = '';
+    export let form_action: string = '/fragen/vorschlagen?/add_question';
     export let categories: Category[] = [];
 
     onMount(async () => {
@@ -29,6 +29,8 @@
     });
 
     export let categoriesEnabled: boolean = true;
+
+    export let questionnaire: null | string = ''
     
     let warnings: Array<string> = []
     let errors: Array<string> = []
@@ -77,7 +79,7 @@
     }
 </script>
 
-<form method="post" use:enhance action="?/{form_action}">
+<form method="post" use:enhance action="{form_action}">
     <fieldset disabled={is_disabled} class="flex flex-col gap-10">
         <div class="grid md:grid-cols-2 gap-4">
             <div>
@@ -116,6 +118,14 @@
                         <option value={cat.id}>{cat.name}</option>
                     {/each}
                 </Select>
+            </div>
+        {/if}
+
+        <!-- If questionnaire is set create a disabled input that shows the id -->
+        {#if questionnaire}
+            <div>
+                <Label for="questionnaire" class="mb-2 text-xl">Fragebogen</Label>
+                <Input name="questionnaire" id="questionnaire" type="text" value={questionnaire} disabled />
             </div>
         {/if}
 

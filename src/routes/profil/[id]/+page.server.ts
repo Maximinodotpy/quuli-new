@@ -1,4 +1,4 @@
-import type { Question } from "@prisma/client";
+import type { Question, Questionnaire } from "@prisma/client";
 import { db } from "$lib/db";
 import type { Actions, PageServerLoad } from "./$types";
 import { error, redirect } from "@sveltejs/kit";
@@ -9,17 +9,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     console.log('Params: ', params.id);
     
     const userId = params.id;
-
-    // Get responses for this user
-    const responses = await db.questionResponse.findMany({
-        include: {
-            question: true
-        },
-        where: {
-            userId: userId
-        },
-        take: 10,
-    })
 
     // Get right answers from db
     const right_answers = await db.questionResponse.count({
@@ -41,11 +30,37 @@ export const load: PageServerLoad = async ({ locals, params }) => {
             id: userId
         }
     })
+
+    // Get proposed Questions that are public (status = NORMAL)
+    const proposedQuestions = await db.question.findMany({
+        where: {
+            status: 'NORMAL',
+            createdById: userId,
+            questionnaireId: null,
+        },
+        include: {
+            responses: true,
+            category: true,
+        }
+    })
+
+    // Get public questionnaires this user has created
+    const questionnaires: Questionnaire[] = await db.questionnaire.findMany({
+        where: {
+            visibility: 'PUBLIC',
+            createdById: userId,
+        },
+        include: {
+            questions: true,
+        }
+    })
+
     
     return {
-        responses: responses,
-        right_answers: right_answers,
-        total_answers: total_answers,
-        user: user,
+        right_answers,
+        total_answers,
+        user,
+        proposedQuestions,
+        questionnaires,
     }
 }

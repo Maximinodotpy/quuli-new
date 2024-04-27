@@ -12,5 +12,5 @@
 <div class="mx-auto max-w-5xl">
     <PageHeaderArea title={`Frage "${data.question?.question}" bearbeiten`} text="" />
     
-    <QuestionForm q_info={data.question} categories={data.categories} form_action="edit_question" />
+    <QuestionForm q_info={data.question} categories={data.categories} form_action="?/edit_question" />
 </div>

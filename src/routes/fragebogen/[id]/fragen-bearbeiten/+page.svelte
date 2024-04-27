@@ -11,7 +11,8 @@
 </script>
 
 <PageHeaderArea title={`Fragebogen Fragen bearbeiten`} text="{data?.questionnaire?.name}" />
-<QuestionListEditor questions={data.questionnaire.questions} />
+
+<QuestionListEditor questions={data.questionnaire.questions} categoriesEnabled={false}/>
 
 <div class="mt-10">
     <Button href="/fragebogen/{data.questionnaire.id}">Zurück zum Fragebogen</Button>
@@ -19,5 +20,5 @@
 </div>
 
 <Modal bind:open={modalVisible} title="Frage hinzufügen" on:close={() => modalVisible = false}>
-    <QuestionForm categoriesEnabled={false}/>
+    <QuestionForm categoriesEnabled={false} questionnaire={data.questionnaire.id}/>
 </Modal>
