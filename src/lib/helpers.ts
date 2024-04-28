@@ -69,7 +69,7 @@ export async function checkQuestionFormData(formData: FormData) {
 }
 
 
-interface GetQuestionsOptions {
+export interface GetQuestionsOptions {
   idExceptions: string[];
   categories: string[];
   questionnaireId?: string | null;
@@ -95,9 +95,6 @@ export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOpt
           id: {
             in: GetQuestionsOptions.idExceptions,
           },
-        },
-        categoryId: {
-          in: GetQuestionsOptions.categories,
         },
         questionnaireId: GetQuestionsOptions.questionnaireId,
       }
@@ -181,14 +178,22 @@ export async function getQuestionnaire(id: string) {
 
   if (browser) {
     // Should use fetch so the frontend can also call this
-    questionnaire = fetch('/api/questionnaire/get', {
+    const re = await fetch('/api/questionnaire/get', {
       method: 'POST',
       body: jsonToFormData({ id }),
     })
+    questionnaire = await re.json();
   } else {
     questionnaire = db.questionnaire.findUnique({
       where: {
         id,
+      },
+      include: {
+        questions: {
+          where: {
+            status: 'NORMAL',
+          },
+        }
       },
     })
   }
