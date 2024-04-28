@@ -36,6 +36,14 @@
         </p>
     </div>
 
+    <div>
+        <Heading tag="h2" customSize="text-4xl font-bold mb-3">Fragebögen</Heading>
+        <p class="text-2xl">
+            Du kannst <a href="/profil/frageboegen" class="underline">Fragebögen</a> erstellen und sie mit anderen teilen. 
+            So kannst du dein Wissen testen und gleichzeitig anderen die Möglichkeit geben, von deinem Wissen zu profitieren.
+        </p>
+    </div>
+
     <div class="text-center text-2xl">
         Also worauf wartest du noch ... <a href="/login" class="underline text-primary-600 font-semibold">lege dir einen Account an</a> und fang an, besser zu wissen!
     </div>
