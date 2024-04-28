@@ -123,9 +123,9 @@
 
         <!-- If questionnaire is set create a disabled input that shows the id -->
         {#if questionnaire}
-            <div>
+            <div class="opacity-50">
                 <Label for="questionnaire" class="mb-2 text-xl">Fragebogen</Label>
-                <Input name="questionnaire" id="questionnaire" type="text" value={questionnaire} disabled />
+                <Input name="questionnaire" id="questionnaire" type="text" value={questionnaire} class="pointer-events-none" />
             </div>
         {/if}
 

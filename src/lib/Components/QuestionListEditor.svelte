@@ -240,12 +240,15 @@
     {#each sought_after as question}
         <div class="flex flex-col lg:flex-row justify-between p-2 lg:p-4 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
             <div class="flex items-center gap-2 pl-1 overflow-hidden max-w-full { question.status == 'DELETED'? 'line-through text-red-500': '' }">
-                <!-- <input type="checkbox" name="" id="" style="aspect-ratio: 1/1;" class="h-full shrink-0 aspect-square" bind:checked={question.selected}>
-                <h3>{question.question}</h3> -->
                 <Checkbox bind:checked={question.selected}>{question.question}</Checkbox>
             </div>
             <div class="w-[60%] flex justify-between">
-                <p>{question.answer}/{question?.category?.name}</p>
+                <p>
+                    {question.answer}
+                    {#if categoriesEnabled}
+                        <span class="text-xs text-gray-500 dark:text-gray-400">/{question?.category?.name}</span>
+                    {/if}
+                </p>
                 <div class="grid grid-cols-2 gap-4 w-[40%]">
                     <a href={`/fragen/bearbeiten/${question.id}`}>Bearbeiten</a>
                     <button on:click={() => { toggleQuestionStatus(question.id) }}>

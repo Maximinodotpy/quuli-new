@@ -12,6 +12,8 @@
 
 <PageHeaderArea title="Meine Fragebögen" text="Hier siehst du alle Fragebögen die du entweder erschaffen hast, bearbeiten darfst oder ein Mitglied davon bist." />
 
+<!-- <pre>{ JSON.stringify(data, null, 2) }</pre> -->
+
 <div class="flex flex-col">
     <Tabs style="underline">
         <TabItem title="Erschaffen" open>

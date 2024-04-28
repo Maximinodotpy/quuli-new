@@ -66,13 +66,13 @@ export const actions: Actions = {
         falsch3 = falsch3.trim()
 
         // Print alle values
-        console.log(frage);
-        console.log(antwort);
-        console.log(falsch1);
-        console.log(falsch2);
-        console.log(falsch3);
-        console.log(category);
-        console.log(questionnaire_id);
+        console.log('frage', frage);
+        console.log('antwort', antwort);
+        console.log('falsch1', falsch1);
+        console.log('falsch2', falsch2);
+        console.log('falsch3', falsch3);
+        console.log('category', category);
+        console.log('questionnaire_id', questionnaire_id);
 
         // Check if there is a question
         if (!frage) {
@@ -106,6 +106,8 @@ export const actions: Actions = {
             }
         }
 
+        console.log('All checks passed');
+
         // Add this to the database
         const new_question = await db.question.create({
             data: {
@@ -114,23 +116,38 @@ export const actions: Actions = {
                 wrongAnswer1: falsch1,
                 wrongAnswer2: falsch2,
                 wrongAnswer3: falsch3,
-                categoryId: category,
                 createdById: auth.user?.id ?? ''
             }
         })
 
-        // add it to the questionnaire
-        if (questionnaire_id) {
-            await db.questionnaire.update({
+        console.log('Added question to database ... ', new_question.id);
+
+        // Add the category to the question if it exists
+        if (category != 'null' && category != '') {
+            console.log('Adding category to question ... ', category);
+            
+            await db.question.update({
                 where: {
-                    id: questionnaire_id
+                    id: new_question.id
                 },
                 data: {
-                    questions: {
-                        connect: {
-                            id: new_question.id
-                        }
-                    }
+                    categoryId: category
+                }
+            })
+
+            console.log('Added category to question ... ', category);
+        }
+
+        // add it to the questionnaire
+        if (questionnaire_id != 'null' && questionnaire_id != '') {
+            console.log('Adding question to questionnaire ... ', questionnaire_id);
+
+            await db.question.update({
+                where: {
+                    id: new_question.id
+                },
+                data: {
+                    questionnaireId: questionnaire_id
                 }
             })
 

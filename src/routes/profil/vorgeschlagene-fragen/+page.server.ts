@@ -12,7 +12,8 @@ export const load: PageServerLoad = async ({ locals }) => {
     // Get all questions this user has created
     const questions = await db.question.findMany({
         where: {
-            createdById: auth.user?.id
+            createdById: auth.user?.id,
+            questionnaireId: null
         },
         include: {
             category: true
