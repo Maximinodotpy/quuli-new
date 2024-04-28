@@ -31,15 +31,19 @@
     </div>
 
     <div class="grid md:grid-cols-2">
-        <div>
-            <h2 class="text-xl mt-8 mb-3">Mitglieder</h2>
-            <AvatarList users={data.questionnaire.members} />
-        </div>
-        <!-- Show Editors as AvatarList -->
-        <div>
-            <h2 class="text-xl mt-8 mb-3">Bearbeiter</h2>
-            <AvatarList users={data.questionnaire.editors} />
-        </div>
+        {#if data.questionnaire.members.length > 0}
+            <div>
+                <h2 class="text-xl mt-8 mb-3">Mitglieder</h2>
+                <AvatarList users={data.questionnaire.members} />
+            </div>
+        {/if}
+        
+        {#if data.questionnaire.editors.length > 0}
+            <div>
+                <h2 class="text-xl mt-8 mb-3">Bearbeiter</h2>
+                <AvatarList users={data.questionnaire.editors} />
+            </div>
+        {/if}
     </div>
 
     <!-- Show Questions -->

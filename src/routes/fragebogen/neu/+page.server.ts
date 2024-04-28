@@ -17,8 +17,12 @@ export const actions: Actions = {
         const name = String(data.get("name"))
         const description = String(data.get("description"))
         const visibility = String(data.get("visibility")) as QuestionnaireVisibility
-        const editors = String(data.get("editors")).split(",")
-        const members = String(data.get("members")).split(",")
+        let editors = String(data.get("editors")).split(",")
+        let members = String(data.get("members")).split(",")
+
+        // Remove empty strings
+        editors = editors.filter(Boolean)
+        members = members.filter(Boolean)
 
         console.log('Creating questionnaire with name', name, '...');
         console.log('Description:', description);

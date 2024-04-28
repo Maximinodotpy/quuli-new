@@ -17,15 +17,18 @@
 <div class="flex flex-col">
     <Tabs style="underline">
         <TabItem title="Erschaffen" open>
-            {#each data.questionnaires as questionnaire}
-                <a class="flex flex-col" href="/fragebogen/{questionnaire.id}">
-                    <h2 class="text-lg font-semibold">{questionnaire.name}</h2>
-                    <p class="text-sm text-neutral-500">{questionnaire.description}</p>
-                </a>
-            {:else}
-                <p class="mb-6">Keine Fragebögen erstellt</p>
-                <Button href="/fragebogen/neu">Jetzt erstellen</Button>
-            {/each}
+            <div class="mb-8">
+                {#each data.questionnaires as questionnaire}
+                    <a class="flex flex-col" href="/fragebogen/{questionnaire.id}">
+                        <h2 class="text-lg font-semibold">{questionnaire.name}</h2>
+                        <p class="text-sm text-neutral-500">{questionnaire.description}</p>
+                    </a>
+                {:else}
+                    <p class="mb-6">Keine Fragebögen erstellt</p>
+                {/each}
+            </div>
+
+            <Button href="/fragebogen/neu">Fragebogen erstellen</Button>
         </TabItem>
         <TabItem title="Bearbeiten">
             {#each data.questionnairesEditor as questionnaire}
