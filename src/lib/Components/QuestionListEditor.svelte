@@ -6,6 +6,8 @@
     import { getCategories } from "$lib/helpers";
     import { GO_BACK_TO } from "$lib/const";
     import { page } from "$app/stores";
+    import { SHORTCUTS } from "$lib/const";
+    import { onMount } from "svelte";
 
     type InteractiveQuestion = Question & {
         selected?: boolean,
@@ -194,6 +196,25 @@
             toggleQuestionStatus(q.id, 'NORMAL');
         });
     }
+
+    onMount(() => {
+        // Shortcuts
+        document.addEventListener('keydown', (e) => {
+            console.log(e);
+
+            if (e.key == SHORTCUTS.select_all.key) {
+                selectAll();
+            } else if (e.key == SHORTCUTS.deselect_all.key) {
+                selectNone();
+            } else if (e.key == SHORTCUTS.invert_selection.key) {
+                invertSelection();
+            } else if (e.key == SHORTCUTS.hide_selected_questions.key) {
+                hideSelectedQuestions();
+            } else if (e.key == SHORTCUTS.unhide_selected_questions.key) {
+                showSelectedQuestions();
+            }
+        });  
+    });
 </script>
 
 <div class="mb-4 flex flex-col lg:flex-row gap-3 whitespace-nowrap">

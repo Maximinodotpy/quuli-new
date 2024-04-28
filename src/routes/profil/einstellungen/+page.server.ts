@@ -10,7 +10,7 @@ export const actions: Actions = {
         const data = await request.formData()
 
         const new_username = String(data.get('username')).trim()
-
+        const image = String(data.get('image')).trim()
 
         // Getting the user id
         const userId = (await locals.auth())?.user?.id
@@ -21,7 +21,8 @@ export const actions: Actions = {
                 id: userId
             },
             data: {
-                name: new_username
+                name: new_username,
+                image: image,
             }
         })
         

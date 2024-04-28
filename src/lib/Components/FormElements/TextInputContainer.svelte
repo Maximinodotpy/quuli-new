@@ -3,7 +3,7 @@
     import InputContainer from "$lib/Components/FormElements/InputContainer.svelte";
     export let id: string;
     export let title: string;
-    export let description: string;
+    export let description: string = '';
 
     type inputTypes = "text" | "email" | "password" | "number" | "tel" | "url" | "textcontainer";
     export let text_type: inputTypes = "text";
