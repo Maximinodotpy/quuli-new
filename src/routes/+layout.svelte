@@ -28,6 +28,7 @@
     import { slide } from "svelte/transition";
     import { expoOut } from "svelte/easing";
     import Footer from "$lib/Components/Footer.svelte";
+    import { browser } from "$app/environment";
 
      let showSidebar = false;
 
@@ -171,10 +172,6 @@
                     </SidebarGroup>
                 </SidebarWrapper>
             </Sidebar>
-
-            <!-- <div class="p-4">
-                <Button class="w-full">App Herunterladen</Button>
-            </div> -->
         </div>
 
         <button class="bg-neutral-900/50 absolute left-0 w-full h-full z-10 {showSidebar ? 'block': 'hidden'} md:hidden" on:click={() => { showSidebar = false }}></button>
