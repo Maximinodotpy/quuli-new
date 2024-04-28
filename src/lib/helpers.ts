@@ -175,3 +175,48 @@ export async function getCategories() {
 
   return categories
 }
+
+export async function getQuestionnaire(id: string) {
+  let questionnaire;
+
+  if (browser) {
+    // Should use fetch so the frontend can also call this
+    questionnaire = fetch('/api/questionnaire/get', {
+      method: 'POST',
+      body: jsonToFormData({ id }),
+    })
+  } else {
+    questionnaire = db.questionnaire.findUnique({
+      where: {
+        id,
+      },
+    })
+  }
+
+  return questionnaire;
+}
+
+
+export async function isUserAllowedToEditQuestinnaire(questionnaire_id: string, user_id: string) {
+
+  // Check if the user is the creator or an editor
+  const questionnaire = await db.questionnaire.findFirst({
+    where: {
+      id: questionnaire_id,
+      OR: [
+        {
+          createdById: user_id,
+        },
+        {
+          editors: {
+            some: {
+              id: user_id,
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  return !!questionnaire;
+}

@@ -2,7 +2,6 @@ import type { PageServerLoad } from "./$types";
 import { db } from "$lib/db";
 import type { Actions } from "../../vorschlagen/$types";
 import { checkQuestionFormData } from "$lib/helpers";
-import { redirect } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({ route, locals, params }) => {
     console.log(route);
@@ -56,6 +55,10 @@ export const actions: Actions = {
         try {
             const data = await checkQuestionFormData(await request.formData());
 
+            data.categoryId = data.categoryId == 'null' ? null : data.categoryId;
+
+            console.log('New Data ...', data);
+
             await db.question.update({
                 where: {
                     id: params?.id || ''
@@ -72,8 +75,6 @@ export const actions: Actions = {
                 error: error
             };
         }
-
-        redirect(307, "/profil");
         
         return {
             success: true,

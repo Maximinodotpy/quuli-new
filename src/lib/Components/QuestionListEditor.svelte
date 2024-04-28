@@ -4,6 +4,8 @@
     import { jsonToFormData } from "$lib/helpers";
     import { Input, Select, CheckboxButton, Dropdown, DropdownItem, Button, Checkbox } from "flowbite-svelte";
     import { getCategories } from "$lib/helpers";
+    import { GO_BACK_TO } from "$lib/const";
+    import { page } from "$app/stores";
 
     type InteractiveQuestion = Question & {
         selected?: boolean,
@@ -246,11 +248,11 @@
                 <p>
                     {question.answer}
                     {#if categoriesEnabled}
-                        <span class="text-xs text-gray-500 dark:text-gray-400">/{question?.category?.name}</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">{question?.category?.name}</span>
                     {/if}
                 </p>
                 <div class="grid grid-cols-2 gap-4 w-[40%]">
-                    <a href={`/fragen/bearbeiten/${question.id}`}>Bearbeiten</a>
+                    <a href={`/fragen/bearbeiten/${question.id}?${GO_BACK_TO}=${$page.url.pathname}`}>Bearbeiten</a>
                     <button on:click={() => { toggleQuestionStatus(question.id) }}>
                         {#if question.status == 'DELETED'}
                             Anzeigen

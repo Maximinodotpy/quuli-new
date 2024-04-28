@@ -41,3 +41,8 @@ export const SHORTCUTS: { [key: string]: Shortcut } = {
 
 
 export const MINIMUM_AMOUNT_OF_QUESTIONS_FOR_CATEGORY = 5;
+
+
+
+// URL Params name
+export const GO_BACK_TO = 'go_back_to'
