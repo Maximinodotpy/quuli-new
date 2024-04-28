@@ -102,8 +102,8 @@
     </div>
 
     <div class="flex grow overflow-hidden">
-        <div class="w-64 border-r h-[calc(100%)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-20 flex-col justify-between overflow-y-auto overflow-x-hidden">
-            <Sidebar activeUrl={activeUrl} >
+        <div class="w-64 border-r h-[calc(100%)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-50">
+            <Sidebar activeUrl={activeUrl} asideClass="overflow-y-auto" >
                 <SidebarWrapper divClass="h-full p-2">
                     <SidebarGroup title="Group 1">
                         <SidebarItem label="Home" href="/">
