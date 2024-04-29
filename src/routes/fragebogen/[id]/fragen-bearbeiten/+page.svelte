@@ -1,11 +1,12 @@
 <script lang="ts">
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
-    import type { PageData } from "./$types";
+    import type { ActionData, PageData } from "./$types";
     import QuestionListEditor from "$lib/Components/QuestionListEditor.svelte";
     import { Button, Modal } from "flowbite-svelte";
     import QuestionForm from "$lib/Components/QuestionForm.svelte";
 
     export let data: PageData
+    export let form: ActionData;
 
     let modalVisible = false;
 </script>
@@ -20,5 +21,5 @@
 </div>
 
 <Modal bind:open={modalVisible} title="Frage hinzufügen" on:close={() => modalVisible = false}>
-    <QuestionForm categoriesEnabled={false} questionnaire={data.questionnaire.id}/>
+    <QuestionForm categoriesEnabled={false} questionnaire={data.questionnaire.id} on:submit={() => { modalVisible = false }}/>
 </Modal>

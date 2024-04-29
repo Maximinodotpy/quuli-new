@@ -7,7 +7,8 @@
     import { GO_BACK_TO } from "$lib/const";
     import { page } from "$app/stores";
     import { SHORTCUTS } from "$lib/const";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
+    import { PenSolid, EyeSolid, EyeSlashSolid } from "flowbite-svelte-icons";
 
     type InteractiveQuestion = Question & {
         selected?: boolean,
@@ -215,6 +216,12 @@
             }
         });  
     });
+
+    onDestroy(() => {
+        document.removeEventListener('keydown', () => {});
+    });
+
+
 </script>
 
 <div class="mb-4 flex flex-col lg:flex-row gap-3 whitespace-nowrap">
@@ -232,7 +239,7 @@
     <CheckboxButton color="alternative" bind:checked={hide_hidden}>Verborgene Fragen nicht anzeigen</CheckboxButton>
 </div>
 
-<div class="sticky md:-top-[33px] -top-4 border shadow-md dark:border-slate-700 bg-white dark:bg-gray-800 p-3 flex gap-4 items-center rounded-xl">
+<div class="sticky md:-top-[33px] -top-4 border shadow-md dark:border-slate-700 bg-white dark:bg-gray-800 p-3 flex gap-4 items-center rounded-xl z-20">
     <Button color="alternative">
         { sought_after.filter(q => q.selected).length }/{ sought_after.length } sichtbare Fragen Ausgewählt
     </Button>
@@ -261,27 +268,35 @@
 
 <div class="flex flex-col divide-y-[1px] divide-gray-300 dark:divide-gray-700 max-w-full overflow-hidden">
     {#each sought_after as question}
-        <div class="flex flex-col lg:flex-row justify-between p-2 lg:p-4 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' }">
-            <div class="flex items-center gap-2 pl-1 overflow-hidden max-w-full { question.status == 'DELETED'? 'line-through text-red-500': '' }">
+        <div class="grid grid-cols-5 gap-3 p-2 lg:p-4 hover:bg-gray-100 dark:hover:bg-gray-900 group whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' } { question.status == 'DELETED'? 'line-through !text-red-500': '' }">
+            <div class="flex items-center col-span-4 md:col-span-3 gap-2 pl-1 overflow-hidden relative">
                 <Checkbox bind:checked={question.selected}>{question.question}</Checkbox>
+                <div class="absolute top-0 right-0 h-full w-16 bg-gradient-to-r from-transparent to-white dark:to-slate-800 to-60% group-hover:to-gray-100 dark:group-hover:to-gray-900"></div>
             </div>
-            <div class="w-[60%] flex justify-between">
-                <p>
-                    {question.answer}
-                    {#if categoriesEnabled}
-                        <span class="text-xs text-gray-500 dark:text-gray-400">{question?.category?.name}</span>
+            <p class="hidden md:block">
+                {question.answer}
+                {#if categoriesEnabled}
+                    <span class="text-xs text-gray-500 dark:text-gray-400">{question?.category?.name}</span>
+                {/if}
+            </p>
+            <div class="gap-4 flex opacity-25 group-hover:opacity-100 justify-end">
+                <a href={`/fragen/bearbeiten/${question.id}?${GO_BACK_TO}=${$page.url.pathname}`}><PenSolid size="lg" title={{
+                    id: 'Bearbeiten',
+                    title: 'Bearbeiten'
+                }} /></a>
+                <button on:click={() => { toggleQuestionStatus(question.id) }}>
+                    {#if question.status == 'DELETED'}
+                        <EyeSolid size="lg" title={{
+                            id: 'Anzeigen',
+                            title: 'Anzeigen'
+                        }} />
+                    {:else}
+                        <EyeSlashSolid size="lg" title={{
+                            id: 'Verstecken',
+                            title: 'Verstecken'
+                        }} />
                     {/if}
-                </p>
-                <div class="grid grid-cols-2 gap-4 w-[40%]">
-                    <a href={`/fragen/bearbeiten/${question.id}?${GO_BACK_TO}=${$page.url.pathname}`}>Bearbeiten</a>
-                    <button on:click={() => { toggleQuestionStatus(question.id) }}>
-                        {#if question.status == 'DELETED'}
-                            Anzeigen
-                        {:else}
-                            Verbergen
-                        {/if}
-                    </button>
-                </div>
+                </button>
             </div>
         </div>
     {/each}

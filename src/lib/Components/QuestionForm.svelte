@@ -6,6 +6,9 @@
     import { hasDuplicates, isAValidAnswer } from "$lib/helpers";
     import { getCategories } from "$lib/helpers";
     import { onMount } from "svelte";
+    import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
     export let q_info: Question = {
         id: '',
@@ -79,7 +82,14 @@
     }
 </script>
 
-<form method="post" use:enhance action="{form_action}">
+<form method="post" use:enhance={({ action }) => {
+    return async ({ update }) => {
+        console.log('submitting');
+        
+        await update();
+        dispatch('submit', {});
+    }
+}} action="{form_action}">
     <fieldset disabled={is_disabled} class="flex flex-col gap-10">
         <div class="grid md:grid-cols-2 gap-4">
             <div>
