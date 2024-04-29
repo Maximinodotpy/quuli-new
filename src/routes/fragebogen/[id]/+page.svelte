@@ -11,7 +11,9 @@
 <!-- <pre>{ JSON.stringify(data, null, 2) }</pre> -->
 
 <div class="mx-auto max-w-3xl flex flex-col gap-6">
-    <PageHeaderArea title="Fragebogen: {data.questionnaire.name}" text={data.questionnaire.description ?? ''} />
+    <PageHeaderArea title="{data.questionnaire.name}" text={data.questionnaire.description ?? ''} margin={false} />
+
+    <!-- <img src="{ data.questionnaire.image ?? 'https://placehold.co/600x400?text=Hello+World' }" alt="" class="w-full rounded-xl shadow-xl border"> -->
 
     <Button size="lg" href="/quiz?questionnaire={data.questionnaire.id}">Fragebogen ausfüllen</Button>
 

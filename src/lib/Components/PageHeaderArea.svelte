@@ -5,6 +5,8 @@
     export let text = "";
 
     export let set_page_title = true;
+
+    export let margin = true;
 </script>
 
 <svelte:head>
@@ -13,7 +15,7 @@
     {/if}
 </svelte:head>
 
-<div class="mb-10 max-w-4xl">
+<div class="{margin ? 'mb-10': ''} max-w-4xl">
     <Heading class="mb-4" tag="h1">{title}</Heading>
     <P class="text-gray-500 dark:text-gray-400 text-xl">{text}</P>
 </div>
