@@ -28,6 +28,9 @@
 <div>
     <form action={form_action} class="flex flex-col gap-8" method="post">
         <TextInputContainer title="Name" id="name" description="" bind:value={questionnaire.name} required={true} />
+        
+        <TextInputContainer title="Bild" id="image" description="" bind:value={questionnaire.image} />
+
         <TextInputContainer title="Beschreibung" id="description" description="" text_type="textcontainer" bind:value={questionnaire.description}/>
     
         <UserChooserContainer title="Bearbeitende" id="editors" description="" chosen_users={questionnaire.editors}/>

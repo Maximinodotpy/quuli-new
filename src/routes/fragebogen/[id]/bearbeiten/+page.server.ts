@@ -41,12 +41,14 @@ export const actions: Actions = {
         const visibility = String(data.get("visibility")) as QuestionnaireVisibility
         const editors = String(data.get("editors")).split(",")
         const members = String(data.get("members")).split(",")
+        const image = String(data.get("image"))
 
         console.log('Creating questionnaire with name', name, '...');
         console.log('Description:', description);
         console.log('Visibility:', visibility);
         console.log('Editors:', editors);
         console.log('Members:', members);
+        console.log('Image:', image);
 
         // Update the question
         const questionnaire = await db.questionnaire.update({
@@ -57,6 +59,7 @@ export const actions: Actions = {
                 name,
                 description,
                 visibility,
+                image,
             },
             include: {
                 members: true,
