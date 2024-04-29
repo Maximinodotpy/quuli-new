@@ -268,17 +268,19 @@
 
 <div class="flex flex-col divide-y-[1px] divide-gray-300 dark:divide-gray-700 max-w-full overflow-hidden">
     {#each sought_after as question}
-        <div class="grid grid-cols-5 gap-3 p-2 lg:p-4 hover:bg-gray-100 dark:hover:bg-gray-900 group whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' } { question.status == 'DELETED'? 'line-through !text-red-500': '' }">
+        <div class="grid grid-cols-5 gap-3 py-2 lg:py-4 hover:bg-gray-100 dark:hover:bg-gray-900 group whitespace-nowrap { question.isLoading ? 'animate-pulse text-blue-500': '' } { question.status == 'DELETED'? 'line-through !text-red-500': '' }">
             <div class="flex items-center col-span-4 md:col-span-3 gap-2 pl-1 overflow-hidden relative">
                 <Checkbox bind:checked={question.selected}>{question.question}</Checkbox>
-                <div class="absolute top-0 right-0 h-full w-16 bg-gradient-to-r from-transparent to-white dark:to-slate-800 to-60% group-hover:to-gray-100 dark:group-hover:to-gray-900"></div>
+                
+                <div class="absolute top-0 right-0 h-full w-16 bg-gradient-to-r from-transparent to-white dark:to-gray-800 to-60% group-hover:to-gray-100 dark:group-hover:to-gray-900"></div>
             </div>
-            <p class="hidden md:block">
+            <div class="hidden md:block relative overflow-hidden">
                 {question.answer}
+                <div class="absolute top-0 right-0 h-full w-16 bg-gradient-to-r from-transparent to-white dark:to-gray-800 to-60% group-hover:to-gray-100 dark:group-hover:to-gray-900"></div>
                 {#if categoriesEnabled}
                     <span class="text-xs text-gray-500 dark:text-gray-400">{question?.category?.name}</span>
                 {/if}
-            </p>
+            </div>
             <div class="gap-4 flex opacity-25 group-hover:opacity-100 justify-end">
                 <a href={`/fragen/bearbeiten/${question.id}?${GO_BACK_TO}=${$page.url.pathname}`}><PenSolid size="lg" title={{
                     id: 'Bearbeiten',

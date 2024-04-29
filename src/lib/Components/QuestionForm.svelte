@@ -83,6 +83,8 @@
 </script>
 
 <form method="post" use:enhance={({ action }) => {
+    dispatch('started_submit', {});
+
     return async ({ update }) => {
         console.log('submitting');
         
