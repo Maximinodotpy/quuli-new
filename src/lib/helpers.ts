@@ -225,3 +225,7 @@ export async function isUserAllowedToEditQuestinnaire(questionnaire_id: string, 
 
   return !!questionnaire;
 }
+
+export function getPlaceholderImage(text: string, width = 600, height = 400) {
+  return `https://placehold.co/${width}x${height}?text=` + text;
+}

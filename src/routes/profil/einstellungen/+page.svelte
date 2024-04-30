@@ -4,6 +4,7 @@
     import type { PageData } from "./$types";
     import TextInputContainer from "$lib/Components/FormElements/TextInputContainer.svelte";
     import { enhance } from "$app/forms";
+    import { PUT_IMAGE_ON_IMGUR } from "$lib/const";
 
     export let data: PageData;
 </script>
@@ -14,7 +15,7 @@
         <PageHeaderArea title="Profil Einstellungen" text="" />
         
         <TextInputContainer id="username" title="Benutzername" bind:value={data.session.user.name} />
-        <TextInputContainer id="image" title="Profilbild URL" bind:value={data.session.user.image} />
+        <TextInputContainer id="image" title="Profilbild URL" description="{PUT_IMAGE_ON_IMGUR}" bind:value={data.session.user.image} />
 
         <div class="flex justify-end">
             <Button type="submit">Speichern</Button>

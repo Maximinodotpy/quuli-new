@@ -281,7 +281,7 @@
                     <span class="text-xs text-gray-500 dark:text-gray-400">{question?.category?.name}</span>
                 {/if}
             </div>
-            <div class="gap-4 flex opacity-25 group-hover:opacity-100 justify-end">
+            <div class="gap-4 flex opacity-25 group-hover:opacity-100 justify-end pr-4">
                 <a href={`/fragen/bearbeiten/${question.id}?${GO_BACK_TO}=${$page.url.pathname}`}><PenSolid size="lg" title={{
                     id: 'Bearbeiten',
                     title: 'Bearbeiten'

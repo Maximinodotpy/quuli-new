@@ -6,6 +6,7 @@
         TabItem,
         Button
     } from "flowbite-svelte"
+    import QuestionnairesList from "$lib/Components/QuestionnairesList.svelte";
 
     export let data: PageData
 </script>
@@ -18,37 +19,16 @@
     <Tabs style="underline">
         <TabItem title="Erschaffen" open>
             <div class="mb-8">
-                {#each data.questionnaires as questionnaire}
-                    <a class="flex flex-col" href="/fragebogen/{questionnaire.id}">
-                        <h2 class="text-lg font-semibold">{questionnaire.name}</h2>
-                        <p class="text-sm text-neutral-500">{questionnaire.description}</p>
-                    </a>
-                {:else}
-                    <p class="mb-6">Keine Fragebögen erstellt</p>
-                {/each}
+                <QuestionnairesList questionnaires={data.questionnaires} />
             </div>
 
             <Button href="/fragebogen/neu">Fragebogen erstellen</Button>
         </TabItem>
         <TabItem title="Bearbeiten">
-            {#each data.questionnairesEditor as questionnaire}
-                <a class="flex flex-col" href="/fragebogen/{questionnaire.id}">
-                    <h2 class="text-lg font-semibold">{questionnaire.name}</h2>
-                    <p class="text-sm text-neutral-500">{questionnaire.description}</p>
-                </a>
-            {:else}
-                <p class="mb-6">Keine Fragebögen zum Bearbeiten</p>
-            {/each}
+            <QuestionnairesList questionnaires={data.questionnairesEditor} />
         </TabItem>
         <TabItem title="Mitglied">
-            {#each data.questionnairesMember as questionnaire}
-                <a class="flex flex-col" href="/fragebogen/{questionnaire.id}">
-                    <h2 class="text-lg font-semibold">{questionnaire.name}</h2>
-                    <p class="text-sm text-neutral-500">{questionnaire.description}</p>
-                </a>
-            {:else}
-                <p class="mb-6">Keine Fragebögen als Mitglied</p>
-            {/each}
+            <QuestionnairesList questionnaires={data.questionnairesMember} />
         </TabItem>
     </Tabs>
 </div>

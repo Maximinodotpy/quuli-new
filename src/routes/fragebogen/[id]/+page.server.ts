@@ -15,9 +15,22 @@ export const load: PageServerLoad = async ({ params }) => {
             members: true,
             editors: true,
             createdBy: true,
-            questions: true,
+            questions: {
+                include: {
+                    responses: true
+                },
+            },
         }
     }) as Questionnaire;
+
+    // Count the number of responses for all questions
+    questionnaire.questions = questionnaire.questions.map(question => {
+        question.responseCount = question.responses.length;
+        return question;
+    });
+
+    // Count the number of responses for the questionnaire
+    questionnaire.responseCount = questionnaire.questions.reduce((acc, question) => acc + question.responseCount, 0);
 
     return {
         questionnaire
