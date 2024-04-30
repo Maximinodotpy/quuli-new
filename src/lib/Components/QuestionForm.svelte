@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Alert, Heading, Input, Label, Button, Select, P } from "flowbite-svelte";
+    import { Alert, Heading, Input, Label, Button, Select, P, Spinner } from "flowbite-svelte";
     import { QUESTION_MIN_LENGTH, QUESTION_MAX_LENGTH, ANSWER_MAX_LENGTH } from "$lib/const";
     import { enhance } from "$app/forms";
     import type { Category, Question } from "@prisma/client";
@@ -26,6 +26,8 @@
     export let is_disabled: boolean = false;
     export let form_action: string = '/fragen/vorschlagen?/add_question';
     export let categories: Category[] = [];
+
+    let is_loading: boolean = false;
 
     onMount(async () => {
         categories = await getCategories();
@@ -85,11 +87,15 @@
 <form method="post" use:enhance={({ action }) => {
     dispatch('started_submit', {});
 
+    is_loading = true;
+
     return async ({ update }) => {
         console.log('submitting');
         
         await update();
         dispatch('submit', {});
+
+        is_loading = false;
     }
 }} action="{form_action}">
     <fieldset disabled={is_disabled} class="flex flex-col gap-10">
@@ -156,7 +162,12 @@
         </div>
 
         <div class="mt-8">
-            <Button type="submit" disabled={errors.length != 0}>Einreichen</Button>
+            <Button type="submit" disabled={errors.length != 0}>
+                {#if is_loading}
+                    <Spinner class="mr-2" />
+                {/if}
+                Einreichen
+            </Button>
         </div>
     </fieldset>
 </form>
