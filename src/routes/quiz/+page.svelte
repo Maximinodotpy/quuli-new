@@ -209,7 +209,7 @@
         {:else}
             <div class="md:mb-10 md:mt-10">
                 {#if questionnaire}
-                    <div>{questionnaire.name}</div>
+                    <a href="/fragebogen/{questionnaire.id}">{questionnaire.name}</a>
                 {/if}
                 <Heading tag="h2" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
             </div>

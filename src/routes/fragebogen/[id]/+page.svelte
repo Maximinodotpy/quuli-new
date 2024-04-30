@@ -6,6 +6,7 @@
     import { Button, Card } from "flowbite-svelte";
     import ImageAspectContainer from "$lib/Components/ImageAspectContainer.svelte";
     import ShareButton from "$lib/Components/ShareButton.svelte";
+    import { getPlaceholderImage } from "$lib/helpers";
 
     export let data: PageData;
 
@@ -19,7 +20,7 @@
 <div class="mx-auto max-w-3xl flex flex-col gap-6">
     <PageHeaderArea title="{data.questionnaire.name}" text={data.questionnaire.description ?? ''} margin={false} />
 
-    <ImageAspectContainer image={data.questionnaire.image ?? 'https://placehold.co/600x400?text=Hello+World'} />
+    <ImageAspectContainer image={data.questionnaire.image ?? getPlaceholderImage(data.questionnaire.name, 800)} />
 
     <div class="flex gap-4 items-center">
         <Button class="grow" href="/quiz?questionnaire={data.questionnaire.id}">Fragebogen ausfüllen</Button>
