@@ -38,11 +38,6 @@ export const load: PageServerData = async ({}) => {
         }
     })
 
-    // Get Players with most correct answers on average
-    /* const ranked_correct_answers_average = await db.user.findMany({
-        _
-    }) */
-
     return {
         ranked_submitted_questions,
         ranked_correct_answers,
