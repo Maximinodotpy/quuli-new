@@ -9,6 +9,7 @@
     import { SHORTCUTS } from "$lib/const";
     import { onDestroy, onMount } from "svelte";
     import { PenSolid, EyeSolid, EyeSlashSolid } from "flowbite-svelte-icons";
+    import { browser } from "$app/environment";
 
     type InteractiveQuestion = Question & {
         selected?: boolean,
@@ -200,21 +201,28 @@
 
     onMount(() => {
         // Shortcuts
-        document.addEventListener('keydown', (e) => {
-            console.log(e);
+        if (browser) {
+            document.addEventListener('keydown', (e) => {                
+                if (document?.activeElement?.tagName == 'INPUT') {
+                    console.log('Input is focused so no shortcuts will be executed');
+                } else {
+                    console.log('Executing shortcut ...');
 
-            if (e.key == SHORTCUTS.select_all.key) {
-                selectAll();
-            } else if (e.key == SHORTCUTS.deselect_all.key) {
-                selectNone();
-            } else if (e.key == SHORTCUTS.invert_selection.key) {
-                invertSelection();
-            } else if (e.key == SHORTCUTS.hide_selected_questions.key) {
-                hideSelectedQuestions();
-            } else if (e.key == SHORTCUTS.unhide_selected_questions.key) {
-                showSelectedQuestions();
-            }
-        });  
+                    if (e.key == SHORTCUTS.select_all.key) {
+                        selectAll();
+                    } else if (e.key == SHORTCUTS.deselect_all.key) {
+                        selectNone();
+                    } else if (e.key == SHORTCUTS.invert_selection.key) {
+                        invertSelection();
+                    } else if (e.key == SHORTCUTS.hide_selected_questions.key) {
+                        hideSelectedQuestions();
+                    } else if (e.key == SHORTCUTS.unhide_selected_questions.key) {
+                        showSelectedQuestions();
+                    }
+                }
+                    
+            });  
+        }
     });
 
     onDestroy(() => {
