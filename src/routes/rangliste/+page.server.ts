@@ -8,11 +8,16 @@ export const load: PageServerData = async ({}) => {
         take: AMOUNT_OF_RANKED_USERS_SHOWN,
         orderBy: {
             Questions: {
-                _count: "desc"
+                _count: "desc",
             }
         },
         include: {
-            Questions: true
+            Questions: {
+                where: {
+                    status: "NORMAL",
+                    questionnaireId: null
+                }
+            }
         }
     })
 
