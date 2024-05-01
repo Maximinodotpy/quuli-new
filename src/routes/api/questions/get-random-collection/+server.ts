@@ -20,11 +20,13 @@ export async function POST(event) {
     const questions = await getAllPublicQuestions({ idExceptions: exceptions, categories: [], questionnaireId: null });
 
     // Get a random collection of questions
-    const randomQuestions = [];
+    let randomQuestions = [];
     while (randomQuestions.length < amount && questions.length > 0) {
         const index = Math.floor(Math.random() * questions.length);
         randomQuestions.push(questions.splice(index, 1)[0]);
     }
 
-    return json({ questions: randomQuestions });
+    randomQuestions = randomQuestions.slice(0, amount);
+
+    return json(randomQuestions);
 }
