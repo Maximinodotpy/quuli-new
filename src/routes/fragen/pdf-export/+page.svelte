@@ -30,8 +30,6 @@
             pdf.save("quizfragen.pdf");
         }
     }
-
-    createPDF();
 </script>
 
 <PageHeaderArea title="Fragen als PDF exportieren" text="Möchtest du deine Freunde auch noch im echten Leben mit Quiz Fragen nerven, dann bist hier genau richtig." />
