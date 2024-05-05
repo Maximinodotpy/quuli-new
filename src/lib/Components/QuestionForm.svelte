@@ -164,7 +164,7 @@
         <div class="mt-8">
             <Button type="submit" disabled={errors.length != 0}>
                 {#if is_loading}
-                    <Spinner class="mr-2" />
+                    <Spinner class="mr-2" size="4" color="white"/>
                 {/if}
                 Einreichen
             </Button>
