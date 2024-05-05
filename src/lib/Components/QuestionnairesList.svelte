@@ -18,6 +18,6 @@
             </div>
         </a>
     {:else}
-        <p class="mb-6">Keine Fragebögen erstellt</p>
+        <p class="mb-6">Keine Fragebögen ...</p>
     {/each}
 </div>

@@ -34,7 +34,7 @@
         <TextInputContainer title="Beschreibung" id="description" description="" text_type="textcontainer" bind:value={questionnaire.description}/>
     
         <UserChooserContainer title="Bearbeitende" id="editors" description="" chosen_users={questionnaire.editors}/>
-        <SelectContainer title="Sichtbarkeit" id="visibility" description="" selected="PRIVATE" options={[{label: "Öffentlich", value: "PUBLIC"}, {label: "Privat", value: "PRIVATE"}]}/>
+        <SelectContainer title="Sichtbarkeit" id="visibility" description="" selected={questionnaire.visibility} options={[{label: "Öffentlich", value: "PUBLIC"}, {label: "Privat", value: "PRIVATE"}]}/>
         <UserChooserContainer title="Mitglieder" id="members" description="" chosen_users={questionnaire.members}/>
     
         <div>

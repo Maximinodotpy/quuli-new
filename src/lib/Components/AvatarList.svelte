@@ -7,6 +7,6 @@
 
 <div class="flex items-center space-x-4 flex-wrap">
     {#each users as user}
-        <Avatar src={user.image ?? ''} alt={user.name ?? ''} size="md"  href="/profil/{user.id}" />
+        <Avatar src={user.image ?? ''} alt={user.name ?? ''} size="md"  href="/profil/{user.id}" class="aspect-square overflow-hidden" />
     {/each}
 </div>

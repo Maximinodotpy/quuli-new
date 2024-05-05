@@ -12,7 +12,7 @@
 
 <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
     {#each data.questionnaires as fragebogen}
-        <Card href={`/fragebogen/${fragebogen.id}`}>
+        <Card href={`/fragebogen/${fragebogen.id}`} class="max-w-full">
             <ImageAspectContainer image={fragebogen.image ?? getPlaceholderImage(fragebogen.name, 800)} />
 
             <div class="p-4 grow flex flex-col justify-between">

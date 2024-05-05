@@ -5,7 +5,7 @@
     import { getQuestionnaire, jsonToFormData } from '$lib/helpers';
     import { onMount } from 'svelte';
     import type { PageData } from './$types';
-    import { SHORTCUTS } from '$lib/const';
+    import { GO_BACK_TO, SHORTCUTS } from '$lib/const';
 
     export let data: PageData;
 
@@ -242,7 +242,7 @@
                     <div>
                         <!-- If the user is logged in and this question was contributed by them add a edit this question button -->
                         {#if data?.session?.user && data?.session?.user?.id == currentQuestion?.createdById}
-                            <Button href="/fragen/bearbeiten/{currentQuestion.id}" color="alternative">Frage bearbeiten</Button>
+                            <Button href="/fragen/bearbeiten/{currentQuestion.id}?{GO_BACK_TO}=/quiz" color="alternative">Frage bearbeiten</Button>
                         {/if}
                     </div>
 

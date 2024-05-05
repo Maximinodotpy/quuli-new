@@ -10,9 +10,7 @@
 
     export let data: PageData;
 
-    console.log(data);
-
-
+    console.log(data.questionnaire.visibility);
 </script>
 
 <!-- <pre>{ JSON.stringify(data, null, 2) }</pre> -->

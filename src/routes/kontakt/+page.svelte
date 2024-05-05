@@ -1,6 +1,5 @@
 <script lang="ts">
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
-    import { Button } from "flowbite-svelte";
 </script>
 
 <div class="max-w-4xl mx-auto min-h-full flex flex-col justify-center">

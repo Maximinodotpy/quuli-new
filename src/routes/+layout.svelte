@@ -62,7 +62,7 @@
         while slow networks see it moving for a full 12 seconds
     -->
     <div class="navigation-loader bg-gray-700 dark:bg-gray-300" in:slide={{ delay: 100, duration: 12000, axis: "x", easing: expoOut }}>
-        { JSON.stringify($navigating) }
+        <!-- { JSON.stringify($navigating) } -->
     </div>
 {/if}
 
@@ -167,6 +167,7 @@
                     {/if}
                     
                     <SidebarGroup title="About" border>
+                        <SidebarItem label="Suche" href="/suchen"></SidebarItem>
                         <SidebarItem label="Über Quuli" href="/ueber"></SidebarItem>
                         <SidebarItem label="Kontakt" href="/kontakt"></SidebarItem>
                     </SidebarGroup>
