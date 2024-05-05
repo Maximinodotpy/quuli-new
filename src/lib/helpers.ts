@@ -75,7 +75,7 @@ export interface GetQuestionsOptions {
   questionnaireId?: string | null;
 }
 
-export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [], questionnaireId: null}) {
+export async function getAllPublicQuestions(GetQuestionsOptions: GetQuestionsOptions = { idExceptions: [], categories: [], questionnaireId: null }) {
   // In case there are no categories specified return all questions
   const all_categories = await db.category.findMany();
 
@@ -225,6 +225,37 @@ export async function isUserAllowedToEditQuestinnaire(questionnaire_id: string, 
 
   return !!questionnaire;
 }
+
+export async function isUserAllowedToSeeQuestinnaire(questionnaire_id: string, user_id: string) {
+  const questionnaire = await db.questionnaire.findFirst({
+    where: {
+      id: questionnaire_id,
+    },
+  });
+
+  if (await isUserAllowedToEditQuestinnaire(questionnaire_id, user_id)) {
+    return true
+  } else if (questionnaire?.visibility == 'PUBLIC') {
+    return true
+  } else {
+    const is_member = !!(await db.questionnaire.findFirst({
+      where: {
+        members: {
+          some: {
+            id: user_id,
+          },
+        },
+      },
+    }));
+
+    if (is_member) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 
 export function getPlaceholderImage(text: string, width = 600, height = 400) {
   return `https://placehold.co/${width}x${height}.png?text=` + text;

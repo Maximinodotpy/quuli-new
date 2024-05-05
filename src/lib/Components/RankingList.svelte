@@ -15,10 +15,9 @@
     export let users: User[] = []
     export let title: string = ''
     export let whereRankedInfo: (user: User) => {  }
-
 </script>
 
-<Card size="lg">
+<Card size="lg" class="max-w-full">
     <Heading tag="h3" class="mb-6" customSize="text-2xl font-bold">{ title }</Heading>
 
     <Table shadow divClass="border border-slate-500 overflow-hidden round-md">

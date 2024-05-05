@@ -17,6 +17,17 @@
 
     let isUsingCredentials = false;
 
+    let notice = "";
+
+    // Check if there is a get param notAllowedToSeeQuestionnaire
+    onMount(() => {
+        if ($page.url.searchParams.get("notAllowedToSeeQuestionnaire")) {
+            notice = "Du musst angemeldet sein um den Fragebogen zu sehen. Es kann auch sein dass du keinen Zugriff auf den Fragebogen hast.";
+        }
+
+        console.log($page.url.searchParams.get("notAllowedToSeeQuestionnaire"));
+    });
+
     onMount(() => {
         if ($page.data.session) {
             goto("/profil/" + $page?.data?.session?.user?.id);
@@ -34,6 +45,13 @@
                 console.log(isUsingCredentials);
                 
              }}>per E-Mail und Password anmelden</span>. --></P>
+
+            {#if notice}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+                    <strong class="font-bold">Achtung!</strong>
+                    <span class="block sm:inline">{notice}</span>
+                </div>
+            {/if}
         </div>
         
         <div>
