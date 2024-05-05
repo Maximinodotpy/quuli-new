@@ -129,7 +129,7 @@
 
                             <SidebarDropdownItem label="Vorschlagen" href="/fragen/vorschlagen"></SidebarDropdownItem>
                             <SidebarDropdownItem label="Fragebogen" href="/fragebogen"></SidebarDropdownItem>
-                            <!-- <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem> -->
+                            <SidebarDropdownItem label="Exportieren als PDF" href="/fragen/pdf-export"></SidebarDropdownItem>
                         </SidebarDropdownWrapper>
 
                         <SidebarItem label="Rangliste" href="/rangliste">
