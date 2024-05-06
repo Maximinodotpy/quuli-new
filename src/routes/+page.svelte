@@ -44,7 +44,16 @@
         </p>
     </div>
 
+    
     <div class="text-center text-2xl">
         Also worauf wartest du noch ... <a href="/login" class="underline text-primary-600 font-semibold">lege dir einen Account an</a> und fang an, besser zu wissen!
+    </div>
+
+    <div>
+        <Heading tag="h2" customSize="text-4xl font-bold mb-3">Quuli Video</Heading>
+        <p class="text-2xl mb-4">
+            Ich habe auch noch ein kurzes Video gemacht, wo es um die neue Version von Quuli geht. Man merkt hier, dass ich vor allem Informatiker bin 😊
+        </p>
+        <iframe src="https://www.youtube-nocookie.com/embed/1jgTTTjw8dg?si=oFCwa4uH6EZcUOCY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full aspect-video overflow-hidden rounded-2xl"></iframe>
     </div>
 </div>

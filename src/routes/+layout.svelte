@@ -70,12 +70,15 @@
     <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-gray-800 z-20 items-center">
         <NavHamburger onClick={() => showSidebar = !showSidebar}/>
 
-        <div class="text-2xl w-64 pl-4 font-bold">
-            QUULI
-        </div>
+        <a class="text-2xl w-64 pl-4 flex items-center gap-3" href="/">
+            <img src="/favicon.svg" alt="" class="w-10 dark:bg-neutral-900 bg-neutral-100 rounded-full p-2 shadow-lg border border-neutral-200 dark:border-neutral-800">
+            <div class="font-semibold">Quuli</div>
+        </a>
 
-        <div class="grow pr-20 max-w-96 hidden">
-            <Input placeholder="Suche" />
+        <div class="grow w-52 absolute left-64 hidden md:block">
+            <dir class="px-2 w-full">
+                <Button color="alternative" class="w-full" href="/suchen">Suchen</Button>
+            </dir>
         </div>
 
         <div class="flex items-center gap-3 grow justify-end">
@@ -102,9 +105,9 @@
     </div>
 
     <div class="flex grow overflow-hidden">
-        <div class="w-64 border-r h-[calc(100%)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-30">
-            <Sidebar activeUrl={activeUrl} asideClass="overflow-y-auto w-full pb-4" >
-                <SidebarWrapper divClass="h-full p-2">
+        <div class="w-64 border-r h-[calc(100%)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-30 shrink-0">
+            <Sidebar activeUrl={activeUrl} asideClass="overflow-y-auto w-full pb-10" >
+                <SidebarWrapper divClass="h-full p-2 pb-10">
                     <SidebarGroup title="Group 1">
                         <SidebarItem label="Home" href="/">
                             <svelte:fragment slot="icon">
@@ -193,5 +196,9 @@
       left: 0;
       height: 5px;
       z-index: 50;
+    }
+
+    :global(*) {
+        scrollbar-width: thin;
     }
 </style>

@@ -169,10 +169,10 @@
 
             <NumberInputContainer id="amount" title="Anzahl Fragen" bind:value={amount} />
 
-            <SelectContainer id="visibility" title="Darstellungsweise" bind:selected={display_mode} options={[
+            <!-- <SelectContainer id="visibility" title="Darstellungsweise" bind:selected={display_mode} options={[
                 {label: 'Einfaches abfragen', value: 'simple_query'},
                 {label: 'Getrennt', value: 'split_query'},
-            ]}/>
+            ]}/> -->
         </Card>
     </div>
     

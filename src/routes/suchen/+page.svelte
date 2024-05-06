@@ -6,6 +6,8 @@
     import { page } from '$app/stores';
     import QuestionnairesList from "$lib/Components/QuestionnairesList.svelte";
     import PlayersList from "$lib/Components/PlayersList.svelte";
+    import { browser } from "$app/environment";
+    import { onMount } from "svelte";
 
     function callSearch() {
         const nach = document.getElementById('nach') as HTMLInputElement;
@@ -17,7 +19,25 @@
 
     export let data: PageData;
 
-    console.log(data)
+    onMount(() => {
+        if (browser) {
+            // Scroll to top
+            window.scrollTo(0, 0);
+    
+            // Focus on search input
+            const nach = document.getElementById('nach') as HTMLInputElement;
+    
+            if (nach) {
+                nach.focus();
+            }
+        }
+    })
+
+    function onKeydown(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+            callSearch();
+        }
+    }
 </script>
 
 <div class="max-w-4xl mx-auto min-h-full">
@@ -28,7 +48,7 @@
             <div class="flex absolute inset-y-0 start-0 items-center ps-3 pointer-events-none">
                 <SearchOutline class="w-4 h-4" />
             </div>
-            <Input id="nach" class="ps-10" placeholder="Search..." value={$page.url.searchParams.get('nach')}/>
+            <Input id="nach" class="ps-10" placeholder="Search..." value={$page.url.searchParams.get('nach')} on:keydown={onKeydown}/>
         </div>
     
         <!-- Submit -->
