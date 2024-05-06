@@ -1,6 +1,7 @@
 <script lang="ts">
     import PageHeaderArea from "$lib/Components/PageHeaderArea.svelte";
     import NumberInputContainer from "$lib/Components/FormElements/NumberInputContainer.svelte";
+    import SelectContainer from "$lib/Components/FormElements/SelectContainer.svelte";
     import jsPDF from "jspdf";
     import { jsonToFormData } from "$lib/helpers";
     import type { Question } from '@prisma/client'
@@ -18,14 +19,21 @@
 
     // User Settings
     let amount = 25;
+    let display_mode = 'simple_query'
+
+    $: {
+        questions;
+        amount;
+        display_mode;
+
+        if (browser && iframe) {
+            createPDF();
+        }
+    }
 
     $: {
         amount;
-
-        if (browser && iframe) {
-            refreshQuestions()
-                .then(() => createPDF());
-        }
+        refreshQuestions();
     }
 
     async function refreshQuestions() {
@@ -44,16 +52,16 @@
         console.log('create pdf');
         const pdf = new jsPDF();
 
-        
         const Padding = 20;
+        const qr_code_size = 20;
         const Space = 7
-        const innerWidth = pdf.internal.pageSize.width - Padding * 2;
+        const innerWidth = pdf.internal.pageSize.width - Padding * 2 - qr_code_size;
 
         function renderOnEachPage() {
             const url = 'https://www.quuli.ch'
             const qr_code = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${url}&margin=0&bgcolor=ffffff&color=000000`
 
-            pdf.addImage(qr_code, 'PNG', pdf.internal.pageSize.width - 30, 10, 20, 20, undefined, 'FAST');
+            pdf.addImage(qr_code, 'PNG', pdf.internal.pageSize.width - 30, 10, qr_code_size, qr_code_size, undefined, 'FAST');
 
             pdf.text('Quuli.ch', pdf.internal.pageSize.width - 10, 37, { align: 'right' });
 
@@ -65,8 +73,6 @@
 
         let content: Array<Array<string>> = [
             [
-                '',
-                '',
                 'Quuli Fragen Ausdruck',
                 '',
             ],
@@ -82,7 +88,7 @@
                 )
             );
             group.push(...pdf.splitTextToSize(
-                `Antwort: ${question.answer}, ${question.wrongAnswer1}, ${question.wrongAnswer2}, ${question.wrongAnswer3}`,
+                `Antworten: ${question.answer}, ${question.wrongAnswer1}, ${question.wrongAnswer2}, ${question.wrongAnswer3}`,
                 innerWidth,
                 {}
             ));
@@ -100,22 +106,11 @@
             }
         });
 
-        /* pdf.html(document.body.querySelector('#hello'), {
-            x: 10,
-            y: 10,
-            callback: () => {
-                console.log('callback');
-            },
-            width: 200,
-        }); */
-
         // Render
         let i = 0;
         content.forEach((group, index) => {            
             let y = Padding + i * Space;
             let groupHeight = group.length * Space + Padding;
-
-            console.log(y, groupHeight, pdf.internal.pageSize.height);
 
             if (y + groupHeight > pdf.internal.pageSize.height) {
                 pdf.addPage();
@@ -173,6 +168,11 @@
             <Heading tag="h3">Einstellungen</Heading>
 
             <NumberInputContainer id="amount" title="Anzahl Fragen" bind:value={amount} />
+
+            <SelectContainer id="visibility" title="Darstellungsweise" bind:selected={display_mode} options={[
+                {label: 'Einfaches abfragen', value: 'simple_query'},
+                {label: 'Getrennt', value: 'split_query'},
+            ]}/>
         </Card>
     </div>
     

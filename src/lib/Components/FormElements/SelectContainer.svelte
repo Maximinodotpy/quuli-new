@@ -3,7 +3,7 @@
     import InputContainer from "$lib/Components/FormElements/InputContainer.svelte";
     export let id: string;
     export let title: string;
-    export let description: string;
+    export let description: string = '';
 
     export let options: { label: string, value: string }[] = [];
     export let selected: string = '';
