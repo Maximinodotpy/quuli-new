@@ -81,7 +81,7 @@
         <div class="flex items-center gap-3 grow justify-end">
             {#if $page.data.session}
                 <Avatar id="user-drop" src="{$page.data.session.user?.image ?? ''}" class="cursor-pointer" />
-                <Dropdown triggeredBy="#user-drop" placement="bottom-start">
+                <Dropdown triggeredBy="#user-drop" placement="bottom-start" class="z-30">
                     <DropdownHeader>
                         <span class="block text-sm">{$page.data.session.user?.name}</span>
                         <span class="block truncate text-sm font-medium">{$page.data.session.user?.email}</span>

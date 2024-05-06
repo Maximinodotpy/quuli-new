@@ -6,6 +6,8 @@
     import { onMount } from 'svelte';
     import type { PageData } from './$types';
     import { GO_BACK_TO, SHORTCUTS } from '$lib/const';
+    import type { Category } from '@prisma/client';
+    import { getCategories } from '$lib/helpers';
 
     export let data: PageData;
 
@@ -22,6 +24,8 @@
     let category_ids: string[] = []
 
     let questionnaire: Questionnaire;
+
+    let category_infos: Category[] = [];
     
     $: {
         if (currentQuestion) {
@@ -101,6 +105,9 @@
                 nextQuestion();
             }
         });
+
+        category_infos = await getCategories();
+        console.log(category_infos);
     });
 
     function goCheck(answer: number) {
@@ -165,12 +172,14 @@
             body: jsonToFormData({ last_question_id, category_ids, questionnaire_id: questionnaire?.id }),
         }).then(response => {
             console.log(response, 'response');
-            
             return response.json()
         }).then((data: { question: Question, questions_left: number }) => {
             console.log(data.question);
 
             currentQuestion = data.question;
+
+            console.log('New question loaded ...', currentQuestion);
+            
 
             if (data.questions_left == 0) {
                 status = 'QuestionnaireFinished';
@@ -210,6 +219,10 @@
             <div class="md:mb-10 md:mt-10">
                 {#if questionnaire}
                     <a href="/fragebogen/{questionnaire.id}">{questionnaire.name}</a>
+                {:else}
+                    <a href="/kategorien">
+                        { category_infos.filter(category => category_ids.includes(category.id)).map(category => category.name).join(', ')}
+                    </a>
                 {/if}
                 <Heading tag="h2" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
             </div>
