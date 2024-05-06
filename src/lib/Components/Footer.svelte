@@ -46,7 +46,7 @@
                 <h2 class="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">Sonstiges</h2>
                 <FooterLinkGroup>
                     <FooterLink liClass="mb-4" href="/">Home</FooterLink>
-                    <FooterLink liClass="mb-4" href="/impressum">Impressum</FooterLink>
+                    <FooterLink liClass="mb-4" href="/ueber">Impressum</FooterLink>
                 </FooterLinkGroup>
             </div>
         </div>

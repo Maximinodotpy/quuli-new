@@ -91,6 +91,7 @@
                     </DropdownHeader>
                     <DropdownItem href="/profil/{$page.data?.session?.user?.id}">Profil</DropdownItem>
                     <DropdownItem href="/profil/einstellungen">Einstellungen</DropdownItem>
+                    <DropdownItem href="/profil/frageboegen">Fragebögen</DropdownItem>
                     <DropdownItem href="/profil/vorgeschlagene-fragen">Vorgeschlagene Fragen</DropdownItem>
                     <DropdownDivider />
                     <DropdownItem>
@@ -108,7 +109,7 @@
         <div class="w-64 border-r h-[calc(100%)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-30 shrink-0">
             <Sidebar activeUrl={activeUrl} asideClass="overflow-y-auto w-full pb-10" >
                 <SidebarWrapper divClass="h-full p-2 pb-10">
-                    <SidebarGroup title="Group 1">
+                    <SidebarGroup title="Navigation">
                         <SidebarItem label="Home" href="/">
                             <svelte:fragment slot="icon">
                                 <HomeSolid class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
