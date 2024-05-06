@@ -220,7 +220,7 @@
                 {#if questionnaire}
                     <a href="/fragebogen/{questionnaire.id}">{questionnaire.name}</a>
                 {:else}
-                    <a href="/kategorien">
+                    <a href="/kategorien?already_selected_categories={category_ids}">
                         { category_infos.filter(category => category_ids.includes(category.id)).map(category => category.name).join(', ')}
                     </a>
                 {/if}
