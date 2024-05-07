@@ -128,16 +128,21 @@
             </div>
         </div>
 
-        {#if categoriesEnabled}
-            <div class="grid md:grid-cols-2 gap-4">
-                <Label for="category" class="mb-2 text-xl">Kategorie</Label>
-                <Select name="category" id="category" required value={q_info.categoryId}>
-                    {#each categories as cat}
-                        <option value={cat.id}>{cat.name}</option>
-                    {/each}
-                </Select>
+        <div class="md:grid-cols-2 gap-4 {categoriesEnabled ? 'grid': 'hidden'}">
+            <div class="invisible pointer-events-none absolute">
+                <div>{ q_info.categoryId }</div>
+                {#each categories as cat}
+                    {cat.id}{cat.name} <br />
+                {/each}
             </div>
-        {/if}
+
+            <Label for="category" class="mb-2 text-xl">Kategorie</Label>
+            <Select name="category" id="category" required bind:value={q_info.categoryId}>
+                {#each categories as cat}
+                    <option value={cat.id}>{cat.name}</option>
+                {/each}
+            </Select>
+        </div>
 
         <!-- If questionnaire is set create a disabled input that shows the id -->
         {#if questionnaire}
