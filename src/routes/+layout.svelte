@@ -70,9 +70,9 @@
     <div class="shrink-0 sticky top-0 p-2 pt-3 flex border-b dark:border-slate-700 bg-white dark:bg-gray-800 z-20 items-center">
         <NavHamburger onClick={() => showSidebar = !showSidebar}/>
 
-        <a class="text-2xl w-64 pl-4 flex items-center gap-3" href="/">
-            <img src="/favicon.svg" alt="" class="w-10 dark:bg-neutral-900 bg-neutral-100 rounded-full p-2 shadow-lg border border-neutral-200 dark:border-neutral-800">
-            <div class="font-semibold">Quuli</div>
+        <a class="text-2xl w-64 pl-3 flex items-center gap-3" href="/">
+            <!-- <img src="/favicon.svg" alt="" class="w-10 dark:bg-neutral-900 bg-neutral-100 rounded-full p-2 shadow-lg border border-neutral-200 dark:border-neutral-800"> -->
+            <div class="font-bold">Quuli</div>
         </a>
 
         <div class="grow w-52 absolute left-64 hidden md:block">
