@@ -17,10 +17,10 @@
     export let whereRankedInfo: (user: User) => {  }
 </script>
 
-<Card size="lg" class="max-w-full">
+<div>
     <Heading tag="h3" class="mb-6" customSize="text-2xl font-bold">{ title }</Heading>
 
-    <Table shadow divClass="border border-slate-500 overflow-hidden round-md">
+    <Table shadow divClass="border border-slate-500 dark:border-slate-700 overflow-hidden round-md">
         <TableHead>
             <TableHeadCell class="w-[10%]">#</TableHeadCell>
             <TableHeadCell class="w-[80%]">Name</TableHeadCell>
@@ -31,11 +31,11 @@
                 <TableBodyRow>
                     <TableBodyCell tdClass="opacity-50 p-4 px-6">{i + 1}</TableBodyCell>
                     <TableBodyCell>
-                        <Avatar {user} />
+                        <Avatar {user} hide_image_on_mobile={true} />
                     </TableBodyCell>
                     <TableBodyCell tdClass="p-4 px-6 text-right">{whereRankedInfo(user)}</TableBodyCell>
                 </TableBodyRow>
             {/each}
         </TableBody>
     </Table>
-</Card>
+</div>
