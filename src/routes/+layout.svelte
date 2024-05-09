@@ -106,7 +106,7 @@
     </div>
 
     <div class="flex grow overflow-hidden">
-        <div class="w-64 border-r h-[calc(100%)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-30 shrink-0">
+        <div class="w-64 border-r h-[calc(100vh-60px)] dark:border-slate-700 {showSidebar ? 'flex': 'hidden'} md:flex absolute md:static bg-white dark:bg-gray-800 z-30 shrink-0">
             <Sidebar activeUrl={activeUrl} asideClass="overflow-y-auto w-full pb-10" >
                 <SidebarWrapper divClass="h-full p-2 pb-10">
                     <SidebarGroup title="Navigation">

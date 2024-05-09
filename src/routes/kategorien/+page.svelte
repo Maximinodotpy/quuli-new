@@ -40,12 +40,30 @@
         'Geographie': '/cat/Geographie.jpg',
         'Sonstiges': '/cat/Sonstiges.jpg',
     }
+
+    function selectAll() {
+        selected_categories = data.categories.map(cat => cat.id);
+    }
+
+    function deselectAll() {
+        selected_categories = [];
+    }
+
+    function invertSelection() {
+        selected_categories = data.categories.map(cat => cat.id).filter(cat => !selected_categories.includes(cat));
+    }
 </script>
 
 <PageHeaderArea title="Kategorien" text="Hier siehts du eine Übersicht der Kategorien auf Quuli. Du kannst auch von hier gleich ein Quiz mit Fragen von nur dort starten." />
 
-<div class="pb-10 flex gap-3 items-center">
+<div class="pb-10 flex flex-col md:flex-row gap-3 md:items-center">
     <Button disabled={selected_categories.length == 0} on:click={startQuiz}>Quiz Starten</Button>
+
+    <div>
+        <Button on:click={selectAll} size="sm" color="alternative">Alle Auswählen</Button>
+        <Button on:click={deselectAll} size="sm" color="alternative">Alle Abwählen</Button>
+        <Button on:click={invertSelection} size="sm" color="alternative">Auswahl umkehren</Button>
+    </div>
 
     <div>
         {#if selected_categories.length > 0}
