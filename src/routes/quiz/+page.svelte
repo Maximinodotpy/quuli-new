@@ -8,6 +8,8 @@
     import { GO_BACK_TO, SHORTCUTS } from '$lib/const';
     import type { Category } from '@prisma/client';
     import { getCategories } from '$lib/helpers';
+    import ShareButton from '$lib/Components/ShareButton.svelte';
+    import { page } from '$app/stores';
 
     export let data: PageData;
 
@@ -262,6 +264,10 @@
                     <div class="flex gap-3">
                         {#if !data?.session?.user}
                             <Button color="alternative" href="/login">Anmelden um Fortschritt zu erfassen</Button>
+                        {/if}
+
+                        {#if !questionnaire}
+                            <ShareButton title="Quuli Teilen" share_content={window.location.href} />
                         {/if}
 
                         <Button on:click={nextQuestion} title="enter">Nächste Frage</Button>

@@ -56,22 +56,24 @@
 
 <PageHeaderArea title="Kategorien" text="Hier siehts du eine Übersicht der Kategorien auf Quuli. Du kannst auch von hier gleich ein Quiz mit Fragen von nur dort starten." />
 
-<div class="pb-10 flex flex-col md:flex-row gap-3 md:items-center">
-    <Button disabled={selected_categories.length == 0} on:click={startQuiz}>Quiz Starten</Button>
-
-    <div>
-        <Button on:click={selectAll} size="sm" color="alternative">Alle Auswählen</Button>
-        <Button on:click={deselectAll} size="sm" color="alternative">Alle Abwählen</Button>
-        <Button on:click={invertSelection} size="sm" color="alternative">Auswahl umkehren</Button>
+<div class="pb-10">
+    <div class="flex flex-col md:flex-row gap-3 md:items-center mb-3">
+        <Button disabled={selected_categories.length == 0} on:click={startQuiz}>Quiz Starten</Button>
+    
+        <div>
+            <Button on:click={selectAll} size="sm" color="alternative">Alle Auswählen</Button>
+            <Button on:click={deselectAll} size="sm" color="alternative">Alle Abwählen</Button>
+            <Button on:click={invertSelection} size="sm" color="alternative">Auswahl umkehren</Button>
+        </div>
     </div>
 
-    <div>
+    <div class="!text-sm">
         {#if selected_categories.length > 0}
             { data.categories.filter(cat => {
                 return selected_categories.includes(cat.id);
             }).map(cat => cat.name).join(', ')}
         {:else}
-            <P>Wähle eine oder mehrere Kategorien aus um ein Quiz zu starten.</P>
+            Wähle eine oder mehrere Kategorien aus um ein Quiz zu starten.
         {/if}
     </div>
 </div>
