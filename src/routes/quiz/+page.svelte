@@ -222,8 +222,13 @@
                 {#if questionnaire}
                     <a href="/fragebogen/{questionnaire.id}">{questionnaire.name}</a>
                 {:else}
-                    <a href="/kategorien?already_selected_categories={category_ids}">
-                        { category_infos.filter(category => category_ids.includes(category.id)).map(category => category.name).join(', ')}
+                    <a href="/kategorien?already_selected_categories={category_ids}" class="flex gap-2">
+                        <!-- Show all categories and underline the one matching the current question -->
+                        {#each category_infos as category}
+                            {#if category_ids.includes(category.id) }
+                                <span class="{category.id == currentQuestion.categoryId ? 'underline': ''}">{category.name}</span>
+                            {/if}
+                        {/each}
                     </a>
                 {/if}
                 <Heading tag="h2" customSize="text-2xl md:text-3xl font-bold">{ currentQuestion.question }</Heading>
