@@ -8,8 +8,8 @@
 
 <div class="grid">
     {#each questionnaires as questionnaire}
-        <a class="p-4 flex items-center gap-4 hover:bg-gray-100 dark:hover:bg-gray-900" href="/fragebogen/{questionnaire.id}">
-            <div class="w-24 md:w-48">
+        <a class="md:p-4 py-2 flex items-center gap-4 hover:bg-gray-100 dark:hover:bg-gray-900" href="/fragebogen/{questionnaire.id}">
+            <div class="w-24 md:w-48 shrink-0">
                 <ImageAspectContainer image={questionnaire.image ?? getPlaceholderImage(questionnaire.name, 800)}  />
             </div>
             <div class="flex flex-col">

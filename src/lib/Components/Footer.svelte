@@ -39,7 +39,7 @@
                 <h2 class="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">Folge mir</h2>
                 <FooterLinkGroup>
                     <FooterLink liClass="mb-4" href="https://github.com/Maximinodotpy" target="_blank">GitHub</FooterLink>
-                    <!-- <FooterLink liClass="mb-4" href="/">Instagram</FooterLink> -->
+                    <FooterLink liClass="mb-4" href="https://www.instagram.com/maximmaeder/" target="_blank">Instagram</FooterLink>
                 </FooterLinkGroup>
             </div>
             <div>

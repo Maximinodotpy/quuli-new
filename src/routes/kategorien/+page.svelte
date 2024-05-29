@@ -60,7 +60,7 @@
     <div class="flex flex-col md:flex-row gap-3 md:items-center mb-3">
         <Button disabled={selected_categories.length == 0} on:click={startQuiz}>Quiz Starten</Button>
     
-        <div>
+        <div class="grid md:flex gap-2">
             <Button on:click={selectAll} size="sm" color="alternative">Alle Auswählen</Button>
             <Button on:click={deselectAll} size="sm" color="alternative">Alle Abwählen</Button>
             <Button on:click={invertSelection} size="sm" color="alternative">Auswahl umkehren</Button>
@@ -89,7 +89,7 @@
 
                     <label for="{category.id}" class="aspect-square w-full h-full outline -outline-offset-8 transition-all rounded-2xl outline-8 outline-transparent peer-checked:outline-primary-500 hover:outline-primary-500/25 group absolute top-0">
                         <div class="absolute z-20 bottom-0 h-1/2 left-0 bg-gradient-to-b from-transparent to-black w-full flex justify-between items-end pb-2 md:p-4 whitespace-nowrap group-hover:h-full transition-all">
-                            <Heading tag="h3" customSize="font-bold text-2xl !text-white text-center lg:text-left transition-all group-hover:mb-4">{ category.name }</Heading>
+                            <Heading tag="h3" customSize="font-bold md:text-2xl !text-white text-center lg:text-left transition-all group-hover:mb-4">{ category.name }</Heading>
                         </div>
                     </label>
                 </div>

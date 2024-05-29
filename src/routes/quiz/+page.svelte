@@ -259,14 +259,14 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <div>
+                    <div class="hidden md:block">
                         <!-- If the user is logged in and this question was contributed by them add a edit this question button -->
                         {#if data?.session?.user && data?.session?.user?.id == currentQuestion?.createdById}
                             <Button href="/fragen/bearbeiten/{currentQuestion.id}?{GO_BACK_TO}=/quiz" color="alternative">Frage bearbeiten</Button>
                         {/if}
                     </div>
 
-                    <div class="flex gap-3">
+                    <div class="flex gap-3 ml-auto">
                         {#if !data?.session?.user}
                             <Button color="alternative" href="/login">Anmelden um Fortschritt zu erfassen</Button>
                         {/if}
