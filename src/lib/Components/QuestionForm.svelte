@@ -137,7 +137,7 @@
             </div>
 
             <Label for="category" class="mb-2 text-xl">Kategorie</Label>
-            <Select name="category" id="category" required bind:value={q_info.categoryId}>
+            <Select name="category" id="category" required={categoriesEnabled} bind:value={q_info.categoryId}>
                 {#each categories as cat}
                     <option value={cat.id}>{cat.name}</option>
                 {/each}
@@ -166,7 +166,7 @@
             </div>
         </div>
 
-        <div class="mt-8">
+        <div class="mt-4">
             <Button type="submit" disabled={errors.length != 0} class="w-full md:w-[unset]">
                 {#if is_loading}
                     <Spinner class="mr-2" size="4" color="white"/>

@@ -28,7 +28,7 @@
     categoriesEnabled={false}
 />
 
-<div class="mt-10">
+<div class="mt-10 flex gap-2 flex-wrap">
     <Button href="/fragebogen/{data.questionnaire.id}"
         >Zurück zum Fragebogen</Button
     >
